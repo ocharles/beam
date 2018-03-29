@@ -423,13 +423,6 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#auto-fields" title="Auto fields" class="md-nav__link">
-    Auto fields
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
   <a href="#embedding" title="Embedding" class="md-nav__link">
     Embedding
   </a>
@@ -986,13 +979,6 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#auto-fields" title="Auto fields" class="md-nav__link">
-    Auto fields
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
   <a href="#embedding" title="Embedding" class="md-nav__link">
     Embedding
   </a>
@@ -1147,8 +1133,6 @@ now unambiguous. You can easily use <code>conv</code> to implement <code>conv'</
 </pre></div>
 
 
-<p>You will often need to write explicit type signatures in order to get the
-compiler to accept your code.</p>
 <h2 id="the-beamable-type-class">The <code>Beamable</code> type class</h2>
 <p>All beam tables, primary keys, and shared data fields must be instances of the
 <code>Beamable</code> class. You cannot override the methods of <code>Beamable</code>. Rather, they
@@ -1177,7 +1161,7 @@ takes a table over an arbitrary column tag and produces that table's
   <span class="kr">data</span> <span class="kt">PrimaryKey</span> <span class="kt">PersonT</span> <span class="n">f</span>
       <span class="ow">=</span> <span class="kt">PersonKey</span> <span class="p">(</span><span class="kt">Columnar</span> <span class="n">f</span> <span class="kt">Text</span><span class="p">)</span> <span class="kr">deriving</span> <span class="kt">Generic</span>
   <span class="n">primaryKey</span> <span class="n">person</span> <span class="ow">=</span> <span class="kt">PersonKey</span> <span class="o">&lt;$&gt;</span> <span class="n">personEmail</span>
-<span class="kr">instance</span> <span class="kt">Beamable</span> <span class="p">(</span><span class="kt">PrimaryKey</span> <span class="kt">PersonT</span><span class="p">)</span> <span class="c1">-- PrimaryKey&#39;s must be &#39;Beamable&#39;  </span>
+<span class="kr">instance</span> <span class="kt">Beamable</span> <span class="p">(</span><span class="kt">PrimaryKey</span> <span class="kt">PersonT</span><span class="p">)</span> <span class="c1">-- PrimaryKey&#39;s must be &#39;Beamable&#39;</span>
 </pre></div>
 
 
@@ -1280,14 +1264,7 @@ support, rather than in the model declarations.</p>
 <p>Also, notice that beam does not allow you to specify any kind of reference
 constraints between tables in your data types. This is because references are a
 property of the database, not a particular table schema. Such relationships can
-be defined using <code>beam-migrate</code> library.</p>
-<h2 id="auto-fields"><code>Auto</code> fields</h2>
-<p>Above, <code>Post</code> used <code>Auto Int</code> as the type for <code>postId</code>. `</p>
-<p>The <code>Auto</code> type constructor is provided by <code>beam-core</code> for fields that are
-automatically assigned by the database. Internally, <code>Auto x</code> is simply a newtype
-over <code>Maybe x</code>. The guarantee is that all values of type <code>Auto x</code> returned by
-beam in the result set will have a value, although this guarantee is not
-enforced at the type level (yet).</p>
+be defined using the <code>beam-migrate</code> package.</p>
 <h2 id="embedding">Embedding</h2>
 <p>Sometimes, we want to declare multiple models with fields in common. Beam allows
 you to simple embed such fields in common types and embed those directly into

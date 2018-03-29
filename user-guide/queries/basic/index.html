@@ -986,14 +986,14 @@ have a database object (something with type <code>DatabaseSettings be db</code>)
 table or view entities, you can use the <code>all_</code> function to retrieve all rows in
 a specific table or view.</p>
 <p>For example, to retrieve all <code>PersonT</code> entries in the <code>exampleDb</code> we defined in
-the last section, we can say </p>
+the last section, we can say</p>
 <div class="codehilite"><pre><span></span><span class="nf">all_</span> <span class="p">(</span><span class="n">persons</span> <span class="n">exampleDb</span><span class="p">)</span> <span class="ow">::</span> <span class="kt">Q</span> <span class="n">syntax</span> <span class="kt">ExampleDb</span> <span class="n">s</span> <span class="p">(</span><span class="kt">PersonT</span> <span class="p">(</span><span class="kt">QExpr</span> <span class="n">s</span><span class="p">))</span>
 </pre></div>
 
 
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>We give the full type of the query here for illustrative purposes only. There 
+<p>We give the full type of the query here for illustrative purposes only. There
 is no need to do so in your own code</p>
 </div>
 <p>Two things to note. Firstly, here <code>PersonT</code> is parameterized over the <code>QExpr s</code>
@@ -1075,23 +1075,23 @@ by the Haskell type system ensure that the query is constructed correctly.</p>
         <ul class="nav nav-tabs">
             
         <li class="nav-item">
-            <a href="#tab-0-haskell" aria-controls="tab-0-haskell" role="tab" data-toggle="tab" data-lang="haskell">Haskell</a>
+            <a href="#tab-0-Haskell" aria-controls="tab-0-Haskell" role="tab" data-toggle="tab" data-lang="haskell">Haskell</a>
         </li>
     
         <li class="nav-item">
-            <a href="#tab-0-sqlite3" aria-controls="tab-0-sqlite3" role="tab" data-toggle="tab" data-lang="sqlite3">Sqlite3</a>
+            <a href="#tab-0-Sqlite" aria-controls="tab-0-Sqlite" role="tab" data-toggle="tab" data-lang="sql">Sqlite</a>
         </li>
     
         <li class="nav-item">
-            <a href="#tab-0-postgres" aria-controls="tab-0-postgres" role="tab" data-toggle="tab" data-lang="postgres">Postgres</a>
+            <a href="#tab-0-Postgres" aria-controls="tab-0-Postgres" role="tab" data-toggle="tab" data-lang="sql">Postgres</a>
         </li>
     
         </ul>
     
         <div class="tab-content">
             
-        <div role="tabpanel" class="tab-pane active" id="tab-0-haskell">
-            <div class="codehilite"><pre><span></span><span class="kr">do</span> <span class="n">tbl1</span> <span class="ow">&lt;-</span> 
+        <div role="tabpanel" class="tab-pane active" id="tab-0-Haskell">
+            <div class="codehilite"><pre><span></span><span class="kr">do</span> <span class="n">tbl1</span> <span class="ow">&lt;-</span>
      <span class="n">limit_</span> <span class="mi">10</span> <span class="o">$</span>
      <span class="n">filter_</span> <span class="p">(</span><span class="nf">\</span><span class="n">customer</span> <span class="ow">-&gt;</span> <span class="p">((</span><span class="n">customerFirstName</span> <span class="n">customer</span> <span class="p">`</span><span class="n">like_</span><span class="p">`</span> <span class="s">&quot;Jo%&quot;</span><span class="p">)</span> <span class="o">&amp;&amp;.</span> <span class="p">(</span><span class="n">customerLastName</span> <span class="n">customer</span> <span class="p">`</span><span class="n">like_</span><span class="p">`</span> <span class="s">&quot;S%&quot;</span><span class="p">))</span> <span class="o">&amp;&amp;.</span>
                            <span class="p">(</span><span class="n">addressState</span> <span class="p">(</span><span class="n">customerAddress</span> <span class="n">customer</span><span class="p">)</span> <span class="o">==.</span> <span class="n">just_</span> <span class="s">&quot;CA&quot;</span> <span class="o">||.</span> <span class="n">addressState</span> <span class="p">(</span><span class="n">customerAddress</span> <span class="n">customer</span><span class="p">)</span> <span class="o">==.</span> <span class="n">just_</span> <span class="s">&quot;WA&quot;</span><span class="p">))</span> <span class="o">$</span>
@@ -1102,100 +1102,114 @@ by the Haskell type system ensure that the query is constructed correctly.</p>
 
         </div>
     
-        <div role="tabpanel" class="tab-pane " id="tab-0-sqlite3">
-            <div class="codehilite"><pre><span></span><span class="go">SELECT &quot;t0&quot;.&quot;res0&quot; AS &quot;res0&quot;,</span>
-<span class="go">       &quot;t0&quot;.&quot;res1&quot; AS &quot;res1&quot;,</span>
-<span class="go">       &quot;t0&quot;.&quot;res2&quot; AS &quot;res2&quot;,</span>
-<span class="go">       &quot;t0&quot;.&quot;res3&quot; AS &quot;res3&quot;,</span>
-<span class="go">       &quot;t0&quot;.&quot;res4&quot; AS &quot;res4&quot;,</span>
-<span class="go">       &quot;t0&quot;.&quot;res5&quot; AS &quot;res5&quot;,</span>
-<span class="go">       &quot;t0&quot;.&quot;res6&quot; AS &quot;res6&quot;,</span>
-<span class="go">       &quot;t0&quot;.&quot;res7&quot; AS &quot;res7&quot;,</span>
-<span class="go">       &quot;t0&quot;.&quot;res8&quot; AS &quot;res8&quot;,</span>
-<span class="go">       &quot;t0&quot;.&quot;res9&quot; AS &quot;res9&quot;,</span>
-<span class="go">       &quot;t0&quot;.&quot;res10&quot; AS &quot;res10&quot;,</span>
-<span class="go">       &quot;t0&quot;.&quot;res11&quot; AS &quot;res11&quot;,</span>
-<span class="go">       &quot;t0&quot;.&quot;res12&quot; AS &quot;res12&quot;,</span>
-<span class="go">       &quot;t1&quot;.&quot;TrackId&quot; AS &quot;res13&quot;,</span>
-<span class="go">       &quot;t1&quot;.&quot;Name&quot; AS &quot;res14&quot;,</span>
-<span class="go">       &quot;t1&quot;.&quot;AlbumId&quot; AS &quot;res15&quot;,</span>
-<span class="go">       &quot;t1&quot;.&quot;MediaTypeId&quot; AS &quot;res16&quot;,</span>
-<span class="go">       &quot;t1&quot;.&quot;GenreId&quot; AS &quot;res17&quot;,</span>
-<span class="go">       &quot;t1&quot;.&quot;Composer&quot; AS &quot;res18&quot;,</span>
-<span class="go">       &quot;t1&quot;.&quot;Milliseconds&quot; AS &quot;res19&quot;,</span>
-<span class="go">       &quot;t1&quot;.&quot;Bytes&quot; AS &quot;res20&quot;,</span>
-<span class="go">       &quot;t1&quot;.&quot;UnitPrice&quot; AS &quot;res21&quot;</span>
-<span class="go">FROM</span>
-<span class="go">  (SELECT &quot;t0&quot;.&quot;CustomerId&quot; AS &quot;res0&quot;,</span>
-<span class="go">          &quot;t0&quot;.&quot;FirstName&quot; AS &quot;res1&quot;,</span>
-<span class="go">          &quot;t0&quot;.&quot;LastName&quot; AS &quot;res2&quot;,</span>
-<span class="go">          &quot;t0&quot;.&quot;Company&quot; AS &quot;res3&quot;,</span>
-<span class="go">          &quot;t0&quot;.&quot;Address&quot; AS &quot;res4&quot;,</span>
-<span class="go">          &quot;t0&quot;.&quot;City&quot; AS &quot;res5&quot;,</span>
-<span class="go">          &quot;t0&quot;.&quot;State&quot; AS &quot;res6&quot;,</span>
-<span class="go">          &quot;t0&quot;.&quot;Country&quot; AS &quot;res7&quot;,</span>
-<span class="go">          &quot;t0&quot;.&quot;PostalCode&quot; AS &quot;res8&quot;,</span>
-<span class="go">          &quot;t0&quot;.&quot;Phone&quot; AS &quot;res9&quot;,</span>
-<span class="go">          &quot;t0&quot;.&quot;Fax&quot; AS &quot;res10&quot;,</span>
-<span class="go">          &quot;t0&quot;.&quot;Email&quot; AS &quot;res11&quot;,</span>
-<span class="go">          &quot;t0&quot;.&quot;SupportRepId&quot; AS &quot;res12&quot;</span>
-<span class="go">   FROM &quot;Customer&quot; AS &quot;t0&quot;</span>
-<span class="go">   WHERE (((&quot;t0&quot;.&quot;FirstName&quot;) LIKE (?))</span>
-<span class="go">          AND ((&quot;t0&quot;.&quot;LastName&quot;) LIKE (?)))</span>
-<span class="go">     AND (((&quot;t0&quot;.&quot;State&quot;)=(?))</span>
-<span class="go">          OR ((&quot;t0&quot;.&quot;State&quot;)=(?)))</span>
-<span class="go">   LIMIT 10) AS &quot;t0&quot;</span>
-<span class="go">INNER JOIN &quot;Track&quot; AS &quot;t1&quot;;</span>
+        <div role="tabpanel" class="tab-pane " id="tab-0-Sqlite">
+            <div class="codehilite"><pre><span></span><span class="k">SELECT</span> <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;res0&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res0&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;res1&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res1&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;res2&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res2&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;res3&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res3&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;res4&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res4&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;res5&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res5&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;res6&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res6&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;res7&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res7&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;res8&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res8&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;res9&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res9&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;res10&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res10&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;res11&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res11&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;res12&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res12&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t1&quot;</span><span class="p">.</span><span class="ss">&quot;TrackId&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res13&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t1&quot;</span><span class="p">.</span><span class="ss">&quot;Name&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res14&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t1&quot;</span><span class="p">.</span><span class="ss">&quot;AlbumId&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res15&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t1&quot;</span><span class="p">.</span><span class="ss">&quot;MediaTypeId&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res16&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t1&quot;</span><span class="p">.</span><span class="ss">&quot;GenreId&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res17&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t1&quot;</span><span class="p">.</span><span class="ss">&quot;Composer&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res18&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t1&quot;</span><span class="p">.</span><span class="ss">&quot;Milliseconds&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res19&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t1&quot;</span><span class="p">.</span><span class="ss">&quot;Bytes&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res20&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t1&quot;</span><span class="p">.</span><span class="ss">&quot;UnitPrice&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res21&quot;</span>
+<span class="k">FROM</span>
+  <span class="p">(</span><span class="k">SELECT</span> <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;CustomerId&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res0&quot;</span><span class="p">,</span>
+          <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;FirstName&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res1&quot;</span><span class="p">,</span>
+          <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;LastName&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res2&quot;</span><span class="p">,</span>
+          <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;Company&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res3&quot;</span><span class="p">,</span>
+          <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;Address&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res4&quot;</span><span class="p">,</span>
+          <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;City&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res5&quot;</span><span class="p">,</span>
+          <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;State&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res6&quot;</span><span class="p">,</span>
+          <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;Country&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res7&quot;</span><span class="p">,</span>
+          <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;PostalCode&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res8&quot;</span><span class="p">,</span>
+          <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;Phone&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res9&quot;</span><span class="p">,</span>
+          <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;Fax&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res10&quot;</span><span class="p">,</span>
+          <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;Email&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res11&quot;</span><span class="p">,</span>
+          <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;SupportRepId&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res12&quot;</span>
+   <span class="k">FROM</span> <span class="ss">&quot;Customer&quot;</span> <span class="k">AS</span> <span class="ss">&quot;t0&quot;</span>
+   <span class="k">WHERE</span> <span class="p">(((</span><span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;FirstName&quot;</span><span class="p">)</span> <span class="k">LIKE</span> <span class="p">(</span><span class="o">?</span><span class="p">))</span>
+          <span class="k">AND</span> <span class="p">((</span><span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;LastName&quot;</span><span class="p">)</span> <span class="k">LIKE</span> <span class="p">(</span><span class="o">?</span><span class="p">)))</span>
+     <span class="k">AND</span> <span class="p">((</span><span class="k">CASE</span>
+               <span class="k">WHEN</span> <span class="p">((</span><span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;State&quot;</span><span class="p">)</span> <span class="k">IS</span> <span class="k">NULL</span><span class="p">)</span>
+                    <span class="k">AND</span> <span class="p">((</span><span class="o">?</span><span class="p">)</span> <span class="k">IS</span> <span class="k">NULL</span><span class="p">)</span> <span class="k">THEN</span> <span class="o">?</span>
+               <span class="k">WHEN</span> <span class="p">((</span><span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;State&quot;</span><span class="p">)</span> <span class="k">IS</span> <span class="k">NULL</span><span class="p">)</span>
+                    <span class="k">OR</span> <span class="p">((</span><span class="o">?</span><span class="p">)</span> <span class="k">IS</span> <span class="k">NULL</span><span class="p">)</span> <span class="k">THEN</span> <span class="o">?</span>
+               <span class="k">ELSE</span> <span class="p">(</span><span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;State&quot;</span><span class="p">)</span><span class="o">=</span><span class="p">(</span><span class="o">?</span><span class="p">)</span>
+           <span class="k">END</span><span class="p">)</span>
+          <span class="k">OR</span> <span class="p">(</span><span class="k">CASE</span>
+                  <span class="k">WHEN</span> <span class="p">((</span><span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;State&quot;</span><span class="p">)</span> <span class="k">IS</span> <span class="k">NULL</span><span class="p">)</span>
+                       <span class="k">AND</span> <span class="p">((</span><span class="o">?</span><span class="p">)</span> <span class="k">IS</span> <span class="k">NULL</span><span class="p">)</span> <span class="k">THEN</span> <span class="o">?</span>
+                  <span class="k">WHEN</span> <span class="p">((</span><span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;State&quot;</span><span class="p">)</span> <span class="k">IS</span> <span class="k">NULL</span><span class="p">)</span>
+                       <span class="k">OR</span> <span class="p">((</span><span class="o">?</span><span class="p">)</span> <span class="k">IS</span> <span class="k">NULL</span><span class="p">)</span> <span class="k">THEN</span> <span class="o">?</span>
+                  <span class="k">ELSE</span> <span class="p">(</span><span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;State&quot;</span><span class="p">)</span><span class="o">=</span><span class="p">(</span><span class="o">?</span><span class="p">)</span>
+              <span class="k">END</span><span class="p">))</span>
+   <span class="k">LIMIT</span> <span class="mi">10</span><span class="p">)</span> <span class="k">AS</span> <span class="ss">&quot;t0&quot;</span>
+<span class="k">INNER</span> <span class="k">JOIN</span> <span class="ss">&quot;Track&quot;</span> <span class="k">AS</span> <span class="ss">&quot;t1&quot;</span><span class="p">;</span>
 
-<span class="go">-- With values: [SQLText &quot;Jo%&quot;,SQLText &quot;S%&quot;,SQLText &quot;CA&quot;,SQLText &quot;WA&quot;]</span>
+<span class="c1">-- With values: [SQLText &quot;Jo%&quot;,SQLText &quot;S%&quot;,SQLText &quot;CA&quot;,SQLInteger 1,SQLText &quot;CA&quot;,SQLInteger 0,SQLText &quot;CA&quot;,SQLText &quot;WA&quot;,SQLInteger 1,SQLText &quot;WA&quot;,SQLInteger 0,SQLText &quot;WA&quot;]</span>
 </pre></div>
 
         </div>
     
-        <div role="tabpanel" class="tab-pane " id="tab-0-postgres">
-            <div class="codehilite"><pre><span></span><span class="k">SELECT</span> <span class="s s-Name">&quot;t0&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;res0&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;res0&quot;</span><span class="p">,</span>
-       <span class="s s-Name">&quot;t0&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;res1&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;res1&quot;</span><span class="p">,</span>
-       <span class="s s-Name">&quot;t0&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;res2&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;res2&quot;</span><span class="p">,</span>
-       <span class="s s-Name">&quot;t0&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;res3&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;res3&quot;</span><span class="p">,</span>
-       <span class="s s-Name">&quot;t0&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;res4&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;res4&quot;</span><span class="p">,</span>
-       <span class="s s-Name">&quot;t0&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;res5&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;res5&quot;</span><span class="p">,</span>
-       <span class="s s-Name">&quot;t0&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;res6&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;res6&quot;</span><span class="p">,</span>
-       <span class="s s-Name">&quot;t0&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;res7&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;res7&quot;</span><span class="p">,</span>
-       <span class="s s-Name">&quot;t0&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;res8&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;res8&quot;</span><span class="p">,</span>
-       <span class="s s-Name">&quot;t0&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;res9&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;res9&quot;</span><span class="p">,</span>
-       <span class="s s-Name">&quot;t0&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;res10&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;res10&quot;</span><span class="p">,</span>
-       <span class="s s-Name">&quot;t0&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;res11&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;res11&quot;</span><span class="p">,</span>
-       <span class="s s-Name">&quot;t0&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;res12&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;res12&quot;</span><span class="p">,</span>
-       <span class="s s-Name">&quot;t1&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;TrackId&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;res13&quot;</span><span class="p">,</span>
-       <span class="s s-Name">&quot;t1&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;Name&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;res14&quot;</span><span class="p">,</span>
-       <span class="s s-Name">&quot;t1&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;AlbumId&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;res15&quot;</span><span class="p">,</span>
-       <span class="s s-Name">&quot;t1&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;MediaTypeId&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;res16&quot;</span><span class="p">,</span>
-       <span class="s s-Name">&quot;t1&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;GenreId&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;res17&quot;</span><span class="p">,</span>
-       <span class="s s-Name">&quot;t1&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;Composer&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;res18&quot;</span><span class="p">,</span>
-       <span class="s s-Name">&quot;t1&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;Milliseconds&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;res19&quot;</span><span class="p">,</span>
-       <span class="s s-Name">&quot;t1&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;Bytes&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;res20&quot;</span><span class="p">,</span>
-       <span class="s s-Name">&quot;t1&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;UnitPrice&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;res21&quot;</span>
+        <div role="tabpanel" class="tab-pane " id="tab-0-Postgres">
+            <div class="codehilite"><pre><span></span><span class="k">SELECT</span> <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;res0&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res0&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;res1&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res1&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;res2&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res2&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;res3&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res3&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;res4&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res4&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;res5&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res5&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;res6&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res6&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;res7&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res7&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;res8&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res8&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;res9&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res9&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;res10&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res10&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;res11&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res11&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;res12&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res12&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t1&quot;</span><span class="p">.</span><span class="ss">&quot;TrackId&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res13&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t1&quot;</span><span class="p">.</span><span class="ss">&quot;Name&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res14&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t1&quot;</span><span class="p">.</span><span class="ss">&quot;AlbumId&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res15&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t1&quot;</span><span class="p">.</span><span class="ss">&quot;MediaTypeId&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res16&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t1&quot;</span><span class="p">.</span><span class="ss">&quot;GenreId&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res17&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t1&quot;</span><span class="p">.</span><span class="ss">&quot;Composer&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res18&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t1&quot;</span><span class="p">.</span><span class="ss">&quot;Milliseconds&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res19&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t1&quot;</span><span class="p">.</span><span class="ss">&quot;Bytes&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res20&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t1&quot;</span><span class="p">.</span><span class="ss">&quot;UnitPrice&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res21&quot;</span>
 <span class="k">FROM</span>
-  <span class="p">(</span><span class="k">SELECT</span> <span class="s s-Name">&quot;t0&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;CustomerId&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;res0&quot;</span><span class="p">,</span>
-          <span class="s s-Name">&quot;t0&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;FirstName&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;res1&quot;</span><span class="p">,</span>
-          <span class="s s-Name">&quot;t0&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;LastName&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;res2&quot;</span><span class="p">,</span>
-          <span class="s s-Name">&quot;t0&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;Company&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;res3&quot;</span><span class="p">,</span>
-          <span class="s s-Name">&quot;t0&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;Address&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;res4&quot;</span><span class="p">,</span>
-          <span class="s s-Name">&quot;t0&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;City&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;res5&quot;</span><span class="p">,</span>
-          <span class="s s-Name">&quot;t0&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;State&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;res6&quot;</span><span class="p">,</span>
-          <span class="s s-Name">&quot;t0&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;Country&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;res7&quot;</span><span class="p">,</span>
-          <span class="s s-Name">&quot;t0&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;PostalCode&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;res8&quot;</span><span class="p">,</span>
-          <span class="s s-Name">&quot;t0&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;Phone&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;res9&quot;</span><span class="p">,</span>
-          <span class="s s-Name">&quot;t0&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;Fax&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;res10&quot;</span><span class="p">,</span>
-          <span class="s s-Name">&quot;t0&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;Email&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;res11&quot;</span><span class="p">,</span>
-          <span class="s s-Name">&quot;t0&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;SupportRepId&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;res12&quot;</span>
-   <span class="k">FROM</span> <span class="s s-Name">&quot;Customer&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;t0&quot;</span>
-   <span class="k">WHERE</span> <span class="p">(((</span><span class="s s-Name">&quot;t0&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;FirstName&quot;</span><span class="p">)</span> <span class="k">LIKE</span> <span class="p">(</span><span class="s1">&#39;Jo%&#39;</span><span class="p">))</span>
-          <span class="k">AND</span> <span class="p">((</span><span class="s s-Name">&quot;t0&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;LastName&quot;</span><span class="p">)</span> <span class="k">LIKE</span> <span class="p">(</span><span class="s1">&#39;S%&#39;</span><span class="p">)))</span>
-     <span class="k">AND</span> <span class="p">(((</span><span class="s s-Name">&quot;t0&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;State&quot;</span><span class="p">)</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;CA&#39;</span><span class="p">))</span>
-          <span class="k">OR</span> <span class="p">((</span><span class="s s-Name">&quot;t0&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;State&quot;</span><span class="p">)</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;WA&#39;</span><span class="p">)))</span>
-   <span class="k">LIMIT</span> <span class="mf">10</span><span class="p">)</span> <span class="k">AS</span> <span class="s s-Name">&quot;t0&quot;</span>
-<span class="k">CROSS</span> <span class="k">JOIN</span> <span class="s s-Name">&quot;Track&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;t1&quot;</span>
+  <span class="p">(</span><span class="k">SELECT</span> <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;CustomerId&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res0&quot;</span><span class="p">,</span>
+          <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;FirstName&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res1&quot;</span><span class="p">,</span>
+          <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;LastName&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res2&quot;</span><span class="p">,</span>
+          <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;Company&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res3&quot;</span><span class="p">,</span>
+          <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;Address&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res4&quot;</span><span class="p">,</span>
+          <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;City&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res5&quot;</span><span class="p">,</span>
+          <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;State&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res6&quot;</span><span class="p">,</span>
+          <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;Country&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res7&quot;</span><span class="p">,</span>
+          <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;PostalCode&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res8&quot;</span><span class="p">,</span>
+          <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;Phone&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res9&quot;</span><span class="p">,</span>
+          <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;Fax&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res10&quot;</span><span class="p">,</span>
+          <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;Email&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res11&quot;</span><span class="p">,</span>
+          <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;SupportRepId&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res12&quot;</span>
+   <span class="k">FROM</span> <span class="ss">&quot;Customer&quot;</span> <span class="k">AS</span> <span class="ss">&quot;t0&quot;</span>
+   <span class="k">WHERE</span> <span class="p">(((</span><span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;FirstName&quot;</span><span class="p">)</span> <span class="k">LIKE</span> <span class="p">(</span><span class="s1">&#39;Jo%&#39;</span><span class="p">))</span>
+          <span class="k">AND</span> <span class="p">((</span><span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;LastName&quot;</span><span class="p">)</span> <span class="k">LIKE</span> <span class="p">(</span><span class="s1">&#39;S%&#39;</span><span class="p">)))</span>
+     <span class="k">AND</span> <span class="p">(((</span><span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;State&quot;</span><span class="p">)</span> <span class="k">IS</span> <span class="k">NOT</span> <span class="k">DISTINCT</span>
+           <span class="k">FROM</span> <span class="p">(</span><span class="s1">&#39;CA&#39;</span><span class="p">))</span>
+          <span class="k">OR</span> <span class="p">((</span><span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;State&quot;</span><span class="p">)</span> <span class="k">IS</span> <span class="k">NOT</span> <span class="k">DISTINCT</span>
+              <span class="k">FROM</span> <span class="p">(</span><span class="s1">&#39;WA&#39;</span><span class="p">)))</span>
+   <span class="k">LIMIT</span> <span class="mi">10</span><span class="p">)</span> <span class="k">AS</span> <span class="ss">&quot;t0&quot;</span>
+<span class="k">CROSS</span> <span class="k">JOIN</span> <span class="ss">&quot;Track&quot;</span> <span class="k">AS</span> <span class="ss">&quot;t1&quot;</span>
 </pre></div>
 
         </div>
@@ -1214,24 +1228,24 @@ possible, rather than shipping data to your application pre-processing.</p>
         <ul class="nav nav-tabs">
             
         <li class="nav-item">
-            <a href="#tab-15-haskell" aria-controls="tab-15-haskell" role="tab" data-toggle="tab" data-lang="haskell">Haskell</a>
+            <a href="#tab-15-Haskell" aria-controls="tab-15-Haskell" role="tab" data-toggle="tab" data-lang="haskell">Haskell</a>
         </li>
     
         <li class="nav-item">
-            <a href="#tab-15-sqlite3" aria-controls="tab-15-sqlite3" role="tab" data-toggle="tab" data-lang="sqlite3">Sqlite3</a>
+            <a href="#tab-15-Sqlite" aria-controls="tab-15-Sqlite" role="tab" data-toggle="tab" data-lang="sql">Sqlite</a>
         </li>
     
         <li class="nav-item">
-            <a href="#tab-15-postgres" aria-controls="tab-15-postgres" role="tab" data-toggle="tab" data-lang="postgres">Postgres</a>
+            <a href="#tab-15-Postgres" aria-controls="tab-15-Postgres" role="tab" data-toggle="tab" data-lang="sql">Postgres</a>
         </li>
     
         </ul>
     
         <div class="tab-content">
             
-        <div role="tabpanel" class="tab-pane active" id="tab-15-haskell">
+        <div role="tabpanel" class="tab-pane active" id="tab-15-Haskell">
             <div class="codehilite"><pre><span></span><span class="c1">-- &#39;complicatedQuery&#39; could be declared and imported from an external module here. The generated query is the same regardless</span>
-<span class="kr">let</span> <span class="n">complicatedQuery</span> <span class="ow">=</span> 
+<span class="kr">let</span> <span class="n">complicatedQuery</span> <span class="ow">=</span>
        <span class="n">filter_</span> <span class="p">(</span><span class="nf">\</span><span class="n">customer</span> <span class="ow">-&gt;</span> <span class="p">((</span><span class="n">customerFirstName</span> <span class="n">customer</span> <span class="p">`</span><span class="n">like_</span><span class="p">`</span> <span class="s">&quot;Jo%&quot;</span><span class="p">)</span> <span class="o">&amp;&amp;.</span> <span class="p">(</span><span class="n">customerLastName</span> <span class="n">customer</span> <span class="p">`</span><span class="n">like_</span><span class="p">`</span> <span class="s">&quot;S%&quot;</span><span class="p">))</span> <span class="o">&amp;&amp;.</span>
                              <span class="p">(</span><span class="n">addressState</span> <span class="p">(</span><span class="n">customerAddress</span> <span class="n">customer</span><span class="p">)</span> <span class="o">==.</span> <span class="n">just_</span> <span class="s">&quot;CA&quot;</span> <span class="o">||.</span> <span class="n">addressState</span> <span class="p">(</span><span class="n">customerAddress</span> <span class="n">customer</span><span class="p">)</span> <span class="o">==.</span> <span class="n">just_</span> <span class="s">&quot;WA&quot;</span><span class="p">))</span> <span class="o">$</span>
                <span class="n">all_</span> <span class="p">(</span><span class="n">customer</span> <span class="n">chinookDb</span><span class="p">)</span>
@@ -1242,100 +1256,114 @@ possible, rather than shipping data to your application pre-processing.</p>
 
         </div>
     
-        <div role="tabpanel" class="tab-pane " id="tab-15-sqlite3">
-            <div class="codehilite"><pre><span></span><span class="go">SELECT &quot;t0&quot;.&quot;res0&quot; AS &quot;res0&quot;,</span>
-<span class="go">       &quot;t0&quot;.&quot;res1&quot; AS &quot;res1&quot;,</span>
-<span class="go">       &quot;t0&quot;.&quot;res2&quot; AS &quot;res2&quot;,</span>
-<span class="go">       &quot;t0&quot;.&quot;res3&quot; AS &quot;res3&quot;,</span>
-<span class="go">       &quot;t0&quot;.&quot;res4&quot; AS &quot;res4&quot;,</span>
-<span class="go">       &quot;t0&quot;.&quot;res5&quot; AS &quot;res5&quot;,</span>
-<span class="go">       &quot;t0&quot;.&quot;res6&quot; AS &quot;res6&quot;,</span>
-<span class="go">       &quot;t0&quot;.&quot;res7&quot; AS &quot;res7&quot;,</span>
-<span class="go">       &quot;t0&quot;.&quot;res8&quot; AS &quot;res8&quot;,</span>
-<span class="go">       &quot;t0&quot;.&quot;res9&quot; AS &quot;res9&quot;,</span>
-<span class="go">       &quot;t0&quot;.&quot;res10&quot; AS &quot;res10&quot;,</span>
-<span class="go">       &quot;t0&quot;.&quot;res11&quot; AS &quot;res11&quot;,</span>
-<span class="go">       &quot;t0&quot;.&quot;res12&quot; AS &quot;res12&quot;,</span>
-<span class="go">       &quot;t1&quot;.&quot;TrackId&quot; AS &quot;res13&quot;,</span>
-<span class="go">       &quot;t1&quot;.&quot;Name&quot; AS &quot;res14&quot;,</span>
-<span class="go">       &quot;t1&quot;.&quot;AlbumId&quot; AS &quot;res15&quot;,</span>
-<span class="go">       &quot;t1&quot;.&quot;MediaTypeId&quot; AS &quot;res16&quot;,</span>
-<span class="go">       &quot;t1&quot;.&quot;GenreId&quot; AS &quot;res17&quot;,</span>
-<span class="go">       &quot;t1&quot;.&quot;Composer&quot; AS &quot;res18&quot;,</span>
-<span class="go">       &quot;t1&quot;.&quot;Milliseconds&quot; AS &quot;res19&quot;,</span>
-<span class="go">       &quot;t1&quot;.&quot;Bytes&quot; AS &quot;res20&quot;,</span>
-<span class="go">       &quot;t1&quot;.&quot;UnitPrice&quot; AS &quot;res21&quot;</span>
-<span class="go">FROM</span>
-<span class="go">  (SELECT &quot;t0&quot;.&quot;CustomerId&quot; AS &quot;res0&quot;,</span>
-<span class="go">          &quot;t0&quot;.&quot;FirstName&quot; AS &quot;res1&quot;,</span>
-<span class="go">          &quot;t0&quot;.&quot;LastName&quot; AS &quot;res2&quot;,</span>
-<span class="go">          &quot;t0&quot;.&quot;Company&quot; AS &quot;res3&quot;,</span>
-<span class="go">          &quot;t0&quot;.&quot;Address&quot; AS &quot;res4&quot;,</span>
-<span class="go">          &quot;t0&quot;.&quot;City&quot; AS &quot;res5&quot;,</span>
-<span class="go">          &quot;t0&quot;.&quot;State&quot; AS &quot;res6&quot;,</span>
-<span class="go">          &quot;t0&quot;.&quot;Country&quot; AS &quot;res7&quot;,</span>
-<span class="go">          &quot;t0&quot;.&quot;PostalCode&quot; AS &quot;res8&quot;,</span>
-<span class="go">          &quot;t0&quot;.&quot;Phone&quot; AS &quot;res9&quot;,</span>
-<span class="go">          &quot;t0&quot;.&quot;Fax&quot; AS &quot;res10&quot;,</span>
-<span class="go">          &quot;t0&quot;.&quot;Email&quot; AS &quot;res11&quot;,</span>
-<span class="go">          &quot;t0&quot;.&quot;SupportRepId&quot; AS &quot;res12&quot;</span>
-<span class="go">   FROM &quot;Customer&quot; AS &quot;t0&quot;</span>
-<span class="go">   WHERE (((&quot;t0&quot;.&quot;FirstName&quot;) LIKE (?))</span>
-<span class="go">          AND ((&quot;t0&quot;.&quot;LastName&quot;) LIKE (?)))</span>
-<span class="go">     AND (((&quot;t0&quot;.&quot;State&quot;)=(?))</span>
-<span class="go">          OR ((&quot;t0&quot;.&quot;State&quot;)=(?)))</span>
-<span class="go">   LIMIT 10) AS &quot;t0&quot;</span>
-<span class="go">INNER JOIN &quot;Track&quot; AS &quot;t1&quot;;</span>
+        <div role="tabpanel" class="tab-pane " id="tab-15-Sqlite">
+            <div class="codehilite"><pre><span></span><span class="k">SELECT</span> <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;res0&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res0&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;res1&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res1&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;res2&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res2&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;res3&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res3&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;res4&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res4&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;res5&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res5&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;res6&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res6&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;res7&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res7&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;res8&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res8&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;res9&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res9&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;res10&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res10&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;res11&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res11&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;res12&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res12&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t1&quot;</span><span class="p">.</span><span class="ss">&quot;TrackId&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res13&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t1&quot;</span><span class="p">.</span><span class="ss">&quot;Name&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res14&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t1&quot;</span><span class="p">.</span><span class="ss">&quot;AlbumId&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res15&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t1&quot;</span><span class="p">.</span><span class="ss">&quot;MediaTypeId&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res16&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t1&quot;</span><span class="p">.</span><span class="ss">&quot;GenreId&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res17&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t1&quot;</span><span class="p">.</span><span class="ss">&quot;Composer&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res18&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t1&quot;</span><span class="p">.</span><span class="ss">&quot;Milliseconds&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res19&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t1&quot;</span><span class="p">.</span><span class="ss">&quot;Bytes&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res20&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t1&quot;</span><span class="p">.</span><span class="ss">&quot;UnitPrice&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res21&quot;</span>
+<span class="k">FROM</span>
+  <span class="p">(</span><span class="k">SELECT</span> <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;CustomerId&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res0&quot;</span><span class="p">,</span>
+          <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;FirstName&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res1&quot;</span><span class="p">,</span>
+          <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;LastName&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res2&quot;</span><span class="p">,</span>
+          <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;Company&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res3&quot;</span><span class="p">,</span>
+          <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;Address&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res4&quot;</span><span class="p">,</span>
+          <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;City&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res5&quot;</span><span class="p">,</span>
+          <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;State&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res6&quot;</span><span class="p">,</span>
+          <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;Country&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res7&quot;</span><span class="p">,</span>
+          <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;PostalCode&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res8&quot;</span><span class="p">,</span>
+          <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;Phone&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res9&quot;</span><span class="p">,</span>
+          <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;Fax&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res10&quot;</span><span class="p">,</span>
+          <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;Email&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res11&quot;</span><span class="p">,</span>
+          <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;SupportRepId&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res12&quot;</span>
+   <span class="k">FROM</span> <span class="ss">&quot;Customer&quot;</span> <span class="k">AS</span> <span class="ss">&quot;t0&quot;</span>
+   <span class="k">WHERE</span> <span class="p">(((</span><span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;FirstName&quot;</span><span class="p">)</span> <span class="k">LIKE</span> <span class="p">(</span><span class="o">?</span><span class="p">))</span>
+          <span class="k">AND</span> <span class="p">((</span><span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;LastName&quot;</span><span class="p">)</span> <span class="k">LIKE</span> <span class="p">(</span><span class="o">?</span><span class="p">)))</span>
+     <span class="k">AND</span> <span class="p">((</span><span class="k">CASE</span>
+               <span class="k">WHEN</span> <span class="p">((</span><span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;State&quot;</span><span class="p">)</span> <span class="k">IS</span> <span class="k">NULL</span><span class="p">)</span>
+                    <span class="k">AND</span> <span class="p">((</span><span class="o">?</span><span class="p">)</span> <span class="k">IS</span> <span class="k">NULL</span><span class="p">)</span> <span class="k">THEN</span> <span class="o">?</span>
+               <span class="k">WHEN</span> <span class="p">((</span><span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;State&quot;</span><span class="p">)</span> <span class="k">IS</span> <span class="k">NULL</span><span class="p">)</span>
+                    <span class="k">OR</span> <span class="p">((</span><span class="o">?</span><span class="p">)</span> <span class="k">IS</span> <span class="k">NULL</span><span class="p">)</span> <span class="k">THEN</span> <span class="o">?</span>
+               <span class="k">ELSE</span> <span class="p">(</span><span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;State&quot;</span><span class="p">)</span><span class="o">=</span><span class="p">(</span><span class="o">?</span><span class="p">)</span>
+           <span class="k">END</span><span class="p">)</span>
+          <span class="k">OR</span> <span class="p">(</span><span class="k">CASE</span>
+                  <span class="k">WHEN</span> <span class="p">((</span><span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;State&quot;</span><span class="p">)</span> <span class="k">IS</span> <span class="k">NULL</span><span class="p">)</span>
+                       <span class="k">AND</span> <span class="p">((</span><span class="o">?</span><span class="p">)</span> <span class="k">IS</span> <span class="k">NULL</span><span class="p">)</span> <span class="k">THEN</span> <span class="o">?</span>
+                  <span class="k">WHEN</span> <span class="p">((</span><span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;State&quot;</span><span class="p">)</span> <span class="k">IS</span> <span class="k">NULL</span><span class="p">)</span>
+                       <span class="k">OR</span> <span class="p">((</span><span class="o">?</span><span class="p">)</span> <span class="k">IS</span> <span class="k">NULL</span><span class="p">)</span> <span class="k">THEN</span> <span class="o">?</span>
+                  <span class="k">ELSE</span> <span class="p">(</span><span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;State&quot;</span><span class="p">)</span><span class="o">=</span><span class="p">(</span><span class="o">?</span><span class="p">)</span>
+              <span class="k">END</span><span class="p">))</span>
+   <span class="k">LIMIT</span> <span class="mi">10</span><span class="p">)</span> <span class="k">AS</span> <span class="ss">&quot;t0&quot;</span>
+<span class="k">INNER</span> <span class="k">JOIN</span> <span class="ss">&quot;Track&quot;</span> <span class="k">AS</span> <span class="ss">&quot;t1&quot;</span><span class="p">;</span>
 
-<span class="go">-- With values: [SQLText &quot;Jo%&quot;,SQLText &quot;S%&quot;,SQLText &quot;CA&quot;,SQLText &quot;WA&quot;]</span>
+<span class="c1">-- With values: [SQLText &quot;Jo%&quot;,SQLText &quot;S%&quot;,SQLText &quot;CA&quot;,SQLInteger 1,SQLText &quot;CA&quot;,SQLInteger 0,SQLText &quot;CA&quot;,SQLText &quot;WA&quot;,SQLInteger 1,SQLText &quot;WA&quot;,SQLInteger 0,SQLText &quot;WA&quot;]</span>
 </pre></div>
 
         </div>
     
-        <div role="tabpanel" class="tab-pane " id="tab-15-postgres">
-            <div class="codehilite"><pre><span></span><span class="k">SELECT</span> <span class="s s-Name">&quot;t0&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;res0&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;res0&quot;</span><span class="p">,</span>
-       <span class="s s-Name">&quot;t0&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;res1&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;res1&quot;</span><span class="p">,</span>
-       <span class="s s-Name">&quot;t0&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;res2&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;res2&quot;</span><span class="p">,</span>
-       <span class="s s-Name">&quot;t0&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;res3&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;res3&quot;</span><span class="p">,</span>
-       <span class="s s-Name">&quot;t0&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;res4&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;res4&quot;</span><span class="p">,</span>
-       <span class="s s-Name">&quot;t0&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;res5&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;res5&quot;</span><span class="p">,</span>
-       <span class="s s-Name">&quot;t0&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;res6&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;res6&quot;</span><span class="p">,</span>
-       <span class="s s-Name">&quot;t0&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;res7&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;res7&quot;</span><span class="p">,</span>
-       <span class="s s-Name">&quot;t0&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;res8&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;res8&quot;</span><span class="p">,</span>
-       <span class="s s-Name">&quot;t0&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;res9&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;res9&quot;</span><span class="p">,</span>
-       <span class="s s-Name">&quot;t0&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;res10&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;res10&quot;</span><span class="p">,</span>
-       <span class="s s-Name">&quot;t0&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;res11&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;res11&quot;</span><span class="p">,</span>
-       <span class="s s-Name">&quot;t0&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;res12&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;res12&quot;</span><span class="p">,</span>
-       <span class="s s-Name">&quot;t1&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;TrackId&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;res13&quot;</span><span class="p">,</span>
-       <span class="s s-Name">&quot;t1&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;Name&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;res14&quot;</span><span class="p">,</span>
-       <span class="s s-Name">&quot;t1&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;AlbumId&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;res15&quot;</span><span class="p">,</span>
-       <span class="s s-Name">&quot;t1&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;MediaTypeId&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;res16&quot;</span><span class="p">,</span>
-       <span class="s s-Name">&quot;t1&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;GenreId&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;res17&quot;</span><span class="p">,</span>
-       <span class="s s-Name">&quot;t1&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;Composer&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;res18&quot;</span><span class="p">,</span>
-       <span class="s s-Name">&quot;t1&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;Milliseconds&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;res19&quot;</span><span class="p">,</span>
-       <span class="s s-Name">&quot;t1&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;Bytes&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;res20&quot;</span><span class="p">,</span>
-       <span class="s s-Name">&quot;t1&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;UnitPrice&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;res21&quot;</span>
+        <div role="tabpanel" class="tab-pane " id="tab-15-Postgres">
+            <div class="codehilite"><pre><span></span><span class="k">SELECT</span> <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;res0&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res0&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;res1&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res1&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;res2&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res2&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;res3&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res3&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;res4&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res4&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;res5&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res5&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;res6&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res6&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;res7&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res7&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;res8&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res8&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;res9&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res9&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;res10&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res10&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;res11&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res11&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;res12&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res12&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t1&quot;</span><span class="p">.</span><span class="ss">&quot;TrackId&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res13&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t1&quot;</span><span class="p">.</span><span class="ss">&quot;Name&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res14&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t1&quot;</span><span class="p">.</span><span class="ss">&quot;AlbumId&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res15&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t1&quot;</span><span class="p">.</span><span class="ss">&quot;MediaTypeId&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res16&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t1&quot;</span><span class="p">.</span><span class="ss">&quot;GenreId&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res17&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t1&quot;</span><span class="p">.</span><span class="ss">&quot;Composer&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res18&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t1&quot;</span><span class="p">.</span><span class="ss">&quot;Milliseconds&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res19&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t1&quot;</span><span class="p">.</span><span class="ss">&quot;Bytes&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res20&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t1&quot;</span><span class="p">.</span><span class="ss">&quot;UnitPrice&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res21&quot;</span>
 <span class="k">FROM</span>
-  <span class="p">(</span><span class="k">SELECT</span> <span class="s s-Name">&quot;t0&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;CustomerId&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;res0&quot;</span><span class="p">,</span>
-          <span class="s s-Name">&quot;t0&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;FirstName&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;res1&quot;</span><span class="p">,</span>
-          <span class="s s-Name">&quot;t0&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;LastName&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;res2&quot;</span><span class="p">,</span>
-          <span class="s s-Name">&quot;t0&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;Company&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;res3&quot;</span><span class="p">,</span>
-          <span class="s s-Name">&quot;t0&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;Address&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;res4&quot;</span><span class="p">,</span>
-          <span class="s s-Name">&quot;t0&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;City&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;res5&quot;</span><span class="p">,</span>
-          <span class="s s-Name">&quot;t0&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;State&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;res6&quot;</span><span class="p">,</span>
-          <span class="s s-Name">&quot;t0&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;Country&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;res7&quot;</span><span class="p">,</span>
-          <span class="s s-Name">&quot;t0&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;PostalCode&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;res8&quot;</span><span class="p">,</span>
-          <span class="s s-Name">&quot;t0&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;Phone&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;res9&quot;</span><span class="p">,</span>
-          <span class="s s-Name">&quot;t0&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;Fax&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;res10&quot;</span><span class="p">,</span>
-          <span class="s s-Name">&quot;t0&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;Email&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;res11&quot;</span><span class="p">,</span>
-          <span class="s s-Name">&quot;t0&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;SupportRepId&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;res12&quot;</span>
-   <span class="k">FROM</span> <span class="s s-Name">&quot;Customer&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;t0&quot;</span>
-   <span class="k">WHERE</span> <span class="p">(((</span><span class="s s-Name">&quot;t0&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;FirstName&quot;</span><span class="p">)</span> <span class="k">LIKE</span> <span class="p">(</span><span class="s1">&#39;Jo%&#39;</span><span class="p">))</span>
-          <span class="k">AND</span> <span class="p">((</span><span class="s s-Name">&quot;t0&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;LastName&quot;</span><span class="p">)</span> <span class="k">LIKE</span> <span class="p">(</span><span class="s1">&#39;S%&#39;</span><span class="p">)))</span>
-     <span class="k">AND</span> <span class="p">(((</span><span class="s s-Name">&quot;t0&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;State&quot;</span><span class="p">)</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;CA&#39;</span><span class="p">))</span>
-          <span class="k">OR</span> <span class="p">((</span><span class="s s-Name">&quot;t0&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;State&quot;</span><span class="p">)</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;WA&#39;</span><span class="p">)))</span>
-   <span class="k">LIMIT</span> <span class="mf">10</span><span class="p">)</span> <span class="k">AS</span> <span class="s s-Name">&quot;t0&quot;</span>
-<span class="k">CROSS</span> <span class="k">JOIN</span> <span class="s s-Name">&quot;Track&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;t1&quot;</span>
+  <span class="p">(</span><span class="k">SELECT</span> <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;CustomerId&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res0&quot;</span><span class="p">,</span>
+          <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;FirstName&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res1&quot;</span><span class="p">,</span>
+          <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;LastName&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res2&quot;</span><span class="p">,</span>
+          <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;Company&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res3&quot;</span><span class="p">,</span>
+          <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;Address&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res4&quot;</span><span class="p">,</span>
+          <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;City&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res5&quot;</span><span class="p">,</span>
+          <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;State&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res6&quot;</span><span class="p">,</span>
+          <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;Country&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res7&quot;</span><span class="p">,</span>
+          <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;PostalCode&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res8&quot;</span><span class="p">,</span>
+          <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;Phone&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res9&quot;</span><span class="p">,</span>
+          <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;Fax&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res10&quot;</span><span class="p">,</span>
+          <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;Email&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res11&quot;</span><span class="p">,</span>
+          <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;SupportRepId&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res12&quot;</span>
+   <span class="k">FROM</span> <span class="ss">&quot;Customer&quot;</span> <span class="k">AS</span> <span class="ss">&quot;t0&quot;</span>
+   <span class="k">WHERE</span> <span class="p">(((</span><span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;FirstName&quot;</span><span class="p">)</span> <span class="k">LIKE</span> <span class="p">(</span><span class="s1">&#39;Jo%&#39;</span><span class="p">))</span>
+          <span class="k">AND</span> <span class="p">((</span><span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;LastName&quot;</span><span class="p">)</span> <span class="k">LIKE</span> <span class="p">(</span><span class="s1">&#39;S%&#39;</span><span class="p">)))</span>
+     <span class="k">AND</span> <span class="p">(((</span><span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;State&quot;</span><span class="p">)</span> <span class="k">IS</span> <span class="k">NOT</span> <span class="k">DISTINCT</span>
+           <span class="k">FROM</span> <span class="p">(</span><span class="s1">&#39;CA&#39;</span><span class="p">))</span>
+          <span class="k">OR</span> <span class="p">((</span><span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;State&quot;</span><span class="p">)</span> <span class="k">IS</span> <span class="k">NOT</span> <span class="k">DISTINCT</span>
+              <span class="k">FROM</span> <span class="p">(</span><span class="s1">&#39;WA&#39;</span><span class="p">)))</span>
+   <span class="k">LIMIT</span> <span class="mi">10</span><span class="p">)</span> <span class="k">AS</span> <span class="ss">&quot;t0&quot;</span>
+<span class="k">CROSS</span> <span class="k">JOIN</span> <span class="ss">&quot;Track&quot;</span> <span class="k">AS</span> <span class="ss">&quot;t1&quot;</span>
 </pre></div>
 
         </div>

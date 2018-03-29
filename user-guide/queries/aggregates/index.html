@@ -886,39 +886,39 @@ expressions as usual.</p>
         <ul class="nav nav-tabs">
             
         <li class="nav-item">
-            <a href="#tab-0-haskell" aria-controls="tab-0-haskell" role="tab" data-toggle="tab" data-lang="haskell">Haskell</a>
+            <a href="#tab-0-Haskell" aria-controls="tab-0-Haskell" role="tab" data-toggle="tab" data-lang="haskell">Haskell</a>
         </li>
     
         <li class="nav-item">
-            <a href="#tab-0-sqlite3" aria-controls="tab-0-sqlite3" role="tab" data-toggle="tab" data-lang="sqlite3">Sqlite3</a>
+            <a href="#tab-0-Sqlite" aria-controls="tab-0-Sqlite" role="tab" data-toggle="tab" data-lang="sql">Sqlite</a>
         </li>
     
         <li class="nav-item">
-            <a href="#tab-0-postgres" aria-controls="tab-0-postgres" role="tab" data-toggle="tab" data-lang="postgres">Postgres</a>
+            <a href="#tab-0-Postgres" aria-controls="tab-0-Postgres" role="tab" data-toggle="tab" data-lang="sql">Postgres</a>
         </li>
     
         </ul>
     
         <div class="tab-content">
             
-        <div role="tabpanel" class="tab-pane active" id="tab-0-haskell">
+        <div role="tabpanel" class="tab-pane active" id="tab-0-Haskell">
             <div class="codehilite"><pre><span></span><span class="nf">aggregate_</span> <span class="p">(</span><span class="nf">\</span><span class="kr">_</span> <span class="ow">-&gt;</span> <span class="n">countAll_</span><span class="p">)</span> <span class="p">(</span><span class="n">all_</span> <span class="p">(</span><span class="n">genre</span> <span class="n">chinookDb</span><span class="p">))</span>
 </pre></div>
 
         </div>
     
-        <div role="tabpanel" class="tab-pane " id="tab-0-sqlite3">
-            <div class="codehilite"><pre><span></span><span class="go">SELECT COUNT(*) AS &quot;res0&quot;</span>
-<span class="go">FROM &quot;Genre&quot; AS &quot;t0&quot;;</span>
+        <div role="tabpanel" class="tab-pane " id="tab-0-Sqlite">
+            <div class="codehilite"><pre><span></span><span class="k">SELECT</span> <span class="k">COUNT</span><span class="p">(</span><span class="o">*</span><span class="p">)</span> <span class="k">AS</span> <span class="ss">&quot;res0&quot;</span>
+<span class="k">FROM</span> <span class="ss">&quot;Genre&quot;</span> <span class="k">AS</span> <span class="ss">&quot;t0&quot;</span><span class="p">;</span>
 
-<span class="go">-- With values: []</span>
+<span class="c1">-- With values: []</span>
 </pre></div>
 
         </div>
     
-        <div role="tabpanel" class="tab-pane " id="tab-0-postgres">
-            <div class="codehilite"><pre><span></span><span class="k">SELECT</span> <span class="n">COUNT</span><span class="p">(</span><span class="o">*</span><span class="p">)</span> <span class="k">AS</span> <span class="s s-Name">&quot;res0&quot;</span>
-<span class="k">FROM</span> <span class="s s-Name">&quot;Genre&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;t0&quot;</span>
+        <div role="tabpanel" class="tab-pane " id="tab-0-Postgres">
+            <div class="codehilite"><pre><span></span><span class="k">SELECT</span> <span class="k">COUNT</span><span class="p">(</span><span class="o">*</span><span class="p">)</span> <span class="k">AS</span> <span class="ss">&quot;res0&quot;</span>
+<span class="k">FROM</span> <span class="ss">&quot;Genre&quot;</span> <span class="k">AS</span> <span class="ss">&quot;t0&quot;</span>
 </pre></div>
 
         </div>
@@ -938,50 +938,50 @@ group by the genre.</p>
         <ul class="nav nav-tabs">
             
         <li class="nav-item">
-            <a href="#tab-1-haskell" aria-controls="tab-1-haskell" role="tab" data-toggle="tab" data-lang="haskell">Haskell</a>
+            <a href="#tab-1-Haskell" aria-controls="tab-1-Haskell" role="tab" data-toggle="tab" data-lang="haskell">Haskell</a>
         </li>
     
         <li class="nav-item">
-            <a href="#tab-1-sqlite3" aria-controls="tab-1-sqlite3" role="tab" data-toggle="tab" data-lang="sqlite3">Sqlite3</a>
+            <a href="#tab-1-Sqlite" aria-controls="tab-1-Sqlite" role="tab" data-toggle="tab" data-lang="sql">Sqlite</a>
         </li>
     
         <li class="nav-item">
-            <a href="#tab-1-postgres" aria-controls="tab-1-postgres" role="tab" data-toggle="tab" data-lang="postgres">Postgres</a>
+            <a href="#tab-1-Postgres" aria-controls="tab-1-Postgres" role="tab" data-toggle="tab" data-lang="sql">Postgres</a>
         </li>
     
         </ul>
     
         <div class="tab-content">
             
-        <div role="tabpanel" class="tab-pane active" id="tab-1-haskell">
+        <div role="tabpanel" class="tab-pane active" id="tab-1-Haskell">
             <div class="codehilite"><pre><span></span><span class="nf">aggregate_</span> <span class="p">(</span><span class="nf">\</span><span class="p">(</span><span class="n">genre</span><span class="p">,</span> <span class="n">track</span><span class="p">)</span> <span class="ow">-&gt;</span> <span class="p">(</span><span class="n">group_</span> <span class="n">genre</span><span class="p">,</span> <span class="n">as_</span> <span class="o">@</span><span class="kt">Int</span> <span class="o">$</span> <span class="n">count_</span> <span class="p">(</span><span class="n">trackId</span> <span class="n">track</span><span class="p">)))</span>
            <span class="p">((,)</span> <span class="o">&lt;$&gt;</span> <span class="n">all_</span> <span class="p">(</span><span class="n">genre</span> <span class="n">chinookDb</span><span class="p">)</span> <span class="o">&lt;*&gt;</span> <span class="n">all_</span> <span class="p">(</span><span class="n">track</span> <span class="n">chinookDb</span><span class="p">))</span>
 </pre></div>
 
         </div>
     
-        <div role="tabpanel" class="tab-pane " id="tab-1-sqlite3">
-            <div class="codehilite"><pre><span></span><span class="go">SELECT &quot;t0&quot;.&quot;GenreId&quot; AS &quot;res0&quot;,</span>
-<span class="go">       &quot;t0&quot;.&quot;Name&quot; AS &quot;res1&quot;,</span>
-<span class="go">       COUNT(&quot;t1&quot;.&quot;TrackId&quot;) AS &quot;res2&quot;</span>
-<span class="go">FROM &quot;Genre&quot; AS &quot;t0&quot;</span>
-<span class="go">INNER JOIN &quot;Track&quot; AS &quot;t1&quot;</span>
-<span class="go">GROUP BY &quot;t0&quot;.&quot;GenreId&quot;,</span>
-<span class="go">         &quot;t0&quot;.&quot;Name&quot;;</span>
+        <div role="tabpanel" class="tab-pane " id="tab-1-Sqlite">
+            <div class="codehilite"><pre><span></span><span class="k">SELECT</span> <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;GenreId&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res0&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;Name&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res1&quot;</span><span class="p">,</span>
+       <span class="k">COUNT</span><span class="p">(</span><span class="ss">&quot;t1&quot;</span><span class="p">.</span><span class="ss">&quot;TrackId&quot;</span><span class="p">)</span> <span class="k">AS</span> <span class="ss">&quot;res2&quot;</span>
+<span class="k">FROM</span> <span class="ss">&quot;Genre&quot;</span> <span class="k">AS</span> <span class="ss">&quot;t0&quot;</span>
+<span class="k">INNER</span> <span class="k">JOIN</span> <span class="ss">&quot;Track&quot;</span> <span class="k">AS</span> <span class="ss">&quot;t1&quot;</span>
+<span class="k">GROUP</span> <span class="k">BY</span> <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;GenreId&quot;</span><span class="p">,</span>
+         <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;Name&quot;</span><span class="p">;</span>
 
-<span class="go">-- With values: []</span>
+<span class="c1">-- With values: []</span>
 </pre></div>
 
         </div>
     
-        <div role="tabpanel" class="tab-pane " id="tab-1-postgres">
-            <div class="codehilite"><pre><span></span><span class="k">SELECT</span> <span class="s s-Name">&quot;t0&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;GenreId&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;res0&quot;</span><span class="p">,</span>
-       <span class="s s-Name">&quot;t0&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;Name&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;res1&quot;</span><span class="p">,</span>
-       <span class="n">COUNT</span><span class="p">(</span><span class="s s-Name">&quot;t1&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;TrackId&quot;</span><span class="p">)</span> <span class="k">AS</span> <span class="s s-Name">&quot;res2&quot;</span>
-<span class="k">FROM</span> <span class="s s-Name">&quot;Genre&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;t0&quot;</span>
-<span class="k">CROSS</span> <span class="k">JOIN</span> <span class="s s-Name">&quot;Track&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;t1&quot;</span>
-<span class="k">GROUP</span> <span class="k">BY</span> <span class="s s-Name">&quot;t0&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;GenreId&quot;</span><span class="p">,</span>
-         <span class="s s-Name">&quot;t0&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;Name&quot;</span>
+        <div role="tabpanel" class="tab-pane " id="tab-1-Postgres">
+            <div class="codehilite"><pre><span></span><span class="k">SELECT</span> <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;GenreId&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res0&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;Name&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res1&quot;</span><span class="p">,</span>
+       <span class="k">COUNT</span><span class="p">(</span><span class="ss">&quot;t1&quot;</span><span class="p">.</span><span class="ss">&quot;TrackId&quot;</span><span class="p">)</span> <span class="k">AS</span> <span class="ss">&quot;res2&quot;</span>
+<span class="k">FROM</span> <span class="ss">&quot;Genre&quot;</span> <span class="k">AS</span> <span class="ss">&quot;t0&quot;</span>
+<span class="k">CROSS</span> <span class="k">JOIN</span> <span class="ss">&quot;Track&quot;</span> <span class="k">AS</span> <span class="ss">&quot;t1&quot;</span>
+<span class="k">GROUP</span> <span class="k">BY</span> <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;GenreId&quot;</span><span class="p">,</span>
+         <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;Name&quot;</span>
 </pre></div>
 
         </div>
@@ -992,7 +992,7 @@ group by the genre.</p>
                     </p>
 <div class="admonition tip">
 <p class="admonition-title">Tip</p>
-<p><code>count_</code> can return any <code>Integral</code> type. Adding the explicit <code>as_ @Int</code> above 
+<p><code>count_</code> can return any <code>Integral</code> type. Adding the explicit <code>as_ @Int</code> above
 prevents an ambiguous type error.</p>
 </div>
 <h2 id="sql-compatibility">SQL compatibility</h2>
@@ -1016,55 +1016,55 @@ to be explicit about it, you can use the <code>allInGroupExplicitly_</code> quan
         <ul class="nav nav-tabs">
             
         <li class="nav-item">
-            <a href="#tab-2-haskell" aria-controls="tab-2-haskell" role="tab" data-toggle="tab" data-lang="haskell">Haskell</a>
+            <a href="#tab-2-Haskell" aria-controls="tab-2-Haskell" role="tab" data-toggle="tab" data-lang="haskell">Haskell</a>
         </li>
     
         <li class="nav-item">
-            <a href="#tab-2-sqlite3" aria-controls="tab-2-sqlite3" role="tab" data-toggle="tab" data-lang="sqlite3">Sqlite3</a>
+            <a href="#tab-2-Sqlite" aria-controls="tab-2-Sqlite" role="tab" data-toggle="tab" data-lang="sql">Sqlite</a>
         </li>
     
         <li class="nav-item">
-            <a href="#tab-2-postgres" aria-controls="tab-2-postgres" role="tab" data-toggle="tab" data-lang="postgres">Postgres</a>
+            <a href="#tab-2-Postgres" aria-controls="tab-2-Postgres" role="tab" data-toggle="tab" data-lang="sql">Postgres</a>
         </li>
     
         </ul>
     
         <div class="tab-content">
             
-        <div role="tabpanel" class="tab-pane active" id="tab-2-haskell">
+        <div role="tabpanel" class="tab-pane active" id="tab-2-Haskell">
             <div class="codehilite"><pre><span></span><span class="nf">aggregate_</span> <span class="p">(</span><span class="nf">\</span><span class="p">(</span><span class="n">genre</span><span class="p">,</span> <span class="n">track</span><span class="p">)</span> <span class="ow">-&gt;</span>
               <span class="p">(</span> <span class="n">group_</span> <span class="n">genre</span>
               <span class="p">,</span> <span class="n">as_</span> <span class="o">@</span><span class="kt">Int</span> <span class="o">$</span> <span class="n">countOver_</span> <span class="n">distinctInGroup_</span> <span class="p">(</span><span class="n">trackUnitPrice</span> <span class="n">track</span><span class="p">)</span>
-              <span class="p">,</span> <span class="n">sumOver_</span> <span class="n">allInGroupExplicitly_</span> <span class="p">(</span><span class="n">trackMilliseconds</span> <span class="n">track</span><span class="p">)</span> <span class="p">`</span><span class="n">div_</span><span class="p">`</span> <span class="mi">1000</span> <span class="p">))</span> <span class="o">$</span>
+              <span class="p">,</span> <span class="n">fromMaybe_</span> <span class="mi">0</span> <span class="p">(</span><span class="n">sumOver_</span> <span class="n">allInGroupExplicitly_</span> <span class="p">(</span><span class="n">trackMilliseconds</span> <span class="n">track</span><span class="p">))</span> <span class="p">`</span><span class="n">div_</span><span class="p">`</span> <span class="mi">1000</span> <span class="p">))</span> <span class="o">$</span>
            <span class="p">((,)</span> <span class="o">&lt;$&gt;</span> <span class="n">all_</span> <span class="p">(</span><span class="n">genre</span> <span class="n">chinookDb</span><span class="p">)</span> <span class="o">&lt;*&gt;</span> <span class="n">all_</span> <span class="p">(</span><span class="n">track</span> <span class="n">chinookDb</span><span class="p">))</span>
 </pre></div>
 
         </div>
     
-        <div role="tabpanel" class="tab-pane " id="tab-2-sqlite3">
-            <div class="codehilite"><pre><span></span><span class="go">SELECT &quot;t0&quot;.&quot;GenreId&quot; AS &quot;res0&quot;,</span>
-<span class="go">       &quot;t0&quot;.&quot;Name&quot; AS &quot;res1&quot;,</span>
-<span class="go">       COUNT(DISTINCT &quot;t1&quot;.&quot;UnitPrice&quot;) AS &quot;res2&quot;,</span>
-<span class="go">       (SUM(ALL &quot;t1&quot;.&quot;Milliseconds&quot;)) / (?) AS &quot;res3&quot;</span>
-<span class="go">FROM &quot;Genre&quot; AS &quot;t0&quot;</span>
-<span class="go">INNER JOIN &quot;Track&quot; AS &quot;t1&quot;</span>
-<span class="go">GROUP BY &quot;t0&quot;.&quot;GenreId&quot;,</span>
-<span class="go">         &quot;t0&quot;.&quot;Name&quot;;</span>
+        <div role="tabpanel" class="tab-pane " id="tab-2-Sqlite">
+            <div class="codehilite"><pre><span></span><span class="k">SELECT</span> <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;GenreId&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res0&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;Name&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res1&quot;</span><span class="p">,</span>
+       <span class="k">COUNT</span><span class="p">(</span><span class="k">DISTINCT</span> <span class="ss">&quot;t1&quot;</span><span class="p">.</span><span class="ss">&quot;UnitPrice&quot;</span><span class="p">)</span> <span class="k">AS</span> <span class="ss">&quot;res2&quot;</span><span class="p">,</span>
+       <span class="p">(</span><span class="n">COALESCE</span><span class="p">(</span><span class="k">SUM</span><span class="p">(</span><span class="k">ALL</span> <span class="ss">&quot;t1&quot;</span><span class="p">.</span><span class="ss">&quot;Milliseconds&quot;</span><span class="p">),</span> <span class="o">?</span><span class="p">))</span> <span class="o">/</span> <span class="p">(</span><span class="o">?</span><span class="p">)</span> <span class="k">AS</span> <span class="ss">&quot;res3&quot;</span>
+<span class="k">FROM</span> <span class="ss">&quot;Genre&quot;</span> <span class="k">AS</span> <span class="ss">&quot;t0&quot;</span>
+<span class="k">INNER</span> <span class="k">JOIN</span> <span class="ss">&quot;Track&quot;</span> <span class="k">AS</span> <span class="ss">&quot;t1&quot;</span>
+<span class="k">GROUP</span> <span class="k">BY</span> <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;GenreId&quot;</span><span class="p">,</span>
+         <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;Name&quot;</span><span class="p">;</span>
 
-<span class="go">-- With values: [SQLInteger 1000]</span>
+<span class="c1">-- With values: [SQLInteger 0,SQLInteger 1000]</span>
 </pre></div>
 
         </div>
     
-        <div role="tabpanel" class="tab-pane " id="tab-2-postgres">
-            <div class="codehilite"><pre><span></span><span class="k">SELECT</span> <span class="s s-Name">&quot;t0&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;GenreId&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;res0&quot;</span><span class="p">,</span>
-       <span class="s s-Name">&quot;t0&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;Name&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;res1&quot;</span><span class="p">,</span>
-       <span class="n">COUNT</span><span class="p">(</span><span class="k">DISTINCT</span> <span class="s s-Name">&quot;t1&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;UnitPrice&quot;</span><span class="p">)</span> <span class="k">AS</span> <span class="s s-Name">&quot;res2&quot;</span><span class="p">,</span>
-       <span class="p">(</span><span class="n">SUM</span><span class="p">(</span><span class="k">ALL</span> <span class="s s-Name">&quot;t1&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;Milliseconds&quot;</span><span class="p">))</span> <span class="o">/</span> <span class="p">(</span><span class="mf">1000</span><span class="p">)</span> <span class="k">AS</span> <span class="s s-Name">&quot;res3&quot;</span>
-<span class="k">FROM</span> <span class="s s-Name">&quot;Genre&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;t0&quot;</span>
-<span class="k">CROSS</span> <span class="k">JOIN</span> <span class="s s-Name">&quot;Track&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;t1&quot;</span>
-<span class="k">GROUP</span> <span class="k">BY</span> <span class="s s-Name">&quot;t0&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;GenreId&quot;</span><span class="p">,</span>
-         <span class="s s-Name">&quot;t0&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;Name&quot;</span>
+        <div role="tabpanel" class="tab-pane " id="tab-2-Postgres">
+            <div class="codehilite"><pre><span></span><span class="k">SELECT</span> <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;GenreId&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res0&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;Name&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res1&quot;</span><span class="p">,</span>
+       <span class="k">COUNT</span><span class="p">(</span><span class="k">DISTINCT</span> <span class="ss">&quot;t1&quot;</span><span class="p">.</span><span class="ss">&quot;UnitPrice&quot;</span><span class="p">)</span> <span class="k">AS</span> <span class="ss">&quot;res2&quot;</span><span class="p">,</span>
+       <span class="p">(</span><span class="n">COALESCE</span><span class="p">(</span><span class="k">SUM</span><span class="p">(</span><span class="k">ALL</span> <span class="ss">&quot;t1&quot;</span><span class="p">.</span><span class="ss">&quot;Milliseconds&quot;</span><span class="p">),</span> <span class="mi">0</span><span class="p">))</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1000</span><span class="p">)</span> <span class="k">AS</span> <span class="ss">&quot;res3&quot;</span>
+<span class="k">FROM</span> <span class="ss">&quot;Genre&quot;</span> <span class="k">AS</span> <span class="ss">&quot;t0&quot;</span>
+<span class="k">CROSS</span> <span class="k">JOIN</span> <span class="ss">&quot;Track&quot;</span> <span class="k">AS</span> <span class="ss">&quot;t1&quot;</span>
+<span class="k">GROUP</span> <span class="k">BY</span> <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;GenreId&quot;</span><span class="p">,</span>
+         <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;Name&quot;</span>
 </pre></div>
 
         </div>
@@ -1073,6 +1073,12 @@ to be explicit about it, you can use the <code>allInGroupExplicitly_</code> quan
     
                 </div>
                     </p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>Most Beam aggregates (<code>count_</code> and <code>countAll_</code> being an exception) return a
+<code>Maybe</code> value, because aggregating over no rows in SQL returns a <code>NULL</code>
+value. Use <code>fromMaybe_</code> or <code>coalesce_</code> to supply a default value in this case.</p>
+</div>
 <p>The <code>beam-core</code> library supports the standard SQL aggregation functions.
 Individual backends are likely to support the full range of aggregates available
 on that backend (if not, please send a bug report).</p>
@@ -1148,59 +1154,59 @@ subselect and add a <code>WHERE</code> clause. Either way, this is transparent t
         <ul class="nav nav-tabs">
             
         <li class="nav-item">
-            <a href="#tab-3-haskell" aria-controls="tab-3-haskell" role="tab" data-toggle="tab" data-lang="haskell">Haskell</a>
+            <a href="#tab-3-Haskell" aria-controls="tab-3-Haskell" role="tab" data-toggle="tab" data-lang="haskell">Haskell</a>
         </li>
     
         <li class="nav-item">
-            <a href="#tab-3-sqlite3" aria-controls="tab-3-sqlite3" role="tab" data-toggle="tab" data-lang="sqlite3">Sqlite3</a>
+            <a href="#tab-3-Sqlite" aria-controls="tab-3-Sqlite" role="tab" data-toggle="tab" data-lang="sql">Sqlite</a>
         </li>
     
         <li class="nav-item">
-            <a href="#tab-3-postgres" aria-controls="tab-3-postgres" role="tab" data-toggle="tab" data-lang="postgres">Postgres</a>
+            <a href="#tab-3-Postgres" aria-controls="tab-3-Postgres" role="tab" data-toggle="tab" data-lang="sql">Postgres</a>
         </li>
     
         </ul>
     
         <div class="tab-content">
             
-        <div role="tabpanel" class="tab-pane active" id="tab-3-haskell">
+        <div role="tabpanel" class="tab-pane active" id="tab-3-Haskell">
             <div class="codehilite"><pre><span></span><span class="c1">-- Only return results for genres whose total track length is over 5 minutes</span>
 <span class="nf">filter_</span> <span class="p">(</span><span class="nf">\</span><span class="p">(</span><span class="n">genre</span><span class="p">,</span> <span class="n">distinctPriceCount</span><span class="p">,</span> <span class="n">totalTrackLength</span><span class="p">)</span> <span class="ow">-&gt;</span> <span class="n">totalTrackLength</span> <span class="o">&gt;=.</span> <span class="mi">300000</span><span class="p">)</span> <span class="o">$</span>
 <span class="nf">aggregate_</span> <span class="p">(</span><span class="nf">\</span><span class="p">(</span><span class="n">genre</span><span class="p">,</span> <span class="n">track</span><span class="p">)</span> <span class="ow">-&gt;</span>
               <span class="p">(</span> <span class="n">group_</span> <span class="n">genre</span>
               <span class="p">,</span> <span class="n">as_</span> <span class="o">@</span><span class="kt">Int</span> <span class="o">$</span> <span class="n">countOver_</span> <span class="n">distinctInGroup_</span> <span class="p">(</span><span class="n">trackUnitPrice</span> <span class="n">track</span><span class="p">)</span>
-              <span class="p">,</span> <span class="n">sumOver_</span> <span class="n">allInGroupExplicitly_</span> <span class="p">(</span><span class="n">trackMilliseconds</span> <span class="n">track</span><span class="p">)</span> <span class="p">`</span><span class="n">div_</span><span class="p">`</span> <span class="mi">1000</span> <span class="p">))</span> <span class="o">$</span>
+              <span class="p">,</span> <span class="n">fromMaybe_</span> <span class="mi">0</span> <span class="p">(</span><span class="n">sumOver_</span> <span class="n">allInGroupExplicitly_</span> <span class="p">(</span><span class="n">trackMilliseconds</span> <span class="n">track</span><span class="p">))</span> <span class="p">`</span><span class="n">div_</span><span class="p">`</span> <span class="mi">1000</span> <span class="p">))</span> <span class="o">$</span>
            <span class="p">((,)</span> <span class="o">&lt;$&gt;</span> <span class="n">all_</span> <span class="p">(</span><span class="n">genre</span> <span class="n">chinookDb</span><span class="p">)</span> <span class="o">&lt;*&gt;</span> <span class="n">all_</span> <span class="p">(</span><span class="n">track</span> <span class="n">chinookDb</span><span class="p">))</span>
 </pre></div>
 
         </div>
     
-        <div role="tabpanel" class="tab-pane " id="tab-3-sqlite3">
-            <div class="codehilite"><pre><span></span><span class="go">SELECT &quot;t0&quot;.&quot;GenreId&quot; AS &quot;res0&quot;,</span>
-<span class="go">       &quot;t0&quot;.&quot;Name&quot; AS &quot;res1&quot;,</span>
-<span class="go">       COUNT(DISTINCT &quot;t1&quot;.&quot;UnitPrice&quot;) AS &quot;res2&quot;,</span>
-<span class="go">       (SUM(ALL &quot;t1&quot;.&quot;Milliseconds&quot;)) / (?) AS &quot;res3&quot;</span>
-<span class="go">FROM &quot;Genre&quot; AS &quot;t0&quot;</span>
-<span class="go">INNER JOIN &quot;Track&quot; AS &quot;t1&quot;</span>
-<span class="go">GROUP BY &quot;t0&quot;.&quot;GenreId&quot;,</span>
-<span class="go">         &quot;t0&quot;.&quot;Name&quot;</span>
-<span class="go">HAVING ((SUM(ALL &quot;t1&quot;.&quot;Milliseconds&quot;)) / (?))&gt;=(?);</span>
+        <div role="tabpanel" class="tab-pane " id="tab-3-Sqlite">
+            <div class="codehilite"><pre><span></span><span class="k">SELECT</span> <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;GenreId&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res0&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;Name&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res1&quot;</span><span class="p">,</span>
+       <span class="k">COUNT</span><span class="p">(</span><span class="k">DISTINCT</span> <span class="ss">&quot;t1&quot;</span><span class="p">.</span><span class="ss">&quot;UnitPrice&quot;</span><span class="p">)</span> <span class="k">AS</span> <span class="ss">&quot;res2&quot;</span><span class="p">,</span>
+       <span class="p">(</span><span class="n">COALESCE</span><span class="p">(</span><span class="k">SUM</span><span class="p">(</span><span class="k">ALL</span> <span class="ss">&quot;t1&quot;</span><span class="p">.</span><span class="ss">&quot;Milliseconds&quot;</span><span class="p">),</span> <span class="o">?</span><span class="p">))</span> <span class="o">/</span> <span class="p">(</span><span class="o">?</span><span class="p">)</span> <span class="k">AS</span> <span class="ss">&quot;res3&quot;</span>
+<span class="k">FROM</span> <span class="ss">&quot;Genre&quot;</span> <span class="k">AS</span> <span class="ss">&quot;t0&quot;</span>
+<span class="k">INNER</span> <span class="k">JOIN</span> <span class="ss">&quot;Track&quot;</span> <span class="k">AS</span> <span class="ss">&quot;t1&quot;</span>
+<span class="k">GROUP</span> <span class="k">BY</span> <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;GenreId&quot;</span><span class="p">,</span>
+         <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;Name&quot;</span>
+<span class="k">HAVING</span> <span class="p">((</span><span class="n">COALESCE</span><span class="p">(</span><span class="k">SUM</span><span class="p">(</span><span class="k">ALL</span> <span class="ss">&quot;t1&quot;</span><span class="p">.</span><span class="ss">&quot;Milliseconds&quot;</span><span class="p">),</span> <span class="o">?</span><span class="p">))</span> <span class="o">/</span> <span class="p">(</span><span class="o">?</span><span class="p">))</span><span class="o">&gt;=</span><span class="p">(</span><span class="o">?</span><span class="p">);</span>
 
-<span class="go">-- With values: [SQLInteger 1000,SQLInteger 1000,SQLInteger 300000]</span>
+<span class="c1">-- With values: [SQLInteger 0,SQLInteger 1000,SQLInteger 0,SQLInteger 1000,SQLInteger 300000]</span>
 </pre></div>
 
         </div>
     
-        <div role="tabpanel" class="tab-pane " id="tab-3-postgres">
-            <div class="codehilite"><pre><span></span><span class="k">SELECT</span> <span class="s s-Name">&quot;t0&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;GenreId&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;res0&quot;</span><span class="p">,</span>
-       <span class="s s-Name">&quot;t0&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;Name&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;res1&quot;</span><span class="p">,</span>
-       <span class="n">COUNT</span><span class="p">(</span><span class="k">DISTINCT</span> <span class="s s-Name">&quot;t1&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;UnitPrice&quot;</span><span class="p">)</span> <span class="k">AS</span> <span class="s s-Name">&quot;res2&quot;</span><span class="p">,</span>
-       <span class="p">(</span><span class="n">SUM</span><span class="p">(</span><span class="k">ALL</span> <span class="s s-Name">&quot;t1&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;Milliseconds&quot;</span><span class="p">))</span> <span class="o">/</span> <span class="p">(</span><span class="mf">1000</span><span class="p">)</span> <span class="k">AS</span> <span class="s s-Name">&quot;res3&quot;</span>
-<span class="k">FROM</span> <span class="s s-Name">&quot;Genre&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;t0&quot;</span>
-<span class="k">CROSS</span> <span class="k">JOIN</span> <span class="s s-Name">&quot;Track&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;t1&quot;</span>
-<span class="k">GROUP</span> <span class="k">BY</span> <span class="s s-Name">&quot;t0&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;GenreId&quot;</span><span class="p">,</span>
-         <span class="s s-Name">&quot;t0&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;Name&quot;</span>
-<span class="k">HAVING</span> <span class="p">((</span><span class="n">SUM</span><span class="p">(</span><span class="k">ALL</span> <span class="s s-Name">&quot;t1&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;Milliseconds&quot;</span><span class="p">))</span> <span class="o">/</span> <span class="p">(</span><span class="mf">1000</span><span class="p">))</span> <span class="o">&gt;=</span> <span class="p">(</span><span class="mf">300000</span><span class="p">)</span>
+        <div role="tabpanel" class="tab-pane " id="tab-3-Postgres">
+            <div class="codehilite"><pre><span></span><span class="k">SELECT</span> <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;GenreId&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res0&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;Name&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res1&quot;</span><span class="p">,</span>
+       <span class="k">COUNT</span><span class="p">(</span><span class="k">DISTINCT</span> <span class="ss">&quot;t1&quot;</span><span class="p">.</span><span class="ss">&quot;UnitPrice&quot;</span><span class="p">)</span> <span class="k">AS</span> <span class="ss">&quot;res2&quot;</span><span class="p">,</span>
+       <span class="p">(</span><span class="n">COALESCE</span><span class="p">(</span><span class="k">SUM</span><span class="p">(</span><span class="k">ALL</span> <span class="ss">&quot;t1&quot;</span><span class="p">.</span><span class="ss">&quot;Milliseconds&quot;</span><span class="p">),</span> <span class="mi">0</span><span class="p">))</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1000</span><span class="p">)</span> <span class="k">AS</span> <span class="ss">&quot;res3&quot;</span>
+<span class="k">FROM</span> <span class="ss">&quot;Genre&quot;</span> <span class="k">AS</span> <span class="ss">&quot;t0&quot;</span>
+<span class="k">CROSS</span> <span class="k">JOIN</span> <span class="ss">&quot;Track&quot;</span> <span class="k">AS</span> <span class="ss">&quot;t1&quot;</span>
+<span class="k">GROUP</span> <span class="k">BY</span> <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;GenreId&quot;</span><span class="p">,</span>
+         <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;Name&quot;</span>
+<span class="k">HAVING</span> <span class="p">((</span><span class="n">COALESCE</span><span class="p">(</span><span class="k">SUM</span><span class="p">(</span><span class="k">ALL</span> <span class="ss">&quot;t1&quot;</span><span class="p">.</span><span class="ss">&quot;Milliseconds&quot;</span><span class="p">),</span> <span class="mi">0</span><span class="p">))</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1000</span><span class="p">))</span> <span class="o">&gt;=</span> <span class="p">(</span><span class="mi">300000</span><span class="p">)</span>
 </pre></div>
 
         </div>
@@ -1218,29 +1224,29 @@ over tracks.</p>
         <ul class="nav nav-tabs">
             
         <li class="nav-item">
-            <a href="#tab-4-haskell" aria-controls="tab-4-haskell" role="tab" data-toggle="tab" data-lang="haskell">Haskell</a>
+            <a href="#tab-4-Haskell" aria-controls="tab-4-Haskell" role="tab" data-toggle="tab" data-lang="haskell">Haskell</a>
         </li>
     
         <li class="nav-item">
-            <a href="#tab-4-sqlite3" aria-controls="tab-4-sqlite3" role="tab" data-toggle="tab" data-lang="sqlite3">Sqlite3</a>
+            <a href="#tab-4-Sqlite" aria-controls="tab-4-Sqlite" role="tab" data-toggle="tab" data-lang="sql">Sqlite</a>
         </li>
     
         <li class="nav-item">
-            <a href="#tab-4-postgres" aria-controls="tab-4-postgres" role="tab" data-toggle="tab" data-lang="postgres">Postgres</a>
+            <a href="#tab-4-Postgres" aria-controls="tab-4-Postgres" role="tab" data-toggle="tab" data-lang="sql">Postgres</a>
         </li>
     
         </ul>
     
         <div class="tab-content">
             
-        <div role="tabpanel" class="tab-pane active" id="tab-4-haskell">
+        <div role="tabpanel" class="tab-pane active" id="tab-4-Haskell">
             <div class="codehilite"><pre><span></span><span class="c1">-- Only return results for genres whose total track length is over 5 minutes</span>
 <span class="nf">filter_</span> <span class="p">(</span><span class="nf">\</span><span class="p">(</span><span class="n">genre</span><span class="p">,</span> <span class="n">track</span><span class="p">,</span> <span class="n">distinctPriceCount</span><span class="p">,</span> <span class="n">totalTrackLength</span><span class="p">)</span> <span class="ow">-&gt;</span> <span class="n">totalTrackLength</span> <span class="o">&gt;=.</span> <span class="mi">300000</span><span class="p">)</span> <span class="o">$</span>
 <span class="kr">do</span> <span class="p">(</span><span class="n">genre</span><span class="p">,</span> <span class="n">priceCnt</span><span class="p">,</span> <span class="n">trackLength</span><span class="p">)</span> <span class="ow">&lt;-</span>
             <span class="n">aggregate_</span> <span class="p">(</span><span class="nf">\</span><span class="p">(</span><span class="n">genre</span><span class="p">,</span> <span class="n">track</span><span class="p">)</span> <span class="ow">-&gt;</span>
                           <span class="p">(</span> <span class="n">group_</span> <span class="n">genre</span>
                           <span class="p">,</span> <span class="n">as_</span> <span class="o">@</span><span class="kt">Int</span> <span class="o">$</span> <span class="n">countOver_</span> <span class="n">distinctInGroup_</span> <span class="p">(</span><span class="n">trackUnitPrice</span> <span class="n">track</span><span class="p">)</span>
-                          <span class="p">,</span> <span class="n">sumOver_</span> <span class="n">allInGroupExplicitly_</span> <span class="p">(</span><span class="n">trackMilliseconds</span> <span class="n">track</span><span class="p">)</span> <span class="p">`</span><span class="n">div_</span><span class="p">`</span> <span class="mi">1000</span> <span class="p">))</span> <span class="o">$</span>
+                          <span class="p">,</span> <span class="n">fromMaybe_</span> <span class="mi">0</span> <span class="p">(</span><span class="n">sumOver_</span> <span class="n">allInGroupExplicitly_</span> <span class="p">(</span><span class="n">trackMilliseconds</span> <span class="n">track</span><span class="p">))</span> <span class="p">`</span><span class="n">div_</span><span class="p">`</span> <span class="mi">1000</span> <span class="p">))</span> <span class="o">$</span>
             <span class="p">((,)</span> <span class="o">&lt;$&gt;</span> <span class="n">all_</span> <span class="p">(</span><span class="n">genre</span> <span class="n">chinookDb</span><span class="p">)</span> <span class="o">&lt;*&gt;</span> <span class="n">all_</span> <span class="p">(</span><span class="n">track</span> <span class="n">chinookDb</span><span class="p">))</span>
    <span class="n">track</span> <span class="ow">&lt;-</span> <span class="n">join_</span> <span class="p">(</span><span class="n">track</span> <span class="n">chinookDb</span><span class="p">)</span> <span class="p">(</span><span class="nf">\</span><span class="n">track</span> <span class="ow">-&gt;</span> <span class="n">trackGenreId</span> <span class="n">track</span> <span class="o">==.</span> <span class="n">just_</span> <span class="p">(</span><span class="n">pk</span> <span class="n">genre</span><span class="p">))</span>
    <span class="n">pure</span> <span class="p">(</span><span class="n">genre</span><span class="p">,</span> <span class="n">track</span><span class="p">,</span> <span class="n">priceCnt</span><span class="p">,</span> <span class="n">trackLength</span><span class="p">)</span>
@@ -1248,62 +1254,69 @@ over tracks.</p>
 
         </div>
     
-        <div role="tabpanel" class="tab-pane " id="tab-4-sqlite3">
-            <div class="codehilite"><pre><span></span><span class="go">SELECT &quot;t0&quot;.&quot;res0&quot; AS &quot;res0&quot;,</span>
-<span class="go">       &quot;t0&quot;.&quot;res1&quot; AS &quot;res1&quot;,</span>
-<span class="go">       &quot;t1&quot;.&quot;TrackId&quot; AS &quot;res2&quot;,</span>
-<span class="go">       &quot;t1&quot;.&quot;Name&quot; AS &quot;res3&quot;,</span>
-<span class="go">       &quot;t1&quot;.&quot;AlbumId&quot; AS &quot;res4&quot;,</span>
-<span class="go">       &quot;t1&quot;.&quot;MediaTypeId&quot; AS &quot;res5&quot;,</span>
-<span class="go">       &quot;t1&quot;.&quot;GenreId&quot; AS &quot;res6&quot;,</span>
-<span class="go">       &quot;t1&quot;.&quot;Composer&quot; AS &quot;res7&quot;,</span>
-<span class="go">       &quot;t1&quot;.&quot;Milliseconds&quot; AS &quot;res8&quot;,</span>
-<span class="go">       &quot;t1&quot;.&quot;Bytes&quot; AS &quot;res9&quot;,</span>
-<span class="go">       &quot;t1&quot;.&quot;UnitPrice&quot; AS &quot;res10&quot;,</span>
-<span class="go">       &quot;t0&quot;.&quot;res2&quot; AS &quot;res11&quot;,</span>
-<span class="go">       &quot;t0&quot;.&quot;res3&quot; AS &quot;res12&quot;</span>
-<span class="go">FROM</span>
-<span class="go">  (SELECT &quot;t0&quot;.&quot;GenreId&quot; AS &quot;res0&quot;,</span>
-<span class="go">          &quot;t0&quot;.&quot;Name&quot; AS &quot;res1&quot;,</span>
-<span class="go">          COUNT(DISTINCT &quot;t1&quot;.&quot;UnitPrice&quot;) AS &quot;res2&quot;,</span>
-<span class="go">          (SUM(ALL &quot;t1&quot;.&quot;Milliseconds&quot;)) / (?) AS &quot;res3&quot;</span>
-<span class="go">   FROM &quot;Genre&quot; AS &quot;t0&quot;</span>
-<span class="go">   INNER JOIN &quot;Track&quot; AS &quot;t1&quot;</span>
-<span class="go">   GROUP BY &quot;t0&quot;.&quot;GenreId&quot;,</span>
-<span class="go">            &quot;t0&quot;.&quot;Name&quot;) AS &quot;t0&quot;</span>
-<span class="go">INNER JOIN &quot;Track&quot; AS &quot;t1&quot; ON (&quot;t1&quot;.&quot;GenreId&quot;)=(&quot;t0&quot;.&quot;res0&quot;)</span>
-<span class="go">WHERE (&quot;t0&quot;.&quot;res3&quot;)&gt;=(?);</span>
+        <div role="tabpanel" class="tab-pane " id="tab-4-Sqlite">
+            <div class="codehilite"><pre><span></span><span class="k">SELECT</span> <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;res0&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res0&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;res1&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res1&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t1&quot;</span><span class="p">.</span><span class="ss">&quot;TrackId&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res2&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t1&quot;</span><span class="p">.</span><span class="ss">&quot;Name&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res3&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t1&quot;</span><span class="p">.</span><span class="ss">&quot;AlbumId&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res4&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t1&quot;</span><span class="p">.</span><span class="ss">&quot;MediaTypeId&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res5&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t1&quot;</span><span class="p">.</span><span class="ss">&quot;GenreId&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res6&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t1&quot;</span><span class="p">.</span><span class="ss">&quot;Composer&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res7&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t1&quot;</span><span class="p">.</span><span class="ss">&quot;Milliseconds&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res8&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t1&quot;</span><span class="p">.</span><span class="ss">&quot;Bytes&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res9&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t1&quot;</span><span class="p">.</span><span class="ss">&quot;UnitPrice&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res10&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;res2&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res11&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;res3&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res12&quot;</span>
+<span class="k">FROM</span>
+  <span class="p">(</span><span class="k">SELECT</span> <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;GenreId&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res0&quot;</span><span class="p">,</span>
+          <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;Name&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res1&quot;</span><span class="p">,</span>
+          <span class="k">COUNT</span><span class="p">(</span><span class="k">DISTINCT</span> <span class="ss">&quot;t1&quot;</span><span class="p">.</span><span class="ss">&quot;UnitPrice&quot;</span><span class="p">)</span> <span class="k">AS</span> <span class="ss">&quot;res2&quot;</span><span class="p">,</span>
+          <span class="p">(</span><span class="n">COALESCE</span><span class="p">(</span><span class="k">SUM</span><span class="p">(</span><span class="k">ALL</span> <span class="ss">&quot;t1&quot;</span><span class="p">.</span><span class="ss">&quot;Milliseconds&quot;</span><span class="p">),</span> <span class="o">?</span><span class="p">))</span> <span class="o">/</span> <span class="p">(</span><span class="o">?</span><span class="p">)</span> <span class="k">AS</span> <span class="ss">&quot;res3&quot;</span>
+   <span class="k">FROM</span> <span class="ss">&quot;Genre&quot;</span> <span class="k">AS</span> <span class="ss">&quot;t0&quot;</span>
+   <span class="k">INNER</span> <span class="k">JOIN</span> <span class="ss">&quot;Track&quot;</span> <span class="k">AS</span> <span class="ss">&quot;t1&quot;</span>
+   <span class="k">GROUP</span> <span class="k">BY</span> <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;GenreId&quot;</span><span class="p">,</span>
+            <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;Name&quot;</span><span class="p">)</span> <span class="k">AS</span> <span class="ss">&quot;t0&quot;</span>
+<span class="k">INNER</span> <span class="k">JOIN</span> <span class="ss">&quot;Track&quot;</span> <span class="k">AS</span> <span class="ss">&quot;t1&quot;</span> <span class="k">ON</span> <span class="k">CASE</span>
+                                  <span class="k">WHEN</span> <span class="p">((</span><span class="ss">&quot;t1&quot;</span><span class="p">.</span><span class="ss">&quot;GenreId&quot;</span><span class="p">)</span> <span class="k">IS</span> <span class="k">NULL</span><span class="p">)</span>
+                                       <span class="k">AND</span> <span class="p">((</span><span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;res0&quot;</span><span class="p">)</span> <span class="k">IS</span> <span class="k">NULL</span><span class="p">)</span> <span class="k">THEN</span> <span class="o">?</span>
+                                  <span class="k">WHEN</span> <span class="p">((</span><span class="ss">&quot;t1&quot;</span><span class="p">.</span><span class="ss">&quot;GenreId&quot;</span><span class="p">)</span> <span class="k">IS</span> <span class="k">NULL</span><span class="p">)</span>
+                                       <span class="k">OR</span> <span class="p">((</span><span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;res0&quot;</span><span class="p">)</span> <span class="k">IS</span> <span class="k">NULL</span><span class="p">)</span> <span class="k">THEN</span> <span class="o">?</span>
+                                  <span class="k">ELSE</span> <span class="p">(</span><span class="ss">&quot;t1&quot;</span><span class="p">.</span><span class="ss">&quot;GenreId&quot;</span><span class="p">)</span><span class="o">=</span><span class="p">(</span><span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;res0&quot;</span><span class="p">)</span>
+                              <span class="k">END</span>
+<span class="k">WHERE</span> <span class="p">(</span><span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;res3&quot;</span><span class="p">)</span><span class="o">&gt;=</span><span class="p">(</span><span class="o">?</span><span class="p">);</span>
 
-<span class="go">-- With values: [SQLInteger 1000,SQLInteger 300000]</span>
+<span class="c1">-- With values: [SQLInteger 0,SQLInteger 1000,SQLInteger 1,SQLInteger 0,SQLInteger 300000]</span>
 </pre></div>
 
         </div>
     
-        <div role="tabpanel" class="tab-pane " id="tab-4-postgres">
-            <div class="codehilite"><pre><span></span><span class="k">SELECT</span> <span class="s s-Name">&quot;t0&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;res0&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;res0&quot;</span><span class="p">,</span>
-       <span class="s s-Name">&quot;t0&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;res1&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;res1&quot;</span><span class="p">,</span>
-       <span class="s s-Name">&quot;t1&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;TrackId&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;res2&quot;</span><span class="p">,</span>
-       <span class="s s-Name">&quot;t1&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;Name&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;res3&quot;</span><span class="p">,</span>
-       <span class="s s-Name">&quot;t1&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;AlbumId&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;res4&quot;</span><span class="p">,</span>
-       <span class="s s-Name">&quot;t1&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;MediaTypeId&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;res5&quot;</span><span class="p">,</span>
-       <span class="s s-Name">&quot;t1&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;GenreId&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;res6&quot;</span><span class="p">,</span>
-       <span class="s s-Name">&quot;t1&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;Composer&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;res7&quot;</span><span class="p">,</span>
-       <span class="s s-Name">&quot;t1&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;Milliseconds&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;res8&quot;</span><span class="p">,</span>
-       <span class="s s-Name">&quot;t1&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;Bytes&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;res9&quot;</span><span class="p">,</span>
-       <span class="s s-Name">&quot;t1&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;UnitPrice&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;res10&quot;</span><span class="p">,</span>
-       <span class="s s-Name">&quot;t0&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;res2&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;res11&quot;</span><span class="p">,</span>
-       <span class="s s-Name">&quot;t0&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;res3&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;res12&quot;</span>
+        <div role="tabpanel" class="tab-pane " id="tab-4-Postgres">
+            <div class="codehilite"><pre><span></span><span class="k">SELECT</span> <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;res0&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res0&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;res1&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res1&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t1&quot;</span><span class="p">.</span><span class="ss">&quot;TrackId&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res2&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t1&quot;</span><span class="p">.</span><span class="ss">&quot;Name&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res3&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t1&quot;</span><span class="p">.</span><span class="ss">&quot;AlbumId&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res4&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t1&quot;</span><span class="p">.</span><span class="ss">&quot;MediaTypeId&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res5&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t1&quot;</span><span class="p">.</span><span class="ss">&quot;GenreId&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res6&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t1&quot;</span><span class="p">.</span><span class="ss">&quot;Composer&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res7&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t1&quot;</span><span class="p">.</span><span class="ss">&quot;Milliseconds&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res8&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t1&quot;</span><span class="p">.</span><span class="ss">&quot;Bytes&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res9&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t1&quot;</span><span class="p">.</span><span class="ss">&quot;UnitPrice&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res10&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;res2&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res11&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;res3&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res12&quot;</span>
 <span class="k">FROM</span>
-  <span class="p">(</span><span class="k">SELECT</span> <span class="s s-Name">&quot;t0&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;GenreId&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;res0&quot;</span><span class="p">,</span>
-          <span class="s s-Name">&quot;t0&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;Name&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;res1&quot;</span><span class="p">,</span>
-          <span class="n">COUNT</span><span class="p">(</span><span class="k">DISTINCT</span> <span class="s s-Name">&quot;t1&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;UnitPrice&quot;</span><span class="p">)</span> <span class="k">AS</span> <span class="s s-Name">&quot;res2&quot;</span><span class="p">,</span>
-          <span class="p">(</span><span class="n">SUM</span><span class="p">(</span><span class="k">ALL</span> <span class="s s-Name">&quot;t1&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;Milliseconds&quot;</span><span class="p">))</span> <span class="o">/</span> <span class="p">(</span><span class="mf">1000</span><span class="p">)</span> <span class="k">AS</span> <span class="s s-Name">&quot;res3&quot;</span>
-   <span class="k">FROM</span> <span class="s s-Name">&quot;Genre&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;t0&quot;</span>
-   <span class="k">CROSS</span> <span class="k">JOIN</span> <span class="s s-Name">&quot;Track&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;t1&quot;</span>
-   <span class="k">GROUP</span> <span class="k">BY</span> <span class="s s-Name">&quot;t0&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;GenreId&quot;</span><span class="p">,</span>
-            <span class="s s-Name">&quot;t0&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;Name&quot;</span><span class="p">)</span> <span class="k">AS</span> <span class="s s-Name">&quot;t0&quot;</span>
-<span class="k">INNER</span> <span class="k">JOIN</span> <span class="s s-Name">&quot;Track&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;t1&quot;</span> <span class="k">ON</span> <span class="p">(</span><span class="s s-Name">&quot;t1&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;GenreId&quot;</span><span class="p">)</span> <span class="o">=</span> <span class="p">(</span><span class="s s-Name">&quot;t0&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;res0&quot;</span><span class="p">)</span>
-<span class="k">WHERE</span> <span class="p">(</span><span class="s s-Name">&quot;t0&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;res3&quot;</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="p">(</span><span class="mf">300000</span><span class="p">)</span>
+  <span class="p">(</span><span class="k">SELECT</span> <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;GenreId&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res0&quot;</span><span class="p">,</span>
+          <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;Name&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res1&quot;</span><span class="p">,</span>
+          <span class="k">COUNT</span><span class="p">(</span><span class="k">DISTINCT</span> <span class="ss">&quot;t1&quot;</span><span class="p">.</span><span class="ss">&quot;UnitPrice&quot;</span><span class="p">)</span> <span class="k">AS</span> <span class="ss">&quot;res2&quot;</span><span class="p">,</span>
+          <span class="p">(</span><span class="n">COALESCE</span><span class="p">(</span><span class="k">SUM</span><span class="p">(</span><span class="k">ALL</span> <span class="ss">&quot;t1&quot;</span><span class="p">.</span><span class="ss">&quot;Milliseconds&quot;</span><span class="p">),</span> <span class="mi">0</span><span class="p">))</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1000</span><span class="p">)</span> <span class="k">AS</span> <span class="ss">&quot;res3&quot;</span>
+   <span class="k">FROM</span> <span class="ss">&quot;Genre&quot;</span> <span class="k">AS</span> <span class="ss">&quot;t0&quot;</span>
+   <span class="k">CROSS</span> <span class="k">JOIN</span> <span class="ss">&quot;Track&quot;</span> <span class="k">AS</span> <span class="ss">&quot;t1&quot;</span>
+   <span class="k">GROUP</span> <span class="k">BY</span> <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;GenreId&quot;</span><span class="p">,</span>
+            <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;Name&quot;</span><span class="p">)</span> <span class="k">AS</span> <span class="ss">&quot;t0&quot;</span>
+<span class="k">INNER</span> <span class="k">JOIN</span> <span class="ss">&quot;Track&quot;</span> <span class="k">AS</span> <span class="ss">&quot;t1&quot;</span> <span class="k">ON</span> <span class="p">(</span><span class="ss">&quot;t1&quot;</span><span class="p">.</span><span class="ss">&quot;GenreId&quot;</span><span class="p">)</span> <span class="k">IS</span> <span class="k">NOT</span> <span class="k">DISTINCT</span>
+<span class="k">FROM</span> <span class="p">(</span><span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;res0&quot;</span><span class="p">)</span>
+<span class="k">WHERE</span> <span class="p">(</span><span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;res3&quot;</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="p">(</span><span class="mi">300000</span><span class="p">)</span>
 </pre></div>
 
         </div>
@@ -1321,29 +1334,29 @@ produced a <code>WHERE</code> clause on the outermost <code>SELECT</code>. If in
         <ul class="nav nav-tabs">
             
         <li class="nav-item">
-            <a href="#tab-5-haskell" aria-controls="tab-5-haskell" role="tab" data-toggle="tab" data-lang="haskell">Haskell</a>
+            <a href="#tab-5-Haskell" aria-controls="tab-5-Haskell" role="tab" data-toggle="tab" data-lang="haskell">Haskell</a>
         </li>
     
         <li class="nav-item">
-            <a href="#tab-5-sqlite3" aria-controls="tab-5-sqlite3" role="tab" data-toggle="tab" data-lang="sqlite3">Sqlite3</a>
+            <a href="#tab-5-Sqlite" aria-controls="tab-5-Sqlite" role="tab" data-toggle="tab" data-lang="sql">Sqlite</a>
         </li>
     
         <li class="nav-item">
-            <a href="#tab-5-postgres" aria-controls="tab-5-postgres" role="tab" data-toggle="tab" data-lang="postgres">Postgres</a>
+            <a href="#tab-5-Postgres" aria-controls="tab-5-Postgres" role="tab" data-toggle="tab" data-lang="sql">Postgres</a>
         </li>
     
         </ul>
     
         <div class="tab-content">
             
-        <div role="tabpanel" class="tab-pane active" id="tab-5-haskell">
+        <div role="tabpanel" class="tab-pane active" id="tab-5-Haskell">
             <div class="codehilite"><pre><span></span><span class="c1">-- Only return results for genres whose total track length is over 5 minutes</span>
 <span class="kr">do</span> <span class="p">(</span><span class="n">genre</span><span class="p">,</span> <span class="n">priceCnt</span><span class="p">,</span> <span class="n">trackLength</span><span class="p">)</span> <span class="ow">&lt;-</span>
             <span class="n">filter_</span> <span class="p">(</span><span class="nf">\</span><span class="p">(</span><span class="n">genre</span><span class="p">,</span> <span class="n">distinctPriceCount</span><span class="p">,</span> <span class="n">totalTrackLength</span><span class="p">)</span> <span class="ow">-&gt;</span> <span class="n">totalTrackLength</span> <span class="o">&gt;=.</span> <span class="mi">300000</span><span class="p">)</span> <span class="o">$</span>
             <span class="n">aggregate_</span> <span class="p">(</span><span class="nf">\</span><span class="p">(</span><span class="n">genre</span><span class="p">,</span> <span class="n">track</span><span class="p">)</span> <span class="ow">-&gt;</span>
                           <span class="p">(</span> <span class="n">group_</span> <span class="n">genre</span>
                           <span class="p">,</span> <span class="n">as_</span> <span class="o">@</span><span class="kt">Int</span> <span class="o">$</span> <span class="n">countOver_</span> <span class="n">distinctInGroup_</span> <span class="p">(</span><span class="n">trackUnitPrice</span> <span class="n">track</span><span class="p">)</span>
-                          <span class="p">,</span> <span class="n">sumOver_</span> <span class="n">allInGroupExplicitly_</span> <span class="p">(</span><span class="n">trackMilliseconds</span> <span class="n">track</span><span class="p">)</span> <span class="p">`</span><span class="n">div_</span><span class="p">`</span> <span class="mi">1000</span> <span class="p">))</span> <span class="o">$</span>
+                          <span class="p">,</span> <span class="n">fromMaybe_</span> <span class="mi">0</span> <span class="p">(</span><span class="n">sumOver_</span> <span class="n">allInGroupExplicitly_</span> <span class="p">(</span><span class="n">trackMilliseconds</span> <span class="n">track</span><span class="p">))</span> <span class="p">`</span><span class="n">div_</span><span class="p">`</span> <span class="mi">1000</span> <span class="p">))</span> <span class="o">$</span>
             <span class="p">((,)</span> <span class="o">&lt;$&gt;</span> <span class="n">all_</span> <span class="p">(</span><span class="n">genre</span> <span class="n">chinookDb</span><span class="p">)</span> <span class="o">&lt;*&gt;</span> <span class="n">all_</span> <span class="p">(</span><span class="n">track</span> <span class="n">chinookDb</span><span class="p">))</span>
    <span class="n">track</span> <span class="ow">&lt;-</span> <span class="n">join_</span> <span class="p">(</span><span class="n">track</span> <span class="n">chinookDb</span><span class="p">)</span> <span class="p">(</span><span class="nf">\</span><span class="n">track</span> <span class="ow">-&gt;</span> <span class="n">trackGenreId</span> <span class="n">track</span> <span class="o">==.</span> <span class="n">just_</span> <span class="p">(</span><span class="n">pk</span> <span class="n">genre</span><span class="p">))</span>
    <span class="n">pure</span> <span class="p">(</span><span class="n">genre</span><span class="p">,</span> <span class="n">track</span><span class="p">,</span> <span class="n">priceCnt</span><span class="p">,</span> <span class="n">trackLength</span><span class="p">)</span>
@@ -1351,62 +1364,69 @@ produced a <code>WHERE</code> clause on the outermost <code>SELECT</code>. If in
 
         </div>
     
-        <div role="tabpanel" class="tab-pane " id="tab-5-sqlite3">
-            <div class="codehilite"><pre><span></span><span class="go">SELECT &quot;t0&quot;.&quot;res0&quot; AS &quot;res0&quot;,</span>
-<span class="go">       &quot;t0&quot;.&quot;res1&quot; AS &quot;res1&quot;,</span>
-<span class="go">       &quot;t1&quot;.&quot;TrackId&quot; AS &quot;res2&quot;,</span>
-<span class="go">       &quot;t1&quot;.&quot;Name&quot; AS &quot;res3&quot;,</span>
-<span class="go">       &quot;t1&quot;.&quot;AlbumId&quot; AS &quot;res4&quot;,</span>
-<span class="go">       &quot;t1&quot;.&quot;MediaTypeId&quot; AS &quot;res5&quot;,</span>
-<span class="go">       &quot;t1&quot;.&quot;GenreId&quot; AS &quot;res6&quot;,</span>
-<span class="go">       &quot;t1&quot;.&quot;Composer&quot; AS &quot;res7&quot;,</span>
-<span class="go">       &quot;t1&quot;.&quot;Milliseconds&quot; AS &quot;res8&quot;,</span>
-<span class="go">       &quot;t1&quot;.&quot;Bytes&quot; AS &quot;res9&quot;,</span>
-<span class="go">       &quot;t1&quot;.&quot;UnitPrice&quot; AS &quot;res10&quot;,</span>
-<span class="go">       &quot;t0&quot;.&quot;res2&quot; AS &quot;res11&quot;,</span>
-<span class="go">       &quot;t0&quot;.&quot;res3&quot; AS &quot;res12&quot;</span>
-<span class="go">FROM</span>
-<span class="go">  (SELECT &quot;t0&quot;.&quot;GenreId&quot; AS &quot;res0&quot;,</span>
-<span class="go">          &quot;t0&quot;.&quot;Name&quot; AS &quot;res1&quot;,</span>
-<span class="go">          COUNT(DISTINCT &quot;t1&quot;.&quot;UnitPrice&quot;) AS &quot;res2&quot;,</span>
-<span class="go">          (SUM(ALL &quot;t1&quot;.&quot;Milliseconds&quot;)) / (?) AS &quot;res3&quot;</span>
-<span class="go">   FROM &quot;Genre&quot; AS &quot;t0&quot;</span>
-<span class="go">   INNER JOIN &quot;Track&quot; AS &quot;t1&quot;</span>
-<span class="go">   GROUP BY &quot;t0&quot;.&quot;GenreId&quot;,</span>
-<span class="go">            &quot;t0&quot;.&quot;Name&quot;</span>
-<span class="go">   HAVING ((SUM(ALL &quot;t1&quot;.&quot;Milliseconds&quot;)) / (?))&gt;=(?)) AS &quot;t0&quot;</span>
-<span class="go">INNER JOIN &quot;Track&quot; AS &quot;t1&quot; ON (&quot;t1&quot;.&quot;GenreId&quot;)=(&quot;t0&quot;.&quot;res0&quot;);</span>
+        <div role="tabpanel" class="tab-pane " id="tab-5-Sqlite">
+            <div class="codehilite"><pre><span></span><span class="k">SELECT</span> <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;res0&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res0&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;res1&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res1&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t1&quot;</span><span class="p">.</span><span class="ss">&quot;TrackId&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res2&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t1&quot;</span><span class="p">.</span><span class="ss">&quot;Name&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res3&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t1&quot;</span><span class="p">.</span><span class="ss">&quot;AlbumId&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res4&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t1&quot;</span><span class="p">.</span><span class="ss">&quot;MediaTypeId&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res5&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t1&quot;</span><span class="p">.</span><span class="ss">&quot;GenreId&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res6&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t1&quot;</span><span class="p">.</span><span class="ss">&quot;Composer&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res7&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t1&quot;</span><span class="p">.</span><span class="ss">&quot;Milliseconds&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res8&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t1&quot;</span><span class="p">.</span><span class="ss">&quot;Bytes&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res9&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t1&quot;</span><span class="p">.</span><span class="ss">&quot;UnitPrice&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res10&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;res2&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res11&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;res3&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res12&quot;</span>
+<span class="k">FROM</span>
+  <span class="p">(</span><span class="k">SELECT</span> <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;GenreId&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res0&quot;</span><span class="p">,</span>
+          <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;Name&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res1&quot;</span><span class="p">,</span>
+          <span class="k">COUNT</span><span class="p">(</span><span class="k">DISTINCT</span> <span class="ss">&quot;t1&quot;</span><span class="p">.</span><span class="ss">&quot;UnitPrice&quot;</span><span class="p">)</span> <span class="k">AS</span> <span class="ss">&quot;res2&quot;</span><span class="p">,</span>
+          <span class="p">(</span><span class="n">COALESCE</span><span class="p">(</span><span class="k">SUM</span><span class="p">(</span><span class="k">ALL</span> <span class="ss">&quot;t1&quot;</span><span class="p">.</span><span class="ss">&quot;Milliseconds&quot;</span><span class="p">),</span> <span class="o">?</span><span class="p">))</span> <span class="o">/</span> <span class="p">(</span><span class="o">?</span><span class="p">)</span> <span class="k">AS</span> <span class="ss">&quot;res3&quot;</span>
+   <span class="k">FROM</span> <span class="ss">&quot;Genre&quot;</span> <span class="k">AS</span> <span class="ss">&quot;t0&quot;</span>
+   <span class="k">INNER</span> <span class="k">JOIN</span> <span class="ss">&quot;Track&quot;</span> <span class="k">AS</span> <span class="ss">&quot;t1&quot;</span>
+   <span class="k">GROUP</span> <span class="k">BY</span> <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;GenreId&quot;</span><span class="p">,</span>
+            <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;Name&quot;</span>
+   <span class="k">HAVING</span> <span class="p">((</span><span class="n">COALESCE</span><span class="p">(</span><span class="k">SUM</span><span class="p">(</span><span class="k">ALL</span> <span class="ss">&quot;t1&quot;</span><span class="p">.</span><span class="ss">&quot;Milliseconds&quot;</span><span class="p">),</span> <span class="o">?</span><span class="p">))</span> <span class="o">/</span> <span class="p">(</span><span class="o">?</span><span class="p">))</span><span class="o">&gt;=</span><span class="p">(</span><span class="o">?</span><span class="p">))</span> <span class="k">AS</span> <span class="ss">&quot;t0&quot;</span>
+<span class="k">INNER</span> <span class="k">JOIN</span> <span class="ss">&quot;Track&quot;</span> <span class="k">AS</span> <span class="ss">&quot;t1&quot;</span> <span class="k">ON</span> <span class="k">CASE</span>
+                                  <span class="k">WHEN</span> <span class="p">((</span><span class="ss">&quot;t1&quot;</span><span class="p">.</span><span class="ss">&quot;GenreId&quot;</span><span class="p">)</span> <span class="k">IS</span> <span class="k">NULL</span><span class="p">)</span>
+                                       <span class="k">AND</span> <span class="p">((</span><span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;res0&quot;</span><span class="p">)</span> <span class="k">IS</span> <span class="k">NULL</span><span class="p">)</span> <span class="k">THEN</span> <span class="o">?</span>
+                                  <span class="k">WHEN</span> <span class="p">((</span><span class="ss">&quot;t1&quot;</span><span class="p">.</span><span class="ss">&quot;GenreId&quot;</span><span class="p">)</span> <span class="k">IS</span> <span class="k">NULL</span><span class="p">)</span>
+                                       <span class="k">OR</span> <span class="p">((</span><span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;res0&quot;</span><span class="p">)</span> <span class="k">IS</span> <span class="k">NULL</span><span class="p">)</span> <span class="k">THEN</span> <span class="o">?</span>
+                                  <span class="k">ELSE</span> <span class="p">(</span><span class="ss">&quot;t1&quot;</span><span class="p">.</span><span class="ss">&quot;GenreId&quot;</span><span class="p">)</span><span class="o">=</span><span class="p">(</span><span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;res0&quot;</span><span class="p">)</span>
+                              <span class="k">END</span><span class="p">;</span>
 
-<span class="go">-- With values: [SQLInteger 1000,SQLInteger 1000,SQLInteger 300000]</span>
+<span class="c1">-- With values: [SQLInteger 0,SQLInteger 1000,SQLInteger 0,SQLInteger 1000,SQLInteger 300000,SQLInteger 1,SQLInteger 0]</span>
 </pre></div>
 
         </div>
     
-        <div role="tabpanel" class="tab-pane " id="tab-5-postgres">
-            <div class="codehilite"><pre><span></span><span class="k">SELECT</span> <span class="s s-Name">&quot;t0&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;res0&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;res0&quot;</span><span class="p">,</span>
-       <span class="s s-Name">&quot;t0&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;res1&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;res1&quot;</span><span class="p">,</span>
-       <span class="s s-Name">&quot;t1&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;TrackId&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;res2&quot;</span><span class="p">,</span>
-       <span class="s s-Name">&quot;t1&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;Name&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;res3&quot;</span><span class="p">,</span>
-       <span class="s s-Name">&quot;t1&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;AlbumId&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;res4&quot;</span><span class="p">,</span>
-       <span class="s s-Name">&quot;t1&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;MediaTypeId&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;res5&quot;</span><span class="p">,</span>
-       <span class="s s-Name">&quot;t1&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;GenreId&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;res6&quot;</span><span class="p">,</span>
-       <span class="s s-Name">&quot;t1&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;Composer&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;res7&quot;</span><span class="p">,</span>
-       <span class="s s-Name">&quot;t1&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;Milliseconds&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;res8&quot;</span><span class="p">,</span>
-       <span class="s s-Name">&quot;t1&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;Bytes&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;res9&quot;</span><span class="p">,</span>
-       <span class="s s-Name">&quot;t1&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;UnitPrice&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;res10&quot;</span><span class="p">,</span>
-       <span class="s s-Name">&quot;t0&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;res2&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;res11&quot;</span><span class="p">,</span>
-       <span class="s s-Name">&quot;t0&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;res3&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;res12&quot;</span>
+        <div role="tabpanel" class="tab-pane " id="tab-5-Postgres">
+            <div class="codehilite"><pre><span></span><span class="k">SELECT</span> <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;res0&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res0&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;res1&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res1&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t1&quot;</span><span class="p">.</span><span class="ss">&quot;TrackId&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res2&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t1&quot;</span><span class="p">.</span><span class="ss">&quot;Name&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res3&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t1&quot;</span><span class="p">.</span><span class="ss">&quot;AlbumId&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res4&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t1&quot;</span><span class="p">.</span><span class="ss">&quot;MediaTypeId&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res5&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t1&quot;</span><span class="p">.</span><span class="ss">&quot;GenreId&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res6&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t1&quot;</span><span class="p">.</span><span class="ss">&quot;Composer&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res7&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t1&quot;</span><span class="p">.</span><span class="ss">&quot;Milliseconds&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res8&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t1&quot;</span><span class="p">.</span><span class="ss">&quot;Bytes&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res9&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t1&quot;</span><span class="p">.</span><span class="ss">&quot;UnitPrice&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res10&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;res2&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res11&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;res3&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res12&quot;</span>
 <span class="k">FROM</span>
-  <span class="p">(</span><span class="k">SELECT</span> <span class="s s-Name">&quot;t0&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;GenreId&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;res0&quot;</span><span class="p">,</span>
-          <span class="s s-Name">&quot;t0&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;Name&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;res1&quot;</span><span class="p">,</span>
-          <span class="n">COUNT</span><span class="p">(</span><span class="k">DISTINCT</span> <span class="s s-Name">&quot;t1&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;UnitPrice&quot;</span><span class="p">)</span> <span class="k">AS</span> <span class="s s-Name">&quot;res2&quot;</span><span class="p">,</span>
-          <span class="p">(</span><span class="n">SUM</span><span class="p">(</span><span class="k">ALL</span> <span class="s s-Name">&quot;t1&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;Milliseconds&quot;</span><span class="p">))</span> <span class="o">/</span> <span class="p">(</span><span class="mf">1000</span><span class="p">)</span> <span class="k">AS</span> <span class="s s-Name">&quot;res3&quot;</span>
-   <span class="k">FROM</span> <span class="s s-Name">&quot;Genre&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;t0&quot;</span>
-   <span class="k">CROSS</span> <span class="k">JOIN</span> <span class="s s-Name">&quot;Track&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;t1&quot;</span>
-   <span class="k">GROUP</span> <span class="k">BY</span> <span class="s s-Name">&quot;t0&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;GenreId&quot;</span><span class="p">,</span>
-            <span class="s s-Name">&quot;t0&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;Name&quot;</span>
-   <span class="k">HAVING</span> <span class="p">((</span><span class="n">SUM</span><span class="p">(</span><span class="k">ALL</span> <span class="s s-Name">&quot;t1&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;Milliseconds&quot;</span><span class="p">))</span> <span class="o">/</span> <span class="p">(</span><span class="mf">1000</span><span class="p">))</span> <span class="o">&gt;=</span> <span class="p">(</span><span class="mf">300000</span><span class="p">))</span> <span class="k">AS</span> <span class="s s-Name">&quot;t0&quot;</span>
-<span class="k">INNER</span> <span class="k">JOIN</span> <span class="s s-Name">&quot;Track&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;t1&quot;</span> <span class="k">ON</span> <span class="p">(</span><span class="s s-Name">&quot;t1&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;GenreId&quot;</span><span class="p">)</span> <span class="o">=</span> <span class="p">(</span><span class="s s-Name">&quot;t0&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;res0&quot;</span><span class="p">)</span>
+  <span class="p">(</span><span class="k">SELECT</span> <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;GenreId&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res0&quot;</span><span class="p">,</span>
+          <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;Name&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res1&quot;</span><span class="p">,</span>
+          <span class="k">COUNT</span><span class="p">(</span><span class="k">DISTINCT</span> <span class="ss">&quot;t1&quot;</span><span class="p">.</span><span class="ss">&quot;UnitPrice&quot;</span><span class="p">)</span> <span class="k">AS</span> <span class="ss">&quot;res2&quot;</span><span class="p">,</span>
+          <span class="p">(</span><span class="n">COALESCE</span><span class="p">(</span><span class="k">SUM</span><span class="p">(</span><span class="k">ALL</span> <span class="ss">&quot;t1&quot;</span><span class="p">.</span><span class="ss">&quot;Milliseconds&quot;</span><span class="p">),</span> <span class="mi">0</span><span class="p">))</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1000</span><span class="p">)</span> <span class="k">AS</span> <span class="ss">&quot;res3&quot;</span>
+   <span class="k">FROM</span> <span class="ss">&quot;Genre&quot;</span> <span class="k">AS</span> <span class="ss">&quot;t0&quot;</span>
+   <span class="k">CROSS</span> <span class="k">JOIN</span> <span class="ss">&quot;Track&quot;</span> <span class="k">AS</span> <span class="ss">&quot;t1&quot;</span>
+   <span class="k">GROUP</span> <span class="k">BY</span> <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;GenreId&quot;</span><span class="p">,</span>
+            <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;Name&quot;</span>
+   <span class="k">HAVING</span> <span class="p">((</span><span class="n">COALESCE</span><span class="p">(</span><span class="k">SUM</span><span class="p">(</span><span class="k">ALL</span> <span class="ss">&quot;t1&quot;</span><span class="p">.</span><span class="ss">&quot;Milliseconds&quot;</span><span class="p">),</span> <span class="mi">0</span><span class="p">))</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1000</span><span class="p">))</span> <span class="o">&gt;=</span> <span class="p">(</span><span class="mi">300000</span><span class="p">))</span> <span class="k">AS</span> <span class="ss">&quot;t0&quot;</span>
+<span class="k">INNER</span> <span class="k">JOIN</span> <span class="ss">&quot;Track&quot;</span> <span class="k">AS</span> <span class="ss">&quot;t1&quot;</span> <span class="k">ON</span> <span class="p">(</span><span class="ss">&quot;t1&quot;</span><span class="p">.</span><span class="ss">&quot;GenreId&quot;</span><span class="p">)</span> <span class="k">IS</span> <span class="k">NOT</span> <span class="k">DISTINCT</span>
+<span class="k">FROM</span> <span class="p">(</span><span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;res0&quot;</span><span class="p">)</span>
 </pre></div>
 
         </div>
@@ -1425,22 +1445,22 @@ aggregate.</p>
         <ul class="nav nav-tabs">
             
         <li class="nav-item">
-            <a href="#tab-6-haskell" aria-controls="tab-6-haskell" role="tab" data-toggle="tab" data-lang="haskell">Haskell</a>
+            <a href="#tab-6-Haskell" aria-controls="tab-6-Haskell" role="tab" data-toggle="tab" data-lang="haskell">Haskell</a>
         </li>
     
         <li class="nav-item">
-            <a href="#tab-6-sqlite3" aria-controls="tab-6-sqlite3" role="tab" data-toggle="tab" data-lang="sqlite3">Sqlite3</a>
+            <a href="#tab-6-Sqlite" aria-controls="tab-6-Sqlite" role="tab" data-toggle="tab" data-lang="sql">Sqlite</a>
         </li>
     
         <li class="nav-item">
-            <a href="#tab-6-postgres" aria-controls="tab-6-postgres" role="tab" data-toggle="tab" data-lang="postgres">Postgres</a>
+            <a href="#tab-6-Postgres" aria-controls="tab-6-Postgres" role="tab" data-toggle="tab" data-lang="sql">Postgres</a>
         </li>
     
         </ul>
     
         <div class="tab-content">
             
-        <div role="tabpanel" class="tab-pane active" id="tab-6-haskell">
+        <div role="tabpanel" class="tab-pane active" id="tab-6-Haskell">
             <div class="codehilite"><pre><span></span><span class="c1">-- Only return results for genres whose total track length is over 5 minutes</span>
 <span class="kr">do</span> <span class="n">track_</span> <span class="ow">&lt;-</span> <span class="n">all_</span> <span class="p">(</span><span class="n">track</span> <span class="n">chinookDb</span><span class="p">)</span>
    <span class="p">(</span><span class="n">genre</span><span class="p">,</span> <span class="n">priceCnt</span><span class="p">,</span> <span class="n">trackLength</span><span class="p">)</span> <span class="ow">&lt;-</span>
@@ -1448,72 +1468,79 @@ aggregate.</p>
             <span class="n">aggregate_</span> <span class="p">(</span><span class="nf">\</span><span class="p">(</span><span class="n">genre</span><span class="p">,</span> <span class="n">track</span><span class="p">)</span> <span class="ow">-&gt;</span>
                           <span class="p">(</span> <span class="n">group_</span> <span class="n">genre</span>
                           <span class="p">,</span> <span class="n">as_</span> <span class="o">@</span><span class="kt">Int</span> <span class="o">$</span> <span class="n">countOver_</span> <span class="n">distinctInGroup_</span> <span class="p">(</span><span class="n">trackUnitPrice</span> <span class="n">track</span><span class="p">)</span>
-                          <span class="p">,</span> <span class="n">sumOver_</span> <span class="n">allInGroupExplicitly_</span> <span class="p">(</span><span class="n">trackMilliseconds</span> <span class="n">track</span><span class="p">)</span> <span class="p">`</span><span class="n">div_</span><span class="p">`</span> <span class="mi">1000</span> <span class="p">))</span> <span class="o">$</span>
-            <span class="p">((,)</span> <span class="o">&lt;$&gt;</span> <span class="n">all_</span> <span class="p">(</span><span class="n">genre</span> <span class="n">chinookDb</span><span class="p">)</span> <span class="o">&lt;*&gt;</span> <span class="n">all_</span> <span class="p">(</span><span class="n">track</span> <span class="n">chinookDb</span><span class="p">))</span> 
+                          <span class="p">,</span> <span class="n">fromMaybe_</span> <span class="mi">0</span> <span class="p">(</span><span class="n">sumOver_</span> <span class="n">allInGroupExplicitly_</span> <span class="p">(</span><span class="n">trackMilliseconds</span> <span class="n">track</span><span class="p">))</span> <span class="p">`</span><span class="n">div_</span><span class="p">`</span> <span class="mi">1000</span> <span class="p">))</span> <span class="o">$</span>
+            <span class="p">((,)</span> <span class="o">&lt;$&gt;</span> <span class="n">all_</span> <span class="p">(</span><span class="n">genre</span> <span class="n">chinookDb</span><span class="p">)</span> <span class="o">&lt;*&gt;</span> <span class="n">all_</span> <span class="p">(</span><span class="n">track</span> <span class="n">chinookDb</span><span class="p">))</span>
    <span class="n">guard_</span> <span class="p">(</span><span class="n">trackGenreId</span> <span class="n">track_</span> <span class="o">==.</span> <span class="n">just_</span> <span class="p">(</span><span class="n">pk</span> <span class="n">genre</span><span class="p">))</span>
    <span class="n">pure</span> <span class="p">(</span><span class="n">genre</span><span class="p">,</span> <span class="n">track_</span><span class="p">,</span> <span class="n">priceCnt</span><span class="p">,</span> <span class="n">trackLength</span><span class="p">)</span>
 </pre></div>
 
         </div>
     
-        <div role="tabpanel" class="tab-pane " id="tab-6-sqlite3">
-            <div class="codehilite"><pre><span></span><span class="go">SELECT &quot;t1&quot;.&quot;res0&quot; AS &quot;res0&quot;,</span>
-<span class="go">       &quot;t1&quot;.&quot;res1&quot; AS &quot;res1&quot;,</span>
-<span class="go">       &quot;t0&quot;.&quot;TrackId&quot; AS &quot;res2&quot;,</span>
-<span class="go">       &quot;t0&quot;.&quot;Name&quot; AS &quot;res3&quot;,</span>
-<span class="go">       &quot;t0&quot;.&quot;AlbumId&quot; AS &quot;res4&quot;,</span>
-<span class="go">       &quot;t0&quot;.&quot;MediaTypeId&quot; AS &quot;res5&quot;,</span>
-<span class="go">       &quot;t0&quot;.&quot;GenreId&quot; AS &quot;res6&quot;,</span>
-<span class="go">       &quot;t0&quot;.&quot;Composer&quot; AS &quot;res7&quot;,</span>
-<span class="go">       &quot;t0&quot;.&quot;Milliseconds&quot; AS &quot;res8&quot;,</span>
-<span class="go">       &quot;t0&quot;.&quot;Bytes&quot; AS &quot;res9&quot;,</span>
-<span class="go">       &quot;t0&quot;.&quot;UnitPrice&quot; AS &quot;res10&quot;,</span>
-<span class="go">       &quot;t1&quot;.&quot;res2&quot; AS &quot;res11&quot;,</span>
-<span class="go">       &quot;t1&quot;.&quot;res3&quot; AS &quot;res12&quot;</span>
-<span class="go">FROM &quot;Track&quot; AS &quot;t0&quot;</span>
-<span class="go">INNER JOIN</span>
-<span class="go">  (SELECT &quot;t0&quot;.&quot;GenreId&quot; AS &quot;res0&quot;,</span>
-<span class="go">          &quot;t0&quot;.&quot;Name&quot; AS &quot;res1&quot;,</span>
-<span class="go">          COUNT(DISTINCT &quot;t1&quot;.&quot;UnitPrice&quot;) AS &quot;res2&quot;,</span>
-<span class="go">          (SUM(ALL &quot;t1&quot;.&quot;Milliseconds&quot;)) / (?) AS &quot;res3&quot;</span>
-<span class="go">   FROM &quot;Genre&quot; AS &quot;t0&quot;</span>
-<span class="go">   INNER JOIN &quot;Track&quot; AS &quot;t1&quot;</span>
-<span class="go">   GROUP BY &quot;t0&quot;.&quot;GenreId&quot;,</span>
-<span class="go">            &quot;t0&quot;.&quot;Name&quot;) AS &quot;t1&quot;</span>
-<span class="go">WHERE ((&quot;t1&quot;.&quot;res3&quot;)&gt;=(?))</span>
-<span class="go">  AND ((&quot;t0&quot;.&quot;GenreId&quot;)=(&quot;t1&quot;.&quot;res0&quot;));</span>
+        <div role="tabpanel" class="tab-pane " id="tab-6-Sqlite">
+            <div class="codehilite"><pre><span></span><span class="k">SELECT</span> <span class="ss">&quot;t1&quot;</span><span class="p">.</span><span class="ss">&quot;res0&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res0&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t1&quot;</span><span class="p">.</span><span class="ss">&quot;res1&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res1&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;TrackId&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res2&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;Name&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res3&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;AlbumId&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res4&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;MediaTypeId&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res5&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;GenreId&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res6&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;Composer&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res7&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;Milliseconds&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res8&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;Bytes&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res9&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;UnitPrice&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res10&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t1&quot;</span><span class="p">.</span><span class="ss">&quot;res2&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res11&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t1&quot;</span><span class="p">.</span><span class="ss">&quot;res3&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res12&quot;</span>
+<span class="k">FROM</span> <span class="ss">&quot;Track&quot;</span> <span class="k">AS</span> <span class="ss">&quot;t0&quot;</span>
+<span class="k">INNER</span> <span class="k">JOIN</span>
+  <span class="p">(</span><span class="k">SELECT</span> <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;GenreId&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res0&quot;</span><span class="p">,</span>
+          <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;Name&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res1&quot;</span><span class="p">,</span>
+          <span class="k">COUNT</span><span class="p">(</span><span class="k">DISTINCT</span> <span class="ss">&quot;t1&quot;</span><span class="p">.</span><span class="ss">&quot;UnitPrice&quot;</span><span class="p">)</span> <span class="k">AS</span> <span class="ss">&quot;res2&quot;</span><span class="p">,</span>
+          <span class="p">(</span><span class="n">COALESCE</span><span class="p">(</span><span class="k">SUM</span><span class="p">(</span><span class="k">ALL</span> <span class="ss">&quot;t1&quot;</span><span class="p">.</span><span class="ss">&quot;Milliseconds&quot;</span><span class="p">),</span> <span class="o">?</span><span class="p">))</span> <span class="o">/</span> <span class="p">(</span><span class="o">?</span><span class="p">)</span> <span class="k">AS</span> <span class="ss">&quot;res3&quot;</span>
+   <span class="k">FROM</span> <span class="ss">&quot;Genre&quot;</span> <span class="k">AS</span> <span class="ss">&quot;t0&quot;</span>
+   <span class="k">INNER</span> <span class="k">JOIN</span> <span class="ss">&quot;Track&quot;</span> <span class="k">AS</span> <span class="ss">&quot;t1&quot;</span>
+   <span class="k">GROUP</span> <span class="k">BY</span> <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;GenreId&quot;</span><span class="p">,</span>
+            <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;Name&quot;</span><span class="p">)</span> <span class="k">AS</span> <span class="ss">&quot;t1&quot;</span>
+<span class="k">WHERE</span> <span class="p">((</span><span class="ss">&quot;t1&quot;</span><span class="p">.</span><span class="ss">&quot;res3&quot;</span><span class="p">)</span><span class="o">&gt;=</span><span class="p">(</span><span class="o">?</span><span class="p">))</span>
+  <span class="k">AND</span> <span class="p">(</span><span class="k">CASE</span>
+           <span class="k">WHEN</span> <span class="p">((</span><span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;GenreId&quot;</span><span class="p">)</span> <span class="k">IS</span> <span class="k">NULL</span><span class="p">)</span>
+                <span class="k">AND</span> <span class="p">((</span><span class="ss">&quot;t1&quot;</span><span class="p">.</span><span class="ss">&quot;res0&quot;</span><span class="p">)</span> <span class="k">IS</span> <span class="k">NULL</span><span class="p">)</span> <span class="k">THEN</span> <span class="o">?</span>
+           <span class="k">WHEN</span> <span class="p">((</span><span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;GenreId&quot;</span><span class="p">)</span> <span class="k">IS</span> <span class="k">NULL</span><span class="p">)</span>
+                <span class="k">OR</span> <span class="p">((</span><span class="ss">&quot;t1&quot;</span><span class="p">.</span><span class="ss">&quot;res0&quot;</span><span class="p">)</span> <span class="k">IS</span> <span class="k">NULL</span><span class="p">)</span> <span class="k">THEN</span> <span class="o">?</span>
+           <span class="k">ELSE</span> <span class="p">(</span><span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;GenreId&quot;</span><span class="p">)</span><span class="o">=</span><span class="p">(</span><span class="ss">&quot;t1&quot;</span><span class="p">.</span><span class="ss">&quot;res0&quot;</span><span class="p">)</span>
+       <span class="k">END</span><span class="p">);</span>
 
-<span class="go">-- With values: [SQLInteger 1000,SQLInteger 300000]</span>
+<span class="c1">-- With values: [SQLInteger 0,SQLInteger 1000,SQLInteger 300000,SQLInteger 1,SQLInteger 0]</span>
 </pre></div>
 
         </div>
     
-        <div role="tabpanel" class="tab-pane " id="tab-6-postgres">
-            <div class="codehilite"><pre><span></span><span class="k">SELECT</span> <span class="s s-Name">&quot;t1&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;res0&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;res0&quot;</span><span class="p">,</span>
-       <span class="s s-Name">&quot;t1&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;res1&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;res1&quot;</span><span class="p">,</span>
-       <span class="s s-Name">&quot;t0&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;TrackId&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;res2&quot;</span><span class="p">,</span>
-       <span class="s s-Name">&quot;t0&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;Name&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;res3&quot;</span><span class="p">,</span>
-       <span class="s s-Name">&quot;t0&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;AlbumId&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;res4&quot;</span><span class="p">,</span>
-       <span class="s s-Name">&quot;t0&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;MediaTypeId&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;res5&quot;</span><span class="p">,</span>
-       <span class="s s-Name">&quot;t0&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;GenreId&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;res6&quot;</span><span class="p">,</span>
-       <span class="s s-Name">&quot;t0&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;Composer&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;res7&quot;</span><span class="p">,</span>
-       <span class="s s-Name">&quot;t0&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;Milliseconds&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;res8&quot;</span><span class="p">,</span>
-       <span class="s s-Name">&quot;t0&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;Bytes&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;res9&quot;</span><span class="p">,</span>
-       <span class="s s-Name">&quot;t0&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;UnitPrice&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;res10&quot;</span><span class="p">,</span>
-       <span class="s s-Name">&quot;t1&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;res2&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;res11&quot;</span><span class="p">,</span>
-       <span class="s s-Name">&quot;t1&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;res3&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;res12&quot;</span>
-<span class="k">FROM</span> <span class="s s-Name">&quot;Track&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;t0&quot;</span>
+        <div role="tabpanel" class="tab-pane " id="tab-6-Postgres">
+            <div class="codehilite"><pre><span></span><span class="k">SELECT</span> <span class="ss">&quot;t1&quot;</span><span class="p">.</span><span class="ss">&quot;res0&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res0&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t1&quot;</span><span class="p">.</span><span class="ss">&quot;res1&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res1&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;TrackId&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res2&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;Name&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res3&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;AlbumId&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res4&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;MediaTypeId&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res5&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;GenreId&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res6&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;Composer&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res7&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;Milliseconds&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res8&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;Bytes&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res9&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;UnitPrice&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res10&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t1&quot;</span><span class="p">.</span><span class="ss">&quot;res2&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res11&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t1&quot;</span><span class="p">.</span><span class="ss">&quot;res3&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res12&quot;</span>
+<span class="k">FROM</span> <span class="ss">&quot;Track&quot;</span> <span class="k">AS</span> <span class="ss">&quot;t0&quot;</span>
 <span class="k">CROSS</span> <span class="k">JOIN</span>
-  <span class="p">(</span><span class="k">SELECT</span> <span class="s s-Name">&quot;t0&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;GenreId&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;res0&quot;</span><span class="p">,</span>
-          <span class="s s-Name">&quot;t0&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;Name&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;res1&quot;</span><span class="p">,</span>
-          <span class="n">COUNT</span><span class="p">(</span><span class="k">DISTINCT</span> <span class="s s-Name">&quot;t1&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;UnitPrice&quot;</span><span class="p">)</span> <span class="k">AS</span> <span class="s s-Name">&quot;res2&quot;</span><span class="p">,</span>
-          <span class="p">(</span><span class="n">SUM</span><span class="p">(</span><span class="k">ALL</span> <span class="s s-Name">&quot;t1&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;Milliseconds&quot;</span><span class="p">))</span> <span class="o">/</span> <span class="p">(</span><span class="mf">1000</span><span class="p">)</span> <span class="k">AS</span> <span class="s s-Name">&quot;res3&quot;</span>
-   <span class="k">FROM</span> <span class="s s-Name">&quot;Genre&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;t0&quot;</span>
-   <span class="k">CROSS</span> <span class="k">JOIN</span> <span class="s s-Name">&quot;Track&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;t1&quot;</span>
-   <span class="k">GROUP</span> <span class="k">BY</span> <span class="s s-Name">&quot;t0&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;GenreId&quot;</span><span class="p">,</span>
-            <span class="s s-Name">&quot;t0&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;Name&quot;</span><span class="p">)</span> <span class="k">AS</span> <span class="s s-Name">&quot;t1&quot;</span>
-<span class="k">WHERE</span> <span class="p">((</span><span class="s s-Name">&quot;t1&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;res3&quot;</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="p">(</span><span class="mf">300000</span><span class="p">))</span>
-  <span class="k">AND</span> <span class="p">((</span><span class="s s-Name">&quot;t0&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;GenreId&quot;</span><span class="p">)</span> <span class="o">=</span> <span class="p">(</span><span class="s s-Name">&quot;t1&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;res0&quot;</span><span class="p">))</span>
+  <span class="p">(</span><span class="k">SELECT</span> <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;GenreId&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res0&quot;</span><span class="p">,</span>
+          <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;Name&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res1&quot;</span><span class="p">,</span>
+          <span class="k">COUNT</span><span class="p">(</span><span class="k">DISTINCT</span> <span class="ss">&quot;t1&quot;</span><span class="p">.</span><span class="ss">&quot;UnitPrice&quot;</span><span class="p">)</span> <span class="k">AS</span> <span class="ss">&quot;res2&quot;</span><span class="p">,</span>
+          <span class="p">(</span><span class="n">COALESCE</span><span class="p">(</span><span class="k">SUM</span><span class="p">(</span><span class="k">ALL</span> <span class="ss">&quot;t1&quot;</span><span class="p">.</span><span class="ss">&quot;Milliseconds&quot;</span><span class="p">),</span> <span class="mi">0</span><span class="p">))</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1000</span><span class="p">)</span> <span class="k">AS</span> <span class="ss">&quot;res3&quot;</span>
+   <span class="k">FROM</span> <span class="ss">&quot;Genre&quot;</span> <span class="k">AS</span> <span class="ss">&quot;t0&quot;</span>
+   <span class="k">CROSS</span> <span class="k">JOIN</span> <span class="ss">&quot;Track&quot;</span> <span class="k">AS</span> <span class="ss">&quot;t1&quot;</span>
+   <span class="k">GROUP</span> <span class="k">BY</span> <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;GenreId&quot;</span><span class="p">,</span>
+            <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;Name&quot;</span><span class="p">)</span> <span class="k">AS</span> <span class="ss">&quot;t1&quot;</span>
+<span class="k">WHERE</span> <span class="p">((</span><span class="ss">&quot;t1&quot;</span><span class="p">.</span><span class="ss">&quot;res3&quot;</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="p">(</span><span class="mi">300000</span><span class="p">))</span>
+  <span class="k">AND</span> <span class="p">((</span><span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;GenreId&quot;</span><span class="p">)</span> <span class="k">IS</span> <span class="k">NOT</span> <span class="k">DISTINCT</span>
+       <span class="k">FROM</span> <span class="p">(</span><span class="ss">&quot;t1&quot;</span><span class="p">.</span><span class="ss">&quot;res0&quot;</span><span class="p">))</span>
 </pre></div>
 
         </div>
@@ -1530,22 +1557,22 @@ using the <code>subselect_</code> combinator.</p>
         <ul class="nav nav-tabs">
             
         <li class="nav-item">
-            <a href="#tab-24-haskell" aria-controls="tab-24-haskell" role="tab" data-toggle="tab" data-lang="haskell">Haskell</a>
+            <a href="#tab-24-Haskell" aria-controls="tab-24-Haskell" role="tab" data-toggle="tab" data-lang="haskell">Haskell</a>
         </li>
     
         <li class="nav-item">
-            <a href="#tab-24-sqlite3" aria-controls="tab-24-sqlite3" role="tab" data-toggle="tab" data-lang="sqlite3">Sqlite3</a>
+            <a href="#tab-24-Sqlite" aria-controls="tab-24-Sqlite" role="tab" data-toggle="tab" data-lang="sql">Sqlite</a>
         </li>
     
         <li class="nav-item">
-            <a href="#tab-24-postgres" aria-controls="tab-24-postgres" role="tab" data-toggle="tab" data-lang="postgres">Postgres</a>
+            <a href="#tab-24-Postgres" aria-controls="tab-24-Postgres" role="tab" data-toggle="tab" data-lang="sql">Postgres</a>
         </li>
     
         </ul>
     
         <div class="tab-content">
             
-        <div role="tabpanel" class="tab-pane active" id="tab-24-haskell">
+        <div role="tabpanel" class="tab-pane active" id="tab-24-Haskell">
             <div class="codehilite"><pre><span></span><span class="c1">-- Only return results for genres whose total track length is over 5 minutes</span>
 <span class="kr">do</span> <span class="n">track_</span> <span class="ow">&lt;-</span> <span class="n">all_</span> <span class="p">(</span><span class="n">track</span> <span class="n">chinookDb</span><span class="p">)</span>
    <span class="p">(</span><span class="n">genre</span><span class="p">,</span> <span class="n">priceCnt</span><span class="p">,</span> <span class="n">trackLength</span><span class="p">)</span> <span class="ow">&lt;-</span>
@@ -1554,82 +1581,89 @@ using the <code>subselect_</code> combinator.</p>
             <span class="n">aggregate_</span> <span class="p">(</span><span class="nf">\</span><span class="p">(</span><span class="n">genre</span><span class="p">,</span> <span class="n">track</span><span class="p">)</span> <span class="ow">-&gt;</span>
                           <span class="p">(</span> <span class="n">group_</span> <span class="n">genre</span>
                           <span class="p">,</span> <span class="n">as_</span> <span class="o">@</span><span class="kt">Int</span> <span class="o">$</span> <span class="n">countOver_</span> <span class="n">distinctInGroup_</span> <span class="p">(</span><span class="n">trackUnitPrice</span> <span class="n">track</span><span class="p">)</span>
-                          <span class="p">,</span> <span class="n">sumOver_</span> <span class="n">allInGroupExplicitly_</span> <span class="p">(</span><span class="n">trackMilliseconds</span> <span class="n">track</span><span class="p">)</span> <span class="p">`</span><span class="n">div_</span><span class="p">`</span> <span class="mi">1000</span> <span class="p">))</span> <span class="o">$</span>
-            <span class="p">((,)</span> <span class="o">&lt;$&gt;</span> <span class="n">all_</span> <span class="p">(</span><span class="n">genre</span> <span class="n">chinookDb</span><span class="p">)</span> <span class="o">&lt;*&gt;</span> <span class="n">all_</span> <span class="p">(</span><span class="n">track</span> <span class="n">chinookDb</span><span class="p">))</span> 
+                          <span class="p">,</span> <span class="n">fromMaybe_</span> <span class="mi">0</span> <span class="p">(</span><span class="n">sumOver_</span> <span class="n">allInGroupExplicitly_</span> <span class="p">(</span><span class="n">trackMilliseconds</span> <span class="n">track</span><span class="p">))</span> <span class="p">`</span><span class="n">div_</span><span class="p">`</span> <span class="mi">1000</span> <span class="p">))</span> <span class="o">$</span>
+            <span class="p">((,)</span> <span class="o">&lt;$&gt;</span> <span class="n">all_</span> <span class="p">(</span><span class="n">genre</span> <span class="n">chinookDb</span><span class="p">)</span> <span class="o">&lt;*&gt;</span> <span class="n">all_</span> <span class="p">(</span><span class="n">track</span> <span class="n">chinookDb</span><span class="p">))</span>
    <span class="n">guard_</span> <span class="p">(</span><span class="n">trackGenreId</span> <span class="n">track_</span> <span class="o">==.</span> <span class="n">just_</span> <span class="p">(</span><span class="n">pk</span> <span class="n">genre</span><span class="p">))</span>
    <span class="n">pure</span> <span class="p">(</span><span class="n">genre</span><span class="p">,</span> <span class="n">track_</span><span class="p">,</span> <span class="n">priceCnt</span><span class="p">,</span> <span class="n">trackLength</span><span class="p">)</span>
 </pre></div>
 
         </div>
     
-        <div role="tabpanel" class="tab-pane " id="tab-24-sqlite3">
-            <div class="codehilite"><pre><span></span><span class="go">SELECT &quot;t1&quot;.&quot;res0&quot; AS &quot;res0&quot;,</span>
-<span class="go">       &quot;t1&quot;.&quot;res1&quot; AS &quot;res1&quot;,</span>
-<span class="go">       &quot;t0&quot;.&quot;TrackId&quot; AS &quot;res2&quot;,</span>
-<span class="go">       &quot;t0&quot;.&quot;Name&quot; AS &quot;res3&quot;,</span>
-<span class="go">       &quot;t0&quot;.&quot;AlbumId&quot; AS &quot;res4&quot;,</span>
-<span class="go">       &quot;t0&quot;.&quot;MediaTypeId&quot; AS &quot;res5&quot;,</span>
-<span class="go">       &quot;t0&quot;.&quot;GenreId&quot; AS &quot;res6&quot;,</span>
-<span class="go">       &quot;t0&quot;.&quot;Composer&quot; AS &quot;res7&quot;,</span>
-<span class="go">       &quot;t0&quot;.&quot;Milliseconds&quot; AS &quot;res8&quot;,</span>
-<span class="go">       &quot;t0&quot;.&quot;Bytes&quot; AS &quot;res9&quot;,</span>
-<span class="go">       &quot;t0&quot;.&quot;UnitPrice&quot; AS &quot;res10&quot;,</span>
-<span class="go">       &quot;t1&quot;.&quot;res2&quot; AS &quot;res11&quot;,</span>
-<span class="go">       &quot;t1&quot;.&quot;res3&quot; AS &quot;res12&quot;</span>
-<span class="go">FROM &quot;Track&quot; AS &quot;t0&quot;</span>
-<span class="go">INNER JOIN</span>
-<span class="go">  (SELECT &quot;t0&quot;.&quot;res0&quot; AS &quot;res0&quot;,</span>
-<span class="go">          &quot;t0&quot;.&quot;res1&quot; AS &quot;res1&quot;,</span>
-<span class="go">          &quot;t0&quot;.&quot;res2&quot; AS &quot;res2&quot;,</span>
-<span class="go">          &quot;t0&quot;.&quot;res3&quot; AS &quot;res3&quot;</span>
-<span class="go">   FROM</span>
-<span class="go">     (SELECT &quot;t0&quot;.&quot;GenreId&quot; AS &quot;res0&quot;,</span>
-<span class="go">             &quot;t0&quot;.&quot;Name&quot; AS &quot;res1&quot;,</span>
-<span class="go">             COUNT(DISTINCT &quot;t1&quot;.&quot;UnitPrice&quot;) AS &quot;res2&quot;,</span>
-<span class="go">             (SUM(ALL &quot;t1&quot;.&quot;Milliseconds&quot;)) / (?) AS &quot;res3&quot;</span>
-<span class="go">      FROM &quot;Genre&quot; AS &quot;t0&quot;</span>
-<span class="go">      INNER JOIN &quot;Track&quot; AS &quot;t1&quot;</span>
-<span class="go">      GROUP BY &quot;t0&quot;.&quot;GenreId&quot;,</span>
-<span class="go">               &quot;t0&quot;.&quot;Name&quot;</span>
-<span class="go">      HAVING ((SUM(ALL &quot;t1&quot;.&quot;Milliseconds&quot;)) / (?))&gt;=(?)) AS &quot;t0&quot;) AS &quot;t1&quot;</span>
-<span class="go">WHERE (&quot;t0&quot;.&quot;GenreId&quot;)=(&quot;t1&quot;.&quot;res0&quot;);</span>
+        <div role="tabpanel" class="tab-pane " id="tab-24-Sqlite">
+            <div class="codehilite"><pre><span></span><span class="k">SELECT</span> <span class="ss">&quot;t1&quot;</span><span class="p">.</span><span class="ss">&quot;res0&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res0&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t1&quot;</span><span class="p">.</span><span class="ss">&quot;res1&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res1&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;TrackId&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res2&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;Name&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res3&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;AlbumId&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res4&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;MediaTypeId&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res5&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;GenreId&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res6&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;Composer&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res7&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;Milliseconds&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res8&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;Bytes&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res9&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;UnitPrice&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res10&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t1&quot;</span><span class="p">.</span><span class="ss">&quot;res2&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res11&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t1&quot;</span><span class="p">.</span><span class="ss">&quot;res3&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res12&quot;</span>
+<span class="k">FROM</span> <span class="ss">&quot;Track&quot;</span> <span class="k">AS</span> <span class="ss">&quot;t0&quot;</span>
+<span class="k">INNER</span> <span class="k">JOIN</span>
+  <span class="p">(</span><span class="k">SELECT</span> <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;res0&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res0&quot;</span><span class="p">,</span>
+          <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;res1&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res1&quot;</span><span class="p">,</span>
+          <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;res2&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res2&quot;</span><span class="p">,</span>
+          <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;res3&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res3&quot;</span>
+   <span class="k">FROM</span>
+     <span class="p">(</span><span class="k">SELECT</span> <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;GenreId&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res0&quot;</span><span class="p">,</span>
+             <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;Name&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res1&quot;</span><span class="p">,</span>
+             <span class="k">COUNT</span><span class="p">(</span><span class="k">DISTINCT</span> <span class="ss">&quot;t1&quot;</span><span class="p">.</span><span class="ss">&quot;UnitPrice&quot;</span><span class="p">)</span> <span class="k">AS</span> <span class="ss">&quot;res2&quot;</span><span class="p">,</span>
+             <span class="p">(</span><span class="n">COALESCE</span><span class="p">(</span><span class="k">SUM</span><span class="p">(</span><span class="k">ALL</span> <span class="ss">&quot;t1&quot;</span><span class="p">.</span><span class="ss">&quot;Milliseconds&quot;</span><span class="p">),</span> <span class="o">?</span><span class="p">))</span> <span class="o">/</span> <span class="p">(</span><span class="o">?</span><span class="p">)</span> <span class="k">AS</span> <span class="ss">&quot;res3&quot;</span>
+      <span class="k">FROM</span> <span class="ss">&quot;Genre&quot;</span> <span class="k">AS</span> <span class="ss">&quot;t0&quot;</span>
+      <span class="k">INNER</span> <span class="k">JOIN</span> <span class="ss">&quot;Track&quot;</span> <span class="k">AS</span> <span class="ss">&quot;t1&quot;</span>
+      <span class="k">GROUP</span> <span class="k">BY</span> <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;GenreId&quot;</span><span class="p">,</span>
+               <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;Name&quot;</span>
+      <span class="k">HAVING</span> <span class="p">((</span><span class="n">COALESCE</span><span class="p">(</span><span class="k">SUM</span><span class="p">(</span><span class="k">ALL</span> <span class="ss">&quot;t1&quot;</span><span class="p">.</span><span class="ss">&quot;Milliseconds&quot;</span><span class="p">),</span> <span class="o">?</span><span class="p">))</span> <span class="o">/</span> <span class="p">(</span><span class="o">?</span><span class="p">))</span><span class="o">&gt;=</span><span class="p">(</span><span class="o">?</span><span class="p">))</span> <span class="k">AS</span> <span class="ss">&quot;t0&quot;</span><span class="p">)</span> <span class="k">AS</span> <span class="ss">&quot;t1&quot;</span>
+<span class="k">WHERE</span> <span class="k">CASE</span>
+          <span class="k">WHEN</span> <span class="p">((</span><span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;GenreId&quot;</span><span class="p">)</span> <span class="k">IS</span> <span class="k">NULL</span><span class="p">)</span>
+               <span class="k">AND</span> <span class="p">((</span><span class="ss">&quot;t1&quot;</span><span class="p">.</span><span class="ss">&quot;res0&quot;</span><span class="p">)</span> <span class="k">IS</span> <span class="k">NULL</span><span class="p">)</span> <span class="k">THEN</span> <span class="o">?</span>
+          <span class="k">WHEN</span> <span class="p">((</span><span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;GenreId&quot;</span><span class="p">)</span> <span class="k">IS</span> <span class="k">NULL</span><span class="p">)</span>
+               <span class="k">OR</span> <span class="p">((</span><span class="ss">&quot;t1&quot;</span><span class="p">.</span><span class="ss">&quot;res0&quot;</span><span class="p">)</span> <span class="k">IS</span> <span class="k">NULL</span><span class="p">)</span> <span class="k">THEN</span> <span class="o">?</span>
+          <span class="k">ELSE</span> <span class="p">(</span><span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;GenreId&quot;</span><span class="p">)</span><span class="o">=</span><span class="p">(</span><span class="ss">&quot;t1&quot;</span><span class="p">.</span><span class="ss">&quot;res0&quot;</span><span class="p">)</span>
+      <span class="k">END</span><span class="p">;</span>
 
-<span class="go">-- With values: [SQLInteger 1000,SQLInteger 1000,SQLInteger 300000]</span>
+<span class="c1">-- With values: [SQLInteger 0,SQLInteger 1000,SQLInteger 0,SQLInteger 1000,SQLInteger 300000,SQLInteger 1,SQLInteger 0]</span>
 </pre></div>
 
         </div>
     
-        <div role="tabpanel" class="tab-pane " id="tab-24-postgres">
-            <div class="codehilite"><pre><span></span><span class="k">SELECT</span> <span class="s s-Name">&quot;t1&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;res0&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;res0&quot;</span><span class="p">,</span>
-       <span class="s s-Name">&quot;t1&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;res1&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;res1&quot;</span><span class="p">,</span>
-       <span class="s s-Name">&quot;t0&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;TrackId&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;res2&quot;</span><span class="p">,</span>
-       <span class="s s-Name">&quot;t0&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;Name&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;res3&quot;</span><span class="p">,</span>
-       <span class="s s-Name">&quot;t0&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;AlbumId&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;res4&quot;</span><span class="p">,</span>
-       <span class="s s-Name">&quot;t0&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;MediaTypeId&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;res5&quot;</span><span class="p">,</span>
-       <span class="s s-Name">&quot;t0&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;GenreId&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;res6&quot;</span><span class="p">,</span>
-       <span class="s s-Name">&quot;t0&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;Composer&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;res7&quot;</span><span class="p">,</span>
-       <span class="s s-Name">&quot;t0&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;Milliseconds&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;res8&quot;</span><span class="p">,</span>
-       <span class="s s-Name">&quot;t0&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;Bytes&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;res9&quot;</span><span class="p">,</span>
-       <span class="s s-Name">&quot;t0&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;UnitPrice&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;res10&quot;</span><span class="p">,</span>
-       <span class="s s-Name">&quot;t1&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;res2&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;res11&quot;</span><span class="p">,</span>
-       <span class="s s-Name">&quot;t1&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;res3&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;res12&quot;</span>
-<span class="k">FROM</span> <span class="s s-Name">&quot;Track&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;t0&quot;</span>
+        <div role="tabpanel" class="tab-pane " id="tab-24-Postgres">
+            <div class="codehilite"><pre><span></span><span class="k">SELECT</span> <span class="ss">&quot;t1&quot;</span><span class="p">.</span><span class="ss">&quot;res0&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res0&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t1&quot;</span><span class="p">.</span><span class="ss">&quot;res1&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res1&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;TrackId&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res2&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;Name&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res3&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;AlbumId&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res4&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;MediaTypeId&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res5&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;GenreId&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res6&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;Composer&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res7&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;Milliseconds&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res8&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;Bytes&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res9&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;UnitPrice&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res10&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t1&quot;</span><span class="p">.</span><span class="ss">&quot;res2&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res11&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t1&quot;</span><span class="p">.</span><span class="ss">&quot;res3&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res12&quot;</span>
+<span class="k">FROM</span> <span class="ss">&quot;Track&quot;</span> <span class="k">AS</span> <span class="ss">&quot;t0&quot;</span>
 <span class="k">CROSS</span> <span class="k">JOIN</span>
-  <span class="p">(</span><span class="k">SELECT</span> <span class="s s-Name">&quot;t0&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;res0&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;res0&quot;</span><span class="p">,</span>
-          <span class="s s-Name">&quot;t0&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;res1&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;res1&quot;</span><span class="p">,</span>
-          <span class="s s-Name">&quot;t0&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;res2&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;res2&quot;</span><span class="p">,</span>
-          <span class="s s-Name">&quot;t0&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;res3&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;res3&quot;</span>
+  <span class="p">(</span><span class="k">SELECT</span> <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;res0&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res0&quot;</span><span class="p">,</span>
+          <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;res1&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res1&quot;</span><span class="p">,</span>
+          <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;res2&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res2&quot;</span><span class="p">,</span>
+          <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;res3&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res3&quot;</span>
    <span class="k">FROM</span>
-     <span class="p">(</span><span class="k">SELECT</span> <span class="s s-Name">&quot;t0&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;GenreId&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;res0&quot;</span><span class="p">,</span>
-             <span class="s s-Name">&quot;t0&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;Name&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;res1&quot;</span><span class="p">,</span>
-             <span class="n">COUNT</span><span class="p">(</span><span class="k">DISTINCT</span> <span class="s s-Name">&quot;t1&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;UnitPrice&quot;</span><span class="p">)</span> <span class="k">AS</span> <span class="s s-Name">&quot;res2&quot;</span><span class="p">,</span>
-             <span class="p">(</span><span class="n">SUM</span><span class="p">(</span><span class="k">ALL</span> <span class="s s-Name">&quot;t1&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;Milliseconds&quot;</span><span class="p">))</span> <span class="o">/</span> <span class="p">(</span><span class="mf">1000</span><span class="p">)</span> <span class="k">AS</span> <span class="s s-Name">&quot;res3&quot;</span>
-      <span class="k">FROM</span> <span class="s s-Name">&quot;Genre&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;t0&quot;</span>
-      <span class="k">CROSS</span> <span class="k">JOIN</span> <span class="s s-Name">&quot;Track&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;t1&quot;</span>
-      <span class="k">GROUP</span> <span class="k">BY</span> <span class="s s-Name">&quot;t0&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;GenreId&quot;</span><span class="p">,</span>
-               <span class="s s-Name">&quot;t0&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;Name&quot;</span>
-      <span class="k">HAVING</span> <span class="p">((</span><span class="n">SUM</span><span class="p">(</span><span class="k">ALL</span> <span class="s s-Name">&quot;t1&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;Milliseconds&quot;</span><span class="p">))</span> <span class="o">/</span> <span class="p">(</span><span class="mf">1000</span><span class="p">))</span> <span class="o">&gt;=</span> <span class="p">(</span><span class="mf">300000</span><span class="p">))</span> <span class="k">AS</span> <span class="s s-Name">&quot;t0&quot;</span><span class="p">)</span> <span class="k">AS</span> <span class="s s-Name">&quot;t1&quot;</span>
-<span class="k">WHERE</span> <span class="p">(</span><span class="s s-Name">&quot;t0&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;GenreId&quot;</span><span class="p">)</span> <span class="o">=</span> <span class="p">(</span><span class="s s-Name">&quot;t1&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;res0&quot;</span><span class="p">)</span>
+     <span class="p">(</span><span class="k">SELECT</span> <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;GenreId&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res0&quot;</span><span class="p">,</span>
+             <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;Name&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res1&quot;</span><span class="p">,</span>
+             <span class="k">COUNT</span><span class="p">(</span><span class="k">DISTINCT</span> <span class="ss">&quot;t1&quot;</span><span class="p">.</span><span class="ss">&quot;UnitPrice&quot;</span><span class="p">)</span> <span class="k">AS</span> <span class="ss">&quot;res2&quot;</span><span class="p">,</span>
+             <span class="p">(</span><span class="n">COALESCE</span><span class="p">(</span><span class="k">SUM</span><span class="p">(</span><span class="k">ALL</span> <span class="ss">&quot;t1&quot;</span><span class="p">.</span><span class="ss">&quot;Milliseconds&quot;</span><span class="p">),</span> <span class="mi">0</span><span class="p">))</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1000</span><span class="p">)</span> <span class="k">AS</span> <span class="ss">&quot;res3&quot;</span>
+      <span class="k">FROM</span> <span class="ss">&quot;Genre&quot;</span> <span class="k">AS</span> <span class="ss">&quot;t0&quot;</span>
+      <span class="k">CROSS</span> <span class="k">JOIN</span> <span class="ss">&quot;Track&quot;</span> <span class="k">AS</span> <span class="ss">&quot;t1&quot;</span>
+      <span class="k">GROUP</span> <span class="k">BY</span> <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;GenreId&quot;</span><span class="p">,</span>
+               <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;Name&quot;</span>
+      <span class="k">HAVING</span> <span class="p">((</span><span class="n">COALESCE</span><span class="p">(</span><span class="k">SUM</span><span class="p">(</span><span class="k">ALL</span> <span class="ss">&quot;t1&quot;</span><span class="p">.</span><span class="ss">&quot;Milliseconds&quot;</span><span class="p">),</span> <span class="mi">0</span><span class="p">))</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1000</span><span class="p">))</span> <span class="o">&gt;=</span> <span class="p">(</span><span class="mi">300000</span><span class="p">))</span> <span class="k">AS</span> <span class="ss">&quot;t0&quot;</span><span class="p">)</span> <span class="k">AS</span> <span class="ss">&quot;t1&quot;</span>
+<span class="k">WHERE</span> <span class="p">(</span><span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;GenreId&quot;</span><span class="p">)</span> <span class="k">IS</span> <span class="k">NOT</span> <span class="k">DISTINCT</span>
+  <span class="k">FROM</span> <span class="p">(</span><span class="ss">&quot;t1&quot;</span><span class="p">.</span><span class="ss">&quot;res0&quot;</span><span class="p">)</span>
 </pre></div>
 
         </div>

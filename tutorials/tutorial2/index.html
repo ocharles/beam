@@ -767,6 +767,7 @@ their homes. Let's build an addresses model to allow users to add home addresses
 to their profile. Our table will store United States addresses for now. An
 address in the United States consists of</p>
 <ul>
+<li>an auto-incrementing primary key</li>
 <li>one required house number and street line</li>
 <li>an optional apartment/suite number line</li>
 <li>a required city</li>
@@ -776,7 +777,7 @@ address in the United States consists of</p>
 <p>Let's build the <code>AddressT</code> table. <code>AddressT</code> will follow a similar formula to
 <code>UserT</code>, but it will contain a reference to a <code>UserT</code> table. ]</p>
 <div class="codehilite"><pre><span></span><span class="kr">data</span> <span class="kt">AddressT</span> <span class="n">f</span> <span class="ow">=</span> <span class="kt">Address</span>
-                <span class="p">{</span> <span class="n">_addressId</span>    <span class="ow">::</span> <span class="kt">C</span> <span class="n">f</span> <span class="p">(</span><span class="kt">Auto</span> <span class="kt">Int</span><span class="p">)</span>
+                <span class="p">{</span> <span class="n">_addressId</span>    <span class="ow">::</span> <span class="kt">C</span> <span class="n">f</span> <span class="kt">Int</span>
                 <span class="p">,</span> <span class="n">_addressLine1</span> <span class="ow">::</span> <span class="kt">C</span> <span class="n">f</span> <span class="kt">Text</span>
                 <span class="p">,</span> <span class="n">_addressLine2</span> <span class="ow">::</span> <span class="kt">C</span> <span class="n">f</span> <span class="p">(</span><span class="kt">Maybe</span> <span class="kt">Text</span><span class="p">)</span>
                 <span class="p">,</span> <span class="n">_addressCity</span>  <span class="ow">::</span> <span class="kt">C</span> <span class="n">f</span> <span class="kt">Text</span>
@@ -790,9 +791,9 @@ address in the United States consists of</p>
 <span class="kr">deriving</span> <span class="kr">instance</span> <span class="kt">Show</span> <span class="kt">Address</span>
 
 <span class="kr">instance</span> <span class="kt">Table</span> <span class="kt">AddressT</span> <span class="kr">where</span>
-    <span class="kr">data</span> <span class="kt">PrimaryKey</span> <span class="kt">AddressT</span> <span class="n">f</span> <span class="ow">=</span> <span class="kt">AddressId</span> <span class="p">(</span><span class="kt">Columnar</span> <span class="n">f</span> <span class="p">(</span><span class="kt">Auto</span> <span class="kt">Int</span><span class="p">))</span> <span class="kr">deriving</span> <span class="kt">Generic</span>
+    <span class="kr">data</span> <span class="kt">PrimaryKey</span> <span class="kt">AddressT</span> <span class="n">f</span> <span class="ow">=</span> <span class="kt">AddressId</span> <span class="p">(</span><span class="kt">Columnar</span> <span class="n">f</span> <span class="kt">Int</span><span class="p">)</span> <span class="kr">deriving</span> <span class="kt">Generic</span>
     <span class="n">primaryKey</span> <span class="ow">=</span> <span class="kt">AddressId</span> <span class="o">.</span> <span class="n">_addressId</span>
-<span class="kr">type</span> <span class="kt">AddressId</span> <span class="ow">=</span> <span class="kt">PrimaryKey</span> <span class="kt">AddressT</span> <span class="kt">Identity</span> <span class="c1">-- For convenience    </span>
+<span class="kr">type</span> <span class="kt">AddressId</span> <span class="ow">=</span> <span class="kt">PrimaryKey</span> <span class="kt">AddressT</span> <span class="kt">Identity</span> <span class="c1">-- For convenience</span>
 
 <span class="kr">instance</span> <span class="kt">Beamable</span> <span class="kt">AddressT</span>
 <span class="kr">instance</span> <span class="kt">Beamable</span> <span class="p">(</span><span class="kt">PrimaryKey</span> <span class="kt">AddressT</span><span class="p">)</span>
@@ -805,37 +806,20 @@ address in the United States consists of</p>
 <code>C</code> is a type synonym for <code>Columnar</code>, and some find it reduces the syntactic
 overhead of model declaration.</p>
 </div>
-<p>The lines of particular interest are the declarations for <code>_addressId</code> and
-<code>_addressForUser</code>.</p>
-<p>The <code>_addressId</code> field is declared with type <code>Auto</code>. <code>Auto</code> is defined in
-<code>Database.Beam.Backend.Types</code> as</p>
-<div class="codehilite"><pre><span></span><span class="kr">newtype</span> <span class="kt">Auto</span> <span class="n">x</span> <span class="ow">=</span> <span class="kt">Auto</span> <span class="p">{</span> <span class="n">unAuto</span> <span class="ow">::</span> <span class="kt">Maybe</span> <span class="n">x</span> <span class="p">}</span>
-</pre></div>
-
-
-<p><code>Auto x</code> describes a field that mainly acts the same as <code>x</code> during marshaling
-and unmarshaling. The only difference is that, if the wrapped value is
-<code>Nothing</code>, then <code>Auto x</code> will make sure to use whatever syntax is necessary to
-have the database assign the default value. The unmarshaled <code>Auto x</code> value is
-always a wrapper over a <code>Just</code>. This allows the common use case of defaulted
-auto increment primary key columns.</p>
-<div class="admonition warning">
-<p class="admonition-title">Warning</p>
-<p>Unfortunately, the invariant of an unmarshaled <code>Auto</code> always having a <code>Just</code>
-value is not currently checked at compile time. Future versions of beam will
-likely be more strict about this.</p>
-</div>
-<p>The second field of interest is <code>_addressForUser</code>, which is declared as a
-<code>PrimaryKey UserT f</code>. This pulls in all the columns necessary for referencing a
-<code>UserT</code> <sup id="fnref:1"><a class="footnote-ref" href="#fn:1" rel="footnote">1</a></sup>. Later, we'll also see how beam can use the field to automatically
-create JOINs.</p>
-<p>We have all the tables we need now, so let's go ahead and redefine our newest database type.</p>
+<p>Notice that <code>_addressForUser</code> is declared as a <code>PrimaryKey UserT f</code>. This pulls
+in all the columns necessary for referencing a <code>UserT</code> <sup id="fnref:1"><a class="footnote-ref" href="#fn:1" rel="footnote">1</a></sup>. Later, we'll also
+see how beam can use the field to automatically create JOINs.</p>
+<p>Notice also that <code>_addressId</code> corresponds to our auto-increminting primary key
+field. In general, beam doesn't care if the underlying field is assigned
+automatically, only about the type of final values of that field.</p>
+<p>We have all the tables we need now, so let's go ahead and redefine our newest
+database type.</p>
 <div class="codehilite"><pre><span></span><span class="kr">data</span> <span class="kt">ShoppingCartDb</span> <span class="n">f</span> <span class="ow">=</span> <span class="kt">ShoppingCartDb</span>
                       <span class="p">{</span> <span class="n">_shoppingCartUsers</span>         <span class="ow">::</span> <span class="n">f</span> <span class="p">(</span><span class="kt">TableEntity</span> <span class="kt">UserT</span><span class="p">)</span>
                       <span class="p">,</span> <span class="n">_shoppingCartUserAddresses</span> <span class="ow">::</span> <span class="n">f</span> <span class="p">(</span><span class="kt">TableEntity</span> <span class="kt">AddressT</span><span class="p">)</span> <span class="p">}</span>
                         <span class="kr">deriving</span> <span class="kt">Generic</span>
 
-<span class="kr">instance</span> <span class="kt">Database</span> <span class="kt">ShoppingCartDb</span>
+<span class="kr">instance</span> <span class="kt">Database</span> <span class="n">be</span> <span class="kt">ShoppingCartDb</span>
 </pre></div>
 
 
@@ -871,7 +855,7 @@ update field and column names. This is best illustrated by an example.</p>
     <span class="kr">deriving</span> <span class="kt">Generic</span>
 
 <span class="kr">data</span> <span class="kt">AddressT</span> <span class="n">f</span> <span class="ow">=</span> <span class="kt">Address</span>
-                <span class="p">{</span> <span class="n">_addressId</span>    <span class="ow">::</span> <span class="kt">C</span> <span class="n">f</span> <span class="p">(</span><span class="kt">Auto</span> <span class="kt">Int</span><span class="p">)</span>
+                <span class="p">{</span> <span class="n">_addressId</span>    <span class="ow">::</span> <span class="kt">C</span> <span class="n">f</span> <span class="kt">Int</span>
                 <span class="p">,</span> <span class="n">_addressLine1</span> <span class="ow">::</span> <span class="kt">C</span> <span class="n">f</span> <span class="kt">Text</span>
                 <span class="p">,</span> <span class="n">_addressLine2</span> <span class="ow">::</span> <span class="kt">C</span> <span class="n">f</span> <span class="p">(</span><span class="kt">Maybe</span> <span class="kt">Text</span><span class="p">)</span>
                 <span class="p">,</span> <span class="n">_addressCity</span>  <span class="ow">::</span> <span class="kt">C</span> <span class="n">f</span> <span class="kt">Text</span>
@@ -944,10 +928,13 @@ polymorphic Van Laarhoven lens.</p>
 <p>We can bring these lenses into scope globally via a global pattern match against
 <code>tableLenses</code>. For example, to get lenses for each column of the <code>AddressT</code> and
 <code>UserT</code> table.</p>
-<div class="codehilite"><pre><span></span><span class="kt">Address</span> <span class="p">(</span><span class="kt">LensFor</span> <span class="n">addressId</span><span class="p">)</span>    <span class="p">(</span><span class="kt">LensFor</span> <span class="n">addressLine1</span><span class="p">)</span>
+<div class="codehilite"><pre><span></span><span class="c1">-- Add the following to the top of the file, for GHC &gt;8.2</span>
+<span class="cm">{-#  LANGUAGE ImpredicativeTypes #-}</span>
+
+<span class="kt">Address</span> <span class="p">(</span><span class="kt">LensFor</span> <span class="n">addressId</span><span class="p">)</span>    <span class="p">(</span><span class="kt">LensFor</span> <span class="n">addressLine1</span><span class="p">)</span>
         <span class="p">(</span><span class="kt">LensFor</span> <span class="n">addressLine2</span><span class="p">)</span> <span class="p">(</span><span class="kt">LensFor</span> <span class="n">addressCity</span><span class="p">)</span>
         <span class="p">(</span><span class="kt">LensFor</span> <span class="n">addressState</span><span class="p">)</span> <span class="p">(</span><span class="kt">LensFor</span> <span class="n">addressZip</span><span class="p">)</span>
-        <span class="p">(</span><span class="kt">UserId</span> <span class="p">(</span><span class="kt">LensFor</span> <span class="n">addressForUserId</span><span class="p">))</span> <span class="ow">=</span> 
+        <span class="p">(</span><span class="kt">UserId</span> <span class="p">(</span><span class="kt">LensFor</span> <span class="n">addressForUserId</span><span class="p">))</span> <span class="ow">=</span>
         <span class="n">tableLenses</span>
 
 <span class="kt">User</span> <span class="p">(</span><span class="kt">LensFor</span> <span class="n">userEmail</span><span class="p">)</span>    <span class="p">(</span><span class="kt">LensFor</span> <span class="n">userFirstName</span><span class="p">)</span>
@@ -956,6 +943,12 @@ polymorphic Van Laarhoven lens.</p>
 </pre></div>
 
 
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The <code>ImpredicativeTypes</code> language extension is necessary for newer
+GHC to allow the polymorphically typed lenses to be introduced at
+the top-level. Older GHCs were more lenient.</p>
+</div>
 <p>As in tables, we can generate lenses for databases via the <code>dbLenses</code> function.</p>
 <div class="codehilite"><pre><span></span><span class="kt">ShoppingCartDb</span> <span class="p">(</span><span class="kt">TableLens</span> <span class="n">shoppingCartUsers</span><span class="p">)</span>
                <span class="p">(</span><span class="kt">TableLens</span> <span class="n">shoppingCartUserAddresses</span><span class="p">)</span> <span class="ow">=</span>
@@ -1005,30 +998,38 @@ opening up a connection for us to use in the rest of the tutorial.</p>
 </pre></div>
 
 
-<p>Now that we have some <code>User</code> objects, we can create associated addresses. Let's give James one
-address, Betty two addresses, and Sam none.</p>
-<div class="codehilite"><pre><span></span><span class="kr">let</span> <span class="n">addresses</span> <span class="ow">=</span> <span class="p">[</span> <span class="kt">Address</span> <span class="p">(</span><span class="kt">Auto</span> <span class="kt">Nothing</span><span class="p">)</span> <span class="s">&quot;123 Little Street&quot;</span> <span class="kt">Nothing</span> <span class="s">&quot;Boston&quot;</span> <span class="s">&quot;MA&quot;</span> <span class="s">&quot;12345&quot;</span> <span class="p">(</span><span class="n">pk</span> <span class="n">james</span><span class="p">)</span>
-                <span class="p">,</span> <span class="kt">Address</span> <span class="p">(</span><span class="kt">Auto</span> <span class="kt">Nothing</span><span class="p">)</span> <span class="s">&quot;222 Main Street&quot;</span> <span class="p">(</span><span class="kt">Just</span> <span class="s">&quot;Ste 1&quot;</span><span class="p">)</span> <span class="s">&quot;Houston&quot;</span> <span class="s">&quot;TX&quot;</span> <span class="s">&quot;8888&quot;</span> <span class="p">(</span><span class="n">pk</span> <span class="n">betty</span><span class="p">)</span>
-                <span class="p">,</span> <span class="kt">Address</span> <span class="p">(</span><span class="kt">Auto</span> <span class="kt">Nothing</span><span class="p">)</span> <span class="s">&quot;9999 Residence Ave&quot;</span> <span class="kt">Nothing</span> <span class="s">&quot;Sugarland&quot;</span> <span class="s">&quot;TX&quot;</span> <span class="s">&quot;8989&quot;</span> <span class="p">(</span><span class="n">pk</span> <span class="n">betty</span><span class="p">)</span> <span class="p">]</span>
+<p>Now that we have some <code>User</code> objects, we can create associated addresses. Notice
+that above, we used <code>insertValues</code> to insert concrete <code>User</code> rows. This worked
+because we could determine every field of <code>User</code> before insertion. <code>Address</code>es
+however have a pesky auto-incrementing primary key field. We can get around this
+by inserting <em>expressions</em> instead of <em>values</em>. We can use <code>default_</code> to stand
+for a value that the database needs to fill in. We can use <code>val_</code> to lift a
+literal value into an expression.</p>
+<p>With that in mind, let's give James one address, Betty two addresses, and Sam none.</p>
+<div class="codehilite"><pre><span></span><span class="kr">let</span> <span class="n">addresses</span> <span class="ow">=</span> <span class="p">[</span> <span class="kt">Address</span> <span class="n">default_</span> <span class="p">(</span><span class="n">val_</span> <span class="s">&quot;123 Little Street&quot;</span><span class="p">)</span> <span class="p">(</span><span class="n">val_</span> <span class="kt">Nothing</span><span class="p">)</span> <span class="p">(</span><span class="n">val_</span> <span class="s">&quot;Boston&quot;</span><span class="p">)</span> <span class="p">(</span><span class="n">val_</span> <span class="s">&quot;MA&quot;</span><span class="p">)</span> <span class="p">(</span><span class="n">val_</span> <span class="s">&quot;12345&quot;</span><span class="p">)</span> <span class="p">(</span><span class="n">pk</span> <span class="n">james</span><span class="p">)</span>
+                <span class="p">,</span> <span class="kt">Address</span> <span class="n">default_</span> <span class="p">(</span><span class="n">val_</span> <span class="s">&quot;222 Main Street&quot;</span><span class="p">)</span> <span class="p">(</span><span class="n">val_</span> <span class="p">(</span><span class="kt">Just</span> <span class="s">&quot;Ste 1&quot;</span><span class="p">))</span> <span class="p">(</span><span class="n">val_</span> <span class="s">&quot;Houston&quot;</span><span class="p">)</span> <span class="p">(</span><span class="n">val_</span> <span class="s">&quot;TX&quot;</span><span class="p">)</span> <span class="p">(</span><span class="n">val_</span> <span class="s">&quot;8888&quot;</span><span class="p">)</span> <span class="p">(</span><span class="n">pk</span> <span class="n">betty</span><span class="p">)</span>
+                <span class="p">,</span> <span class="kt">Address</span> <span class="n">default_</span> <span class="p">(</span><span class="n">val_</span> <span class="s">&quot;9999 Residence Ave&quot;</span><span class="p">)</span> <span class="p">(</span><span class="n">val_</span> <span class="kt">Nothing</span><span class="p">)</span> <span class="p">(</span><span class="n">val_</span> <span class="s">&quot;Sugarland&quot;</span><span class="p">)</span> <span class="p">(</span><span class="n">val_</span> <span class="s">&quot;TX&quot;</span><span class="p">)</span> <span class="p">(</span><span class="n">val_</span> <span class="s">&quot;8989&quot;</span><span class="p">)</span> <span class="p">(</span><span class="n">pk</span> <span class="n">betty</span><span class="p">)</span> <span class="p">]</span>
 
 <span class="nf">withDatabaseDebug</span> <span class="n">putStrLn</span> <span class="n">conn</span> <span class="o">$</span> <span class="n">runInsert</span> <span class="o">$</span>
   <span class="n">insert</span> <span class="p">(</span><span class="n">_shoppingCartUserAddresses</span> <span class="n">shoppingCartDb</span><span class="p">)</span> <span class="o">$</span>
-  <span class="n">insertValues</span> <span class="n">addresses</span>
+  <span class="n">insertExpressions</span> <span class="n">addresses</span>
 </pre></div>
 
 
-<p>Notice that we used the <code>pk</code> function to assign the reference to the <code>UserT</code> table. <code>pk</code> is a
-synonym of the <code>primaryKey</code> function from the <code>Table</code> type class. It should be clear what's going
-on, but if it's not, let's ask GHCi.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Previous versions of beam used a type called <code>Auto</code> to insert values into
+default fields. It was found to be a leaky abstraction and removed in version
+0.7.0.0. Current best practices are to use <code>default_</code> instead.</p>
+</div>
+<p>Notice that we used the <code>pk</code> function to assign the reference to the <code>UserT</code>
+table. <code>pk</code> is a synonym of the <code>primaryKey</code> function from the <code>Table</code> type
+class. It should be clear what's going on, but if it's not, let's ask GHCi.</p>
 <div class="codehilite"><pre><span></span><span class="go">*NextSteps&gt; pk (james :: User)</span>
 <span class="go">UserId &quot;james@example.com&quot;</span>
 </pre></div>
 
 
-<p>Notice also that we set <code>_addressId</code> to <code>Auto Nothing</code>. As mentioned above, the
-<code>AutoId</code> type means the addresses won't have an id until they're inserted into
-the database. This could be an issue if we want to refer to the addresses in the
-future.</p>
 <p>If we query for all the addresses, we'll see that SQLite has assigned them an
 appropriate id.</p>
 <p>First, let's use the new lenses we made. Make sure to import <code>Lens.Micro</code> or
@@ -1039,25 +1040,25 @@ appropriate id.</p>
         <ul class="nav nav-tabs">
             
         <li class="nav-item">
-            <a href="#tab-0-haskell" aria-controls="tab-0-haskell" role="tab" data-toggle="tab" data-lang="haskell">Haskell</a>
+            <a href="#tab-0-Haskell" aria-controls="tab-0-Haskell" role="tab" data-toggle="tab" data-lang="haskell">Haskell</a>
         </li>
     
         <li class="nav-item">
-            <a href="#tab-0-sql" aria-controls="tab-0-sql" role="tab" data-toggle="tab" data-lang="sql">Sql</a>
+            <a href="#tab-0-Sql" aria-controls="tab-0-Sql" role="tab" data-toggle="tab" data-lang="sql">Sql</a>
         </li>
     
         <li class="nav-item">
-            <a href="#tab-0-console" aria-controls="tab-0-console" role="tab" data-toggle="tab" data-lang="console">Console</a>
+            <a href="#tab-0-Console" aria-controls="tab-0-Console" role="tab" data-toggle="tab" data-lang="console">Console</a>
         </li>
     
         </ul>
     
         <div class="tab-content">
             
-        <div role="tabpanel" class="tab-pane active" id="tab-0-haskell">
+        <div role="tabpanel" class="tab-pane active" id="tab-0-Haskell">
             <div class="codehilite"><pre><span></span><span class="c1">-- import Lens.Micro</span>
 <span class="c1">-- import Control.Lens</span>
-<span class="nf">addresses</span> <span class="ow">&lt;-</span> <span class="n">withDatabaseDebug</span> <span class="n">putStrLn</span> <span class="n">conn</span> <span class="o">$</span> 
+<span class="nf">addresses</span> <span class="ow">&lt;-</span> <span class="n">withDatabaseDebug</span> <span class="n">putStrLn</span> <span class="n">conn</span> <span class="o">$</span>
              <span class="n">runSelectReturningList</span> <span class="o">$</span>
              <span class="n">select</span> <span class="p">(</span><span class="n">all_</span> <span class="p">(</span><span class="n">shoppingCartDb</span> <span class="o">^.</span> <span class="n">shoppingCartUserAddresses</span><span class="p">))</span>
 <span class="nf">mapM_</span> <span class="n">print</span> <span class="n">addresses</span>
@@ -1065,7 +1066,7 @@ appropriate id.</p>
 
         </div>
     
-        <div role="tabpanel" class="tab-pane " id="tab-0-sql">
+        <div role="tabpanel" class="tab-pane " id="tab-0-Sql">
             <div class="codehilite"><pre><span></span><span class="k">SELECT</span> <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;id&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res0&quot;</span><span class="p">,</span>
        <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;address1&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res1&quot;</span><span class="p">,</span>
        <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;address2&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res2&quot;</span><span class="p">,</span>
@@ -1080,25 +1081,28 @@ appropriate id.</p>
 
         </div>
     
-        <div role="tabpanel" class="tab-pane " id="tab-0-console">
-            <div class="codehilite"><pre><span></span><span class="go">Address {_addressId = Auto {unAuto = Just 1}, _addressLine1 = &quot;123 Little Street&quot;,</span>
-<span class="go">                                              _addressLine2 = Nothing,</span>
-<span class="go">                                                              _addressCity = &quot;Boston&quot;,</span>
-<span class="go">                                                              _addressState = &quot;MA&quot;,</span>
-<span class="go">                                                              _addressZip = &quot;12345&quot;,</span>
-<span class="go">                                                              _addressForUser = UserId &quot;james@example.com&quot;} --</span>
-<span class="go">Address {_addressId = Auto {unAuto = Just 2}, _addressLine1 = &quot;222 Main Street&quot;,</span>
-<span class="go">                                              _addressLine2 = Just &quot;Ste 1&quot;,</span>
-<span class="go">                                              _addressCity = &quot;Houston&quot;,</span>
-<span class="go">                                              _addressState = &quot;TX&quot;,</span>
-<span class="go">                                              _addressZip = &quot;8888&quot;,</span>
-<span class="go">                                              _addressForUser = UserId &quot;betty@example.com&quot;} --</span>
-<span class="go">Address {_addressId = Auto {unAuto = Just 3}, _addressLine1 = &quot;9999 Residence Ave&quot;,</span>
-<span class="go">                                              _addressLine2 = Nothing,</span>
-<span class="go">                                                              _addressCity = &quot;Sugarland&quot;,</span>
-<span class="go">                                                              _addressState = &quot;TX&quot;,</span>
-<span class="go">                                                              _addressZip = &quot;8989&quot;,</span>
-<span class="go">                                                              _addressForUser = UserId &quot;betty@example.com&quot;} --</span>
+        <div role="tabpanel" class="tab-pane " id="tab-0-Console">
+            <div class="codehilite"><pre><span></span><span class="go">Address {_addressId = 1,</span>
+<span class="go">         _addressLine1 = &quot;123 Little Street&quot;,</span>
+<span class="go">         _addressLine2 = Nothing,</span>
+<span class="go">                         _addressCity = &quot;Boston&quot;,</span>
+<span class="go">                         _addressState = &quot;MA&quot;,</span>
+<span class="go">                         _addressZip = &quot;12345&quot;,</span>
+<span class="go">                         _addressForUser = UserId &quot;james@example.com&quot;} --</span>
+<span class="go">Address {_addressId = 2,</span>
+<span class="go">         _addressLine1 = &quot;222 Main Street&quot;,</span>
+<span class="go">         _addressLine2 = Just &quot;Ste 1&quot;,</span>
+<span class="go">         _addressCity = &quot;Houston&quot;,</span>
+<span class="go">         _addressState = &quot;TX&quot;,</span>
+<span class="go">         _addressZip = &quot;8888&quot;,</span>
+<span class="go">         _addressForUser = UserId &quot;betty@example.com&quot;} --</span>
+<span class="go">Address {_addressId = 3,</span>
+<span class="go">         _addressLine1 = &quot;9999 Residence Ave&quot;,</span>
+<span class="go">         _addressLine2 = Nothing,</span>
+<span class="go">                         _addressCity = &quot;Sugarland&quot;,</span>
+<span class="go">                         _addressState = &quot;TX&quot;,</span>
+<span class="go">                         _addressZip = &quot;8989&quot;,</span>
+<span class="go">                         _addressForUser = UserId &quot;betty@example.com&quot;} --</span>
 </pre></div>
 
         </div>
@@ -1157,22 +1161,22 @@ do. It follows that queries also expose a monadic interface.</p>
         <ul class="nav nav-tabs">
             
         <li class="nav-item">
-            <a href="#tab-1-haskell" aria-controls="tab-1-haskell" role="tab" data-toggle="tab" data-lang="haskell">Haskell</a>
+            <a href="#tab-1-Haskell" aria-controls="tab-1-Haskell" role="tab" data-toggle="tab" data-lang="haskell">Haskell</a>
         </li>
     
         <li class="nav-item">
-            <a href="#tab-1-sql" aria-controls="tab-1-sql" role="tab" data-toggle="tab" data-lang="sql">Sql</a>
+            <a href="#tab-1-Sql" aria-controls="tab-1-Sql" role="tab" data-toggle="tab" data-lang="sql">Sql</a>
         </li>
     
         <li class="nav-item">
-            <a href="#tab-1-console" aria-controls="tab-1-console" role="tab" data-toggle="tab" data-lang="console">Console</a>
+            <a href="#tab-1-Console" aria-controls="tab-1-Console" role="tab" data-toggle="tab" data-lang="console">Console</a>
         </li>
     
         </ul>
     
         <div class="tab-content">
             
-        <div role="tabpanel" class="tab-pane active" id="tab-1-haskell">
+        <div role="tabpanel" class="tab-pane active" id="tab-1-Haskell">
             <div class="codehilite"><pre><span></span><span class="nf">allPairs</span> <span class="ow">&lt;-</span> <span class="n">withDatabaseDebug</span> <span class="n">putStrLn</span> <span class="n">conn</span> <span class="o">$</span>
             <span class="n">runSelectReturningList</span> <span class="o">$</span> <span class="n">select</span> <span class="o">$</span> <span class="kr">do</span>
               <span class="n">user</span> <span class="ow">&lt;-</span> <span class="n">all_</span> <span class="p">(</span><span class="n">shoppingCartDb</span> <span class="o">^.</span> <span class="n">shoppingCartUsers</span><span class="p">)</span>
@@ -1184,7 +1188,7 @@ do. It follows that queries also expose a monadic interface.</p>
 
         </div>
     
-        <div role="tabpanel" class="tab-pane " id="tab-1-sql">
+        <div role="tabpanel" class="tab-pane " id="tab-1-Sql">
             <div class="codehilite"><pre><span></span><span class="k">SELECT</span> <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;email&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res0&quot;</span><span class="p">,</span>
        <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;first_name&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res1&quot;</span><span class="p">,</span>
        <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;last_name&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res2&quot;</span><span class="p">,</span>
@@ -1204,88 +1208,97 @@ do. It follows that queries also expose a monadic interface.</p>
 
         </div>
     
-        <div role="tabpanel" class="tab-pane " id="tab-1-console">
+        <div role="tabpanel" class="tab-pane " id="tab-1-Console">
             <div class="codehilite"><pre><span></span><span class="go">(User {_userEmail = &quot;james@example.com&quot;,</span>
 <span class="go">       _userFirstName = &quot;James&quot;,</span>
 <span class="go">       _userLastName = &quot;Smith&quot;,</span>
-<span class="go">       _userPassword = &quot;b4cc344d25a2efe540adbf2678e2304c&quot;},Address {_addressId = Auto {unAuto = Just 1}, _addressLine1 = &quot;123 Little Street&quot;,</span>
-<span class="go">                                                                                                         _addressLine2 = Nothing,</span>
-<span class="go">                                                                                                                         _addressCity = &quot;Boston&quot;,</span>
-<span class="go">                                                                                                                         _addressState = &quot;MA&quot;,</span>
-<span class="go">                                                                                                                         _addressZip = &quot;12345&quot;,</span>
-<span class="go">                                                                                                                         _addressForUser = UserId &quot;james@example.com&quot;}) --</span>
+<span class="go">       _userPassword = &quot;b4cc344d25a2efe540adbf2678e2304c&quot;},Address {_addressId = 1,</span>
+<span class="go">                                                                    _addressLine1 = &quot;123 Little Street&quot;,</span>
+<span class="go">                                                                    _addressLine2 = Nothing,</span>
+<span class="go">                                                                                    _addressCity = &quot;Boston&quot;,</span>
+<span class="go">                                                                                    _addressState = &quot;MA&quot;,</span>
+<span class="go">                                                                                    _addressZip = &quot;12345&quot;,</span>
+<span class="go">                                                                                    _addressForUser = UserId &quot;james@example.com&quot;}) --</span>
 <span class="go">(User {_userEmail = &quot;james@example.com&quot;,</span>
 <span class="go">       _userFirstName = &quot;James&quot;,</span>
 <span class="go">       _userLastName = &quot;Smith&quot;,</span>
-<span class="go">       _userPassword = &quot;b4cc344d25a2efe540adbf2678e2304c&quot;},Address {_addressId = Auto {unAuto = Just 2}, _addressLine1 = &quot;222 Main Street&quot;,</span>
-<span class="go">                                                                                                         _addressLine2 = Just &quot;Ste 1&quot;,</span>
-<span class="go">                                                                                                         _addressCity = &quot;Houston&quot;,</span>
-<span class="go">                                                                                                         _addressState = &quot;TX&quot;,</span>
-<span class="go">                                                                                                         _addressZip = &quot;8888&quot;,</span>
-<span class="go">                                                                                                         _addressForUser = UserId &quot;betty@example.com&quot;}) --</span>
+<span class="go">       _userPassword = &quot;b4cc344d25a2efe540adbf2678e2304c&quot;},Address {_addressId = 2,</span>
+<span class="go">                                                                    _addressLine1 = &quot;222 Main Street&quot;,</span>
+<span class="go">                                                                    _addressLine2 = Just &quot;Ste 1&quot;,</span>
+<span class="go">                                                                    _addressCity = &quot;Houston&quot;,</span>
+<span class="go">                                                                    _addressState = &quot;TX&quot;,</span>
+<span class="go">                                                                    _addressZip = &quot;8888&quot;,</span>
+<span class="go">                                                                    _addressForUser = UserId &quot;betty@example.com&quot;}) --</span>
 <span class="go">(User {_userEmail = &quot;james@example.com&quot;,</span>
 <span class="go">       _userFirstName = &quot;James&quot;,</span>
 <span class="go">       _userLastName = &quot;Smith&quot;,</span>
-<span class="go">       _userPassword = &quot;b4cc344d25a2efe540adbf2678e2304c&quot;},Address {_addressId = Auto {unAuto = Just 3}, _addressLine1 = &quot;9999 Residence Ave&quot;,</span>
-<span class="go">                                                                                                         _addressLine2 = Nothing,</span>
-<span class="go">                                                                                                                         _addressCity = &quot;Sugarland&quot;,</span>
-<span class="go">                                                                                                                         _addressState = &quot;TX&quot;,</span>
-<span class="go">                                                                                                                         _addressZip = &quot;8989&quot;,</span>
-<span class="go">                                                                                                                         _addressForUser = UserId &quot;betty@example.com&quot;}) --</span>
+<span class="go">       _userPassword = &quot;b4cc344d25a2efe540adbf2678e2304c&quot;},Address {_addressId = 3,</span>
+<span class="go">                                                                    _addressLine1 = &quot;9999 Residence Ave&quot;,</span>
+<span class="go">                                                                    _addressLine2 = Nothing,</span>
+<span class="go">                                                                                    _addressCity = &quot;Sugarland&quot;,</span>
+<span class="go">                                                                                    _addressState = &quot;TX&quot;,</span>
+<span class="go">                                                                                    _addressZip = &quot;8989&quot;,</span>
+<span class="go">                                                                                    _addressForUser = UserId &quot;betty@example.com&quot;}) --</span>
 <span class="go">(User {_userEmail = &quot;betty@example.com&quot;,</span>
 <span class="go">       _userFirstName = &quot;Betty&quot;,</span>
 <span class="go">       _userLastName = &quot;Jones&quot;,</span>
-<span class="go">       _userPassword = &quot;82b054bd83ffad9b6cf8bdb98ce3cc2f&quot;},Address {_addressId = Auto {unAuto = Just 1}, _addressLine1 = &quot;123 Little Street&quot;,</span>
-<span class="go">                                                                                                         _addressLine2 = Nothing,</span>
-<span class="go">                                                                                                                         _addressCity = &quot;Boston&quot;,</span>
-<span class="go">                                                                                                                         _addressState = &quot;MA&quot;,</span>
-<span class="go">                                                                                                                         _addressZip = &quot;12345&quot;,</span>
-<span class="go">                                                                                                                         _addressForUser = UserId &quot;james@example.com&quot;}) --</span>
+<span class="go">       _userPassword = &quot;82b054bd83ffad9b6cf8bdb98ce3cc2f&quot;},Address {_addressId = 1,</span>
+<span class="go">                                                                    _addressLine1 = &quot;123 Little Street&quot;,</span>
+<span class="go">                                                                    _addressLine2 = Nothing,</span>
+<span class="go">                                                                                    _addressCity = &quot;Boston&quot;,</span>
+<span class="go">                                                                                    _addressState = &quot;MA&quot;,</span>
+<span class="go">                                                                                    _addressZip = &quot;12345&quot;,</span>
+<span class="go">                                                                                    _addressForUser = UserId &quot;james@example.com&quot;}) --</span>
 <span class="go">(User {_userEmail = &quot;betty@example.com&quot;,</span>
 <span class="go">       _userFirstName = &quot;Betty&quot;,</span>
 <span class="go">       _userLastName = &quot;Jones&quot;,</span>
-<span class="go">       _userPassword = &quot;82b054bd83ffad9b6cf8bdb98ce3cc2f&quot;},Address {_addressId = Auto {unAuto = Just 2}, _addressLine1 = &quot;222 Main Street&quot;,</span>
-<span class="go">                                                                                                         _addressLine2 = Just &quot;Ste 1&quot;,</span>
-<span class="go">                                                                                                         _addressCity = &quot;Houston&quot;,</span>
-<span class="go">                                                                                                         _addressState = &quot;TX&quot;,</span>
-<span class="go">                                                                                                         _addressZip = &quot;8888&quot;,</span>
-<span class="go">                                                                                                         _addressForUser = UserId &quot;betty@example.com&quot;}) --</span>
+<span class="go">       _userPassword = &quot;82b054bd83ffad9b6cf8bdb98ce3cc2f&quot;},Address {_addressId = 2,</span>
+<span class="go">                                                                    _addressLine1 = &quot;222 Main Street&quot;,</span>
+<span class="go">                                                                    _addressLine2 = Just &quot;Ste 1&quot;,</span>
+<span class="go">                                                                    _addressCity = &quot;Houston&quot;,</span>
+<span class="go">                                                                    _addressState = &quot;TX&quot;,</span>
+<span class="go">                                                                    _addressZip = &quot;8888&quot;,</span>
+<span class="go">                                                                    _addressForUser = UserId &quot;betty@example.com&quot;}) --</span>
 <span class="go">(User {_userEmail = &quot;betty@example.com&quot;,</span>
 <span class="go">       _userFirstName = &quot;Betty&quot;,</span>
 <span class="go">       _userLastName = &quot;Jones&quot;,</span>
-<span class="go">       _userPassword = &quot;82b054bd83ffad9b6cf8bdb98ce3cc2f&quot;},Address {_addressId = Auto {unAuto = Just 3}, _addressLine1 = &quot;9999 Residence Ave&quot;,</span>
-<span class="go">                                                                                                         _addressLine2 = Nothing,</span>
-<span class="go">                                                                                                                         _addressCity = &quot;Sugarland&quot;,</span>
-<span class="go">                                                                                                                         _addressState = &quot;TX&quot;,</span>
-<span class="go">                                                                                                                         _addressZip = &quot;8989&quot;,</span>
-<span class="go">                                                                                                                         _addressForUser = UserId &quot;betty@example.com&quot;}) --</span>
+<span class="go">       _userPassword = &quot;82b054bd83ffad9b6cf8bdb98ce3cc2f&quot;},Address {_addressId = 3,</span>
+<span class="go">                                                                    _addressLine1 = &quot;9999 Residence Ave&quot;,</span>
+<span class="go">                                                                    _addressLine2 = Nothing,</span>
+<span class="go">                                                                                    _addressCity = &quot;Sugarland&quot;,</span>
+<span class="go">                                                                                    _addressState = &quot;TX&quot;,</span>
+<span class="go">                                                                                    _addressZip = &quot;8989&quot;,</span>
+<span class="go">                                                                                    _addressForUser = UserId &quot;betty@example.com&quot;}) --</span>
 <span class="go">(User {_userEmail = &quot;sam@example.com&quot;,</span>
 <span class="go">       _userFirstName = &quot;Sam&quot;,</span>
 <span class="go">       _userLastName = &quot;Taylor&quot;,</span>
-<span class="go">       _userPassword = &quot;332532dcfaa1cbf61e2a266bd723612c&quot;},Address {_addressId = Auto {unAuto = Just 1}, _addressLine1 = &quot;123 Little Street&quot;,</span>
-<span class="go">                                                                                                         _addressLine2 = Nothing,</span>
-<span class="go">                                                                                                                         _addressCity = &quot;Boston&quot;,</span>
-<span class="go">                                                                                                                         _addressState = &quot;MA&quot;,</span>
-<span class="go">                                                                                                                         _addressZip = &quot;12345&quot;,</span>
-<span class="go">                                                                                                                         _addressForUser = UserId &quot;james@example.com&quot;}) --</span>
+<span class="go">       _userPassword = &quot;332532dcfaa1cbf61e2a266bd723612c&quot;},Address {_addressId = 1,</span>
+<span class="go">                                                                    _addressLine1 = &quot;123 Little Street&quot;,</span>
+<span class="go">                                                                    _addressLine2 = Nothing,</span>
+<span class="go">                                                                                    _addressCity = &quot;Boston&quot;,</span>
+<span class="go">                                                                                    _addressState = &quot;MA&quot;,</span>
+<span class="go">                                                                                    _addressZip = &quot;12345&quot;,</span>
+<span class="go">                                                                                    _addressForUser = UserId &quot;james@example.com&quot;}) --</span>
 <span class="go">(User {_userEmail = &quot;sam@example.com&quot;,</span>
 <span class="go">       _userFirstName = &quot;Sam&quot;,</span>
 <span class="go">       _userLastName = &quot;Taylor&quot;,</span>
-<span class="go">       _userPassword = &quot;332532dcfaa1cbf61e2a266bd723612c&quot;},Address {_addressId = Auto {unAuto = Just 2}, _addressLine1 = &quot;222 Main Street&quot;,</span>
-<span class="go">                                                                                                         _addressLine2 = Just &quot;Ste 1&quot;,</span>
-<span class="go">                                                                                                         _addressCity = &quot;Houston&quot;,</span>
-<span class="go">                                                                                                         _addressState = &quot;TX&quot;,</span>
-<span class="go">                                                                                                         _addressZip = &quot;8888&quot;,</span>
-<span class="go">                                                                                                         _addressForUser = UserId &quot;betty@example.com&quot;}) --</span>
+<span class="go">       _userPassword = &quot;332532dcfaa1cbf61e2a266bd723612c&quot;},Address {_addressId = 2,</span>
+<span class="go">                                                                    _addressLine1 = &quot;222 Main Street&quot;,</span>
+<span class="go">                                                                    _addressLine2 = Just &quot;Ste 1&quot;,</span>
+<span class="go">                                                                    _addressCity = &quot;Houston&quot;,</span>
+<span class="go">                                                                    _addressState = &quot;TX&quot;,</span>
+<span class="go">                                                                    _addressZip = &quot;8888&quot;,</span>
+<span class="go">                                                                    _addressForUser = UserId &quot;betty@example.com&quot;}) --</span>
 <span class="go">(User {_userEmail = &quot;sam@example.com&quot;,</span>
 <span class="go">       _userFirstName = &quot;Sam&quot;,</span>
 <span class="go">       _userLastName = &quot;Taylor&quot;,</span>
-<span class="go">       _userPassword = &quot;332532dcfaa1cbf61e2a266bd723612c&quot;},Address {_addressId = Auto {unAuto = Just 3}, _addressLine1 = &quot;9999 Residence Ave&quot;,</span>
-<span class="go">                                                                                                         _addressLine2 = Nothing,</span>
-<span class="go">                                                                                                                         _addressCity = &quot;Sugarland&quot;,</span>
-<span class="go">                                                                                                                         _addressState = &quot;TX&quot;,</span>
-<span class="go">                                                                                                                         _addressZip = &quot;8989&quot;,</span>
-<span class="go">                                                                                                                         _addressForUser = UserId &quot;betty@example.com&quot;}) --</span>
+<span class="go">       _userPassword = &quot;332532dcfaa1cbf61e2a266bd723612c&quot;},Address {_addressId = 3,</span>
+<span class="go">                                                                    _addressLine1 = &quot;9999 Residence Ave&quot;,</span>
+<span class="go">                                                                    _addressLine2 = Nothing,</span>
+<span class="go">                                                                                    _addressCity = &quot;Sugarland&quot;,</span>
+<span class="go">                                                                                    _addressState = &quot;TX&quot;,</span>
+<span class="go">                                                                                    _addressZip = &quot;8989&quot;,</span>
+<span class="go">                                                                                    _addressForUser = UserId &quot;betty@example.com&quot;}) --</span>
 </pre></div>
 
         </div>
@@ -1307,22 +1320,22 @@ bools.</p>
         <ul class="nav nav-tabs">
             
         <li class="nav-item">
-            <a href="#tab-2-haskell" aria-controls="tab-2-haskell" role="tab" data-toggle="tab" data-lang="haskell">Haskell</a>
+            <a href="#tab-2-Haskell" aria-controls="tab-2-Haskell" role="tab" data-toggle="tab" data-lang="haskell">Haskell</a>
         </li>
     
         <li class="nav-item">
-            <a href="#tab-2-sql" aria-controls="tab-2-sql" role="tab" data-toggle="tab" data-lang="sql">Sql</a>
+            <a href="#tab-2-Sql" aria-controls="tab-2-Sql" role="tab" data-toggle="tab" data-lang="sql">Sql</a>
         </li>
     
         <li class="nav-item">
-            <a href="#tab-2-console" aria-controls="tab-2-console" role="tab" data-toggle="tab" data-lang="console">Console</a>
+            <a href="#tab-2-Console" aria-controls="tab-2-Console" role="tab" data-toggle="tab" data-lang="console">Console</a>
         </li>
     
         </ul>
     
         <div class="tab-content">
             
-        <div role="tabpanel" class="tab-pane active" id="tab-2-haskell">
+        <div role="tabpanel" class="tab-pane active" id="tab-2-Haskell">
             <div class="codehilite"><pre><span></span><span class="nf">usersAndRelatedAddresses</span> <span class="ow">&lt;-</span>
   <span class="n">withDatabaseDebug</span> <span class="n">putStrLn</span> <span class="n">conn</span> <span class="o">$</span>
     <span class="n">runSelectReturningList</span> <span class="o">$</span> <span class="n">select</span> <span class="o">$</span>
@@ -1336,7 +1349,7 @@ bools.</p>
 
         </div>
     
-        <div role="tabpanel" class="tab-pane " id="tab-2-sql">
+        <div role="tabpanel" class="tab-pane " id="tab-2-Sql">
             <div class="codehilite"><pre><span></span><span class="k">SELECT</span> <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;email&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res0&quot;</span><span class="p">,</span>
        <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;first_name&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res1&quot;</span><span class="p">,</span>
        <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;last_name&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res2&quot;</span><span class="p">,</span>
@@ -1357,34 +1370,37 @@ bools.</p>
 
         </div>
     
-        <div role="tabpanel" class="tab-pane " id="tab-2-console">
+        <div role="tabpanel" class="tab-pane " id="tab-2-Console">
             <div class="codehilite"><pre><span></span><span class="go">(User {_userEmail = &quot;james@example.com&quot;,</span>
 <span class="go">       _userFirstName = &quot;James&quot;,</span>
 <span class="go">       _userLastName = &quot;Smith&quot;,</span>
-<span class="go">       _userPassword = &quot;b4cc344d25a2efe540adbf2678e2304c&quot;},Address {_addressId = Auto {unAuto = Just 1}, _addressLine1 = &quot;123 Little Street&quot;,</span>
-<span class="go">                                                                                                         _addressLine2 = Nothing,</span>
-<span class="go">                                                                                                                         _addressCity = &quot;Boston&quot;,</span>
-<span class="go">                                                                                                                         _addressState = &quot;MA&quot;,</span>
-<span class="go">                                                                                                                         _addressZip = &quot;12345&quot;,</span>
-<span class="go">                                                                                                                         _addressForUser = UserId &quot;james@example.com&quot;}) --</span>
+<span class="go">       _userPassword = &quot;b4cc344d25a2efe540adbf2678e2304c&quot;},Address {_addressId = 1,</span>
+<span class="go">                                                                    _addressLine1 = &quot;123 Little Street&quot;,</span>
+<span class="go">                                                                    _addressLine2 = Nothing,</span>
+<span class="go">                                                                                    _addressCity = &quot;Boston&quot;,</span>
+<span class="go">                                                                                    _addressState = &quot;MA&quot;,</span>
+<span class="go">                                                                                    _addressZip = &quot;12345&quot;,</span>
+<span class="go">                                                                                    _addressForUser = UserId &quot;james@example.com&quot;}) --</span>
 <span class="go">(User {_userEmail = &quot;betty@example.com&quot;,</span>
 <span class="go">       _userFirstName = &quot;Betty&quot;,</span>
 <span class="go">       _userLastName = &quot;Jones&quot;,</span>
-<span class="go">       _userPassword = &quot;82b054bd83ffad9b6cf8bdb98ce3cc2f&quot;},Address {_addressId = Auto {unAuto = Just 2}, _addressLine1 = &quot;222 Main Street&quot;,</span>
-<span class="go">                                                                                                         _addressLine2 = Just &quot;Ste 1&quot;,</span>
-<span class="go">                                                                                                         _addressCity = &quot;Houston&quot;,</span>
-<span class="go">                                                                                                         _addressState = &quot;TX&quot;,</span>
-<span class="go">                                                                                                         _addressZip = &quot;8888&quot;,</span>
-<span class="go">                                                                                                         _addressForUser = UserId &quot;betty@example.com&quot;}) --</span>
+<span class="go">       _userPassword = &quot;82b054bd83ffad9b6cf8bdb98ce3cc2f&quot;},Address {_addressId = 2,</span>
+<span class="go">                                                                    _addressLine1 = &quot;222 Main Street&quot;,</span>
+<span class="go">                                                                    _addressLine2 = Just &quot;Ste 1&quot;,</span>
+<span class="go">                                                                    _addressCity = &quot;Houston&quot;,</span>
+<span class="go">                                                                    _addressState = &quot;TX&quot;,</span>
+<span class="go">                                                                    _addressZip = &quot;8888&quot;,</span>
+<span class="go">                                                                    _addressForUser = UserId &quot;betty@example.com&quot;}) --</span>
 <span class="go">(User {_userEmail = &quot;betty@example.com&quot;,</span>
 <span class="go">       _userFirstName = &quot;Betty&quot;,</span>
 <span class="go">       _userLastName = &quot;Jones&quot;,</span>
-<span class="go">       _userPassword = &quot;82b054bd83ffad9b6cf8bdb98ce3cc2f&quot;},Address {_addressId = Auto {unAuto = Just 3}, _addressLine1 = &quot;9999 Residence Ave&quot;,</span>
-<span class="go">                                                                                                         _addressLine2 = Nothing,</span>
-<span class="go">                                                                                                                         _addressCity = &quot;Sugarland&quot;,</span>
-<span class="go">                                                                                                                         _addressState = &quot;TX&quot;,</span>
-<span class="go">                                                                                                                         _addressZip = &quot;8989&quot;,</span>
-<span class="go">                                                                                                                         _addressForUser = UserId &quot;betty@example.com&quot;}) --</span>
+<span class="go">       _userPassword = &quot;82b054bd83ffad9b6cf8bdb98ce3cc2f&quot;},Address {_addressId = 3,</span>
+<span class="go">                                                                    _addressLine1 = &quot;9999 Residence Ave&quot;,</span>
+<span class="go">                                                                    _addressLine2 = Nothing,</span>
+<span class="go">                                                                                    _addressCity = &quot;Sugarland&quot;,</span>
+<span class="go">                                                                                    _addressState = &quot;TX&quot;,</span>
+<span class="go">                                                                                    _addressZip = &quot;8989&quot;,</span>
+<span class="go">                                                                                    _addressForUser = UserId &quot;betty@example.com&quot;}) --</span>
 </pre></div>
 
         </div>
@@ -1403,22 +1419,22 @@ expression that can match primary keys together.</p>
         <ul class="nav nav-tabs">
             
         <li class="nav-item">
-            <a href="#tab-3-haskell" aria-controls="tab-3-haskell" role="tab" data-toggle="tab" data-lang="haskell">Haskell</a>
+            <a href="#tab-3-Haskell" aria-controls="tab-3-Haskell" role="tab" data-toggle="tab" data-lang="haskell">Haskell</a>
         </li>
     
         <li class="nav-item">
-            <a href="#tab-3-sql" aria-controls="tab-3-sql" role="tab" data-toggle="tab" data-lang="sql">Sql</a>
+            <a href="#tab-3-Sql" aria-controls="tab-3-Sql" role="tab" data-toggle="tab" data-lang="sql">Sql</a>
         </li>
     
         <li class="nav-item">
-            <a href="#tab-3-console" aria-controls="tab-3-console" role="tab" data-toggle="tab" data-lang="console">Console</a>
+            <a href="#tab-3-Console" aria-controls="tab-3-Console" role="tab" data-toggle="tab" data-lang="console">Console</a>
         </li>
     
         </ul>
     
         <div class="tab-content">
             
-        <div role="tabpanel" class="tab-pane active" id="tab-3-haskell">
+        <div role="tabpanel" class="tab-pane active" id="tab-3-Haskell">
             <div class="codehilite"><pre><span></span><span class="nf">usersAndRelatedAddressesUsingReferences</span> <span class="ow">&lt;-</span>
   <span class="n">withDatabaseDebug</span> <span class="n">putStrLn</span> <span class="n">conn</span> <span class="o">$</span>
     <span class="n">runSelectReturningList</span> <span class="o">$</span> <span class="n">select</span> <span class="o">$</span>
@@ -1433,7 +1449,7 @@ expression that can match primary keys together.</p>
 
         </div>
     
-        <div role="tabpanel" class="tab-pane " id="tab-3-sql">
+        <div role="tabpanel" class="tab-pane " id="tab-3-Sql">
             <div class="codehilite"><pre><span></span><span class="k">SELECT</span> <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;email&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res0&quot;</span><span class="p">,</span>
        <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;first_name&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res1&quot;</span><span class="p">,</span>
        <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;last_name&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res2&quot;</span><span class="p">,</span>
@@ -1454,34 +1470,37 @@ expression that can match primary keys together.</p>
 
         </div>
     
-        <div role="tabpanel" class="tab-pane " id="tab-3-console">
+        <div role="tabpanel" class="tab-pane " id="tab-3-Console">
             <div class="codehilite"><pre><span></span><span class="go">(User {_userEmail = &quot;james@example.com&quot;,</span>
 <span class="go">       _userFirstName = &quot;James&quot;,</span>
 <span class="go">       _userLastName = &quot;Smith&quot;,</span>
-<span class="go">       _userPassword = &quot;b4cc344d25a2efe540adbf2678e2304c&quot;},Address {_addressId = Auto {unAuto = Just 1}, _addressLine1 = &quot;123 Little Street&quot;,</span>
-<span class="go">                                                                                                         _addressLine2 = Nothing,</span>
-<span class="go">                                                                                                                         _addressCity = &quot;Boston&quot;,</span>
-<span class="go">                                                                                                                         _addressState = &quot;MA&quot;,</span>
-<span class="go">                                                                                                                         _addressZip = &quot;12345&quot;,</span>
-<span class="go">                                                                                                                         _addressForUser = UserId &quot;james@example.com&quot;}) --</span>
+<span class="go">       _userPassword = &quot;b4cc344d25a2efe540adbf2678e2304c&quot;},Address {_addressId = 1,</span>
+<span class="go">                                                                    _addressLine1 = &quot;123 Little Street&quot;,</span>
+<span class="go">                                                                    _addressLine2 = Nothing,</span>
+<span class="go">                                                                                    _addressCity = &quot;Boston&quot;,</span>
+<span class="go">                                                                                    _addressState = &quot;MA&quot;,</span>
+<span class="go">                                                                                    _addressZip = &quot;12345&quot;,</span>
+<span class="go">                                                                                    _addressForUser = UserId &quot;james@example.com&quot;}) --</span>
 <span class="go">(User {_userEmail = &quot;betty@example.com&quot;,</span>
 <span class="go">       _userFirstName = &quot;Betty&quot;,</span>
 <span class="go">       _userLastName = &quot;Jones&quot;,</span>
-<span class="go">       _userPassword = &quot;82b054bd83ffad9b6cf8bdb98ce3cc2f&quot;},Address {_addressId = Auto {unAuto = Just 2}, _addressLine1 = &quot;222 Main Street&quot;,</span>
-<span class="go">                                                                                                         _addressLine2 = Just &quot;Ste 1&quot;,</span>
-<span class="go">                                                                                                         _addressCity = &quot;Houston&quot;,</span>
-<span class="go">                                                                                                         _addressState = &quot;TX&quot;,</span>
-<span class="go">                                                                                                         _addressZip = &quot;8888&quot;,</span>
-<span class="go">                                                                                                         _addressForUser = UserId &quot;betty@example.com&quot;}) --</span>
+<span class="go">       _userPassword = &quot;82b054bd83ffad9b6cf8bdb98ce3cc2f&quot;},Address {_addressId = 2,</span>
+<span class="go">                                                                    _addressLine1 = &quot;222 Main Street&quot;,</span>
+<span class="go">                                                                    _addressLine2 = Just &quot;Ste 1&quot;,</span>
+<span class="go">                                                                    _addressCity = &quot;Houston&quot;,</span>
+<span class="go">                                                                    _addressState = &quot;TX&quot;,</span>
+<span class="go">                                                                    _addressZip = &quot;8888&quot;,</span>
+<span class="go">                                                                    _addressForUser = UserId &quot;betty@example.com&quot;}) --</span>
 <span class="go">(User {_userEmail = &quot;betty@example.com&quot;,</span>
 <span class="go">       _userFirstName = &quot;Betty&quot;,</span>
 <span class="go">       _userLastName = &quot;Jones&quot;,</span>
-<span class="go">       _userPassword = &quot;82b054bd83ffad9b6cf8bdb98ce3cc2f&quot;},Address {_addressId = Auto {unAuto = Just 3}, _addressLine1 = &quot;9999 Residence Ave&quot;,</span>
-<span class="go">                                                                                                         _addressLine2 = Nothing,</span>
-<span class="go">                                                                                                                         _addressCity = &quot;Sugarland&quot;,</span>
-<span class="go">                                                                                                                         _addressState = &quot;TX&quot;,</span>
-<span class="go">                                                                                                                         _addressZip = &quot;8989&quot;,</span>
-<span class="go">                                                                                                                         _addressForUser = UserId &quot;betty@example.com&quot;}) --</span>
+<span class="go">       _userPassword = &quot;82b054bd83ffad9b6cf8bdb98ce3cc2f&quot;},Address {_addressId = 3,</span>
+<span class="go">                                                                    _addressLine1 = &quot;9999 Residence Ave&quot;,</span>
+<span class="go">                                                                    _addressLine2 = Nothing,</span>
+<span class="go">                                                                                    _addressCity = &quot;Sugarland&quot;,</span>
+<span class="go">                                                                                    _addressState = &quot;TX&quot;,</span>
+<span class="go">                                                                                    _addressZip = &quot;8989&quot;,</span>
+<span class="go">                                                                                    _addressForUser = UserId &quot;betty@example.com&quot;}) --</span>
 </pre></div>
 
         </div>
@@ -1501,22 +1520,22 @@ combinator to pull related tables directly into the query monad.</p>
         <ul class="nav nav-tabs">
             
         <li class="nav-item">
-            <a href="#tab-4-haskell" aria-controls="tab-4-haskell" role="tab" data-toggle="tab" data-lang="haskell">Haskell</a>
+            <a href="#tab-4-Haskell" aria-controls="tab-4-Haskell" role="tab" data-toggle="tab" data-lang="haskell">Haskell</a>
         </li>
     
         <li class="nav-item">
-            <a href="#tab-4-sql" aria-controls="tab-4-sql" role="tab" data-toggle="tab" data-lang="sql">Sql</a>
+            <a href="#tab-4-Sql" aria-controls="tab-4-Sql" role="tab" data-toggle="tab" data-lang="sql">Sql</a>
         </li>
     
         <li class="nav-item">
-            <a href="#tab-4-console" aria-controls="tab-4-console" role="tab" data-toggle="tab" data-lang="console">Console</a>
+            <a href="#tab-4-Console" aria-controls="tab-4-Console" role="tab" data-toggle="tab" data-lang="console">Console</a>
         </li>
     
         </ul>
     
         <div class="tab-content">
             
-        <div role="tabpanel" class="tab-pane active" id="tab-4-haskell">
+        <div role="tabpanel" class="tab-pane active" id="tab-4-Haskell">
             <div class="codehilite"><pre><span></span><span class="nf">usersAndRelatedAddressesUsingRelated</span> <span class="ow">&lt;-</span>
   <span class="n">withDatabaseDebug</span> <span class="n">putStrLn</span> <span class="n">conn</span> <span class="o">$</span>
     <span class="n">runSelectReturningList</span> <span class="o">$</span> <span class="n">select</span> <span class="o">$</span>
@@ -1529,7 +1548,7 @@ combinator to pull related tables directly into the query monad.</p>
 
         </div>
     
-        <div role="tabpanel" class="tab-pane " id="tab-4-sql">
+        <div role="tabpanel" class="tab-pane " id="tab-4-Sql">
             <div class="codehilite"><pre><span></span><span class="k">SELECT</span> <span class="ss">&quot;t1&quot;</span><span class="p">.</span><span class="ss">&quot;email&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res0&quot;</span><span class="p">,</span>
        <span class="ss">&quot;t1&quot;</span><span class="p">.</span><span class="ss">&quot;first_name&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res1&quot;</span><span class="p">,</span>
        <span class="ss">&quot;t1&quot;</span><span class="p">.</span><span class="ss">&quot;last_name&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res2&quot;</span><span class="p">,</span>
@@ -1549,34 +1568,37 @@ combinator to pull related tables directly into the query monad.</p>
 
         </div>
     
-        <div role="tabpanel" class="tab-pane " id="tab-4-console">
+        <div role="tabpanel" class="tab-pane " id="tab-4-Console">
             <div class="codehilite"><pre><span></span><span class="go">(User {_userEmail = &quot;james@example.com&quot;,</span>
 <span class="go">       _userFirstName = &quot;James&quot;,</span>
 <span class="go">       _userLastName = &quot;Smith&quot;,</span>
-<span class="go">       _userPassword = &quot;b4cc344d25a2efe540adbf2678e2304c&quot;},Address {_addressId = Auto {unAuto = Just 1}, _addressLine1 = &quot;123 Little Street&quot;,</span>
-<span class="go">                                                                                                         _addressLine2 = Nothing,</span>
-<span class="go">                                                                                                                         _addressCity = &quot;Boston&quot;,</span>
-<span class="go">                                                                                                                         _addressState = &quot;MA&quot;,</span>
-<span class="go">                                                                                                                         _addressZip = &quot;12345&quot;,</span>
-<span class="go">                                                                                                                         _addressForUser = UserId &quot;james@example.com&quot;}) --</span>
+<span class="go">       _userPassword = &quot;b4cc344d25a2efe540adbf2678e2304c&quot;},Address {_addressId = 1,</span>
+<span class="go">                                                                    _addressLine1 = &quot;123 Little Street&quot;,</span>
+<span class="go">                                                                    _addressLine2 = Nothing,</span>
+<span class="go">                                                                                    _addressCity = &quot;Boston&quot;,</span>
+<span class="go">                                                                                    _addressState = &quot;MA&quot;,</span>
+<span class="go">                                                                                    _addressZip = &quot;12345&quot;,</span>
+<span class="go">                                                                                    _addressForUser = UserId &quot;james@example.com&quot;}) --</span>
 <span class="go">(User {_userEmail = &quot;betty@example.com&quot;,</span>
 <span class="go">       _userFirstName = &quot;Betty&quot;,</span>
 <span class="go">       _userLastName = &quot;Jones&quot;,</span>
-<span class="go">       _userPassword = &quot;82b054bd83ffad9b6cf8bdb98ce3cc2f&quot;},Address {_addressId = Auto {unAuto = Just 2}, _addressLine1 = &quot;222 Main Street&quot;,</span>
-<span class="go">                                                                                                         _addressLine2 = Just &quot;Ste 1&quot;,</span>
-<span class="go">                                                                                                         _addressCity = &quot;Houston&quot;,</span>
-<span class="go">                                                                                                         _addressState = &quot;TX&quot;,</span>
-<span class="go">                                                                                                         _addressZip = &quot;8888&quot;,</span>
-<span class="go">                                                                                                         _addressForUser = UserId &quot;betty@example.com&quot;}) --</span>
+<span class="go">       _userPassword = &quot;82b054bd83ffad9b6cf8bdb98ce3cc2f&quot;},Address {_addressId = 2,</span>
+<span class="go">                                                                    _addressLine1 = &quot;222 Main Street&quot;,</span>
+<span class="go">                                                                    _addressLine2 = Just &quot;Ste 1&quot;,</span>
+<span class="go">                                                                    _addressCity = &quot;Houston&quot;,</span>
+<span class="go">                                                                    _addressState = &quot;TX&quot;,</span>
+<span class="go">                                                                    _addressZip = &quot;8888&quot;,</span>
+<span class="go">                                                                    _addressForUser = UserId &quot;betty@example.com&quot;}) --</span>
 <span class="go">(User {_userEmail = &quot;betty@example.com&quot;,</span>
 <span class="go">       _userFirstName = &quot;Betty&quot;,</span>
 <span class="go">       _userLastName = &quot;Jones&quot;,</span>
-<span class="go">       _userPassword = &quot;82b054bd83ffad9b6cf8bdb98ce3cc2f&quot;},Address {_addressId = Auto {unAuto = Just 3}, _addressLine1 = &quot;9999 Residence Ave&quot;,</span>
-<span class="go">                                                                                                         _addressLine2 = Nothing,</span>
-<span class="go">                                                                                                                         _addressCity = &quot;Sugarland&quot;,</span>
-<span class="go">                                                                                                                         _addressState = &quot;TX&quot;,</span>
-<span class="go">                                                                                                                         _addressZip = &quot;8989&quot;,</span>
-<span class="go">                                                                                                                         _addressForUser = UserId &quot;betty@example.com&quot;}) --</span>
+<span class="go">       _userPassword = &quot;82b054bd83ffad9b6cf8bdb98ce3cc2f&quot;},Address {_addressId = 3,</span>
+<span class="go">                                                                    _addressLine1 = &quot;9999 Residence Ave&quot;,</span>
+<span class="go">                                                                    _addressLine2 = Nothing,</span>
+<span class="go">                                                                                    _addressCity = &quot;Sugarland&quot;,</span>
+<span class="go">                                                                                    _addressState = &quot;TX&quot;,</span>
+<span class="go">                                                                                    _addressZip = &quot;8989&quot;,</span>
+<span class="go">                                                                                    _addressForUser = UserId &quot;betty@example.com&quot;}) --</span>
 </pre></div>
 
         </div>
@@ -1592,22 +1614,22 @@ combinator to pull related tables directly into the query monad.</p>
         <ul class="nav nav-tabs">
             
         <li class="nav-item">
-            <a href="#tab-5-haskell" aria-controls="tab-5-haskell" role="tab" data-toggle="tab" data-lang="haskell">Haskell</a>
+            <a href="#tab-5-Haskell" aria-controls="tab-5-Haskell" role="tab" data-toggle="tab" data-lang="haskell">Haskell</a>
         </li>
     
         <li class="nav-item">
-            <a href="#tab-5-sql" aria-controls="tab-5-sql" role="tab" data-toggle="tab" data-lang="sql">Sql</a>
+            <a href="#tab-5-Sql" aria-controls="tab-5-Sql" role="tab" data-toggle="tab" data-lang="sql">Sql</a>
         </li>
     
         <li class="nav-item">
-            <a href="#tab-5-console" aria-controls="tab-5-console" role="tab" data-toggle="tab" data-lang="console">Console</a>
+            <a href="#tab-5-Console" aria-controls="tab-5-Console" role="tab" data-toggle="tab" data-lang="console">Console</a>
         </li>
     
         </ul>
     
         <div class="tab-content">
             
-        <div role="tabpanel" class="tab-pane active" id="tab-5-haskell">
+        <div role="tabpanel" class="tab-pane active" id="tab-5-Haskell">
             <div class="codehilite"><pre><span></span><span class="c1">-- This is a contrived example to show how we can use an arbitrary UserId to fetch a particular user.</span>
 <span class="c1">-- We don&#39;t always have access to the full &#39;User&#39; lying around. For example we may be in a function that</span>
 <span class="c1">-- only accepts &#39;UserId&#39;s.</span>
@@ -1626,7 +1648,7 @@ combinator to pull related tables directly into the query monad.</p>
 
         </div>
     
-        <div role="tabpanel" class="tab-pane " id="tab-5-sql">
+        <div role="tabpanel" class="tab-pane " id="tab-5-Sql">
             <div class="codehilite"><pre><span></span><span class="k">SELECT</span> <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;id&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res0&quot;</span><span class="p">,</span>
        <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;address1&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res1&quot;</span><span class="p">,</span>
        <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;address2&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res2&quot;</span><span class="p">,</span>
@@ -1642,19 +1664,21 @@ combinator to pull related tables directly into the query monad.</p>
 
         </div>
     
-        <div role="tabpanel" class="tab-pane " id="tab-5-console">
-            <div class="codehilite"><pre><span></span><span class="go">Address {_addressId = Auto {unAuto = Just 2}, _addressLine1 = &quot;222 Main Street&quot;,</span>
-<span class="go">                                              _addressLine2 = Just &quot;Ste 1&quot;,</span>
-<span class="go">                                              _addressCity = &quot;Houston&quot;,</span>
-<span class="go">                                              _addressState = &quot;TX&quot;,</span>
-<span class="go">                                              _addressZip = &quot;8888&quot;,</span>
-<span class="go">                                              _addressForUser = UserId &quot;betty@example.com&quot;} --</span>
-<span class="go">Address {_addressId = Auto {unAuto = Just 3}, _addressLine1 = &quot;9999 Residence Ave&quot;,</span>
-<span class="go">                                              _addressLine2 = Nothing,</span>
-<span class="go">                                                              _addressCity = &quot;Sugarland&quot;,</span>
-<span class="go">                                                              _addressState = &quot;TX&quot;,</span>
-<span class="go">                                                              _addressZip = &quot;8989&quot;,</span>
-<span class="go">                                                              _addressForUser = UserId &quot;betty@example.com&quot;} --</span>
+        <div role="tabpanel" class="tab-pane " id="tab-5-Console">
+            <div class="codehilite"><pre><span></span><span class="go">Address {_addressId = 2,</span>
+<span class="go">         _addressLine1 = &quot;222 Main Street&quot;,</span>
+<span class="go">         _addressLine2 = Just &quot;Ste 1&quot;,</span>
+<span class="go">         _addressCity = &quot;Houston&quot;,</span>
+<span class="go">         _addressState = &quot;TX&quot;,</span>
+<span class="go">         _addressZip = &quot;8888&quot;,</span>
+<span class="go">         _addressForUser = UserId &quot;betty@example.com&quot;} --</span>
+<span class="go">Address {_addressId = 3,</span>
+<span class="go">         _addressLine1 = &quot;9999 Residence Ave&quot;,</span>
+<span class="go">         _addressLine2 = Nothing,</span>
+<span class="go">                         _addressCity = &quot;Sugarland&quot;,</span>
+<span class="go">                         _addressState = &quot;TX&quot;,</span>
+<span class="go">                         _addressZip = &quot;8989&quot;,</span>
+<span class="go">                         _addressForUser = UserId &quot;betty@example.com&quot;} --</span>
 </pre></div>
 
         </div>
@@ -1689,36 +1713,36 @@ update the corresponding record in the database.</p>
         <ul class="nav nav-tabs">
             
         <li class="nav-item">
-            <a href="#tab-6-haskell" aria-controls="tab-6-haskell" role="tab" data-toggle="tab" data-lang="haskell">Haskell</a>
+            <a href="#tab-6-Haskell" aria-controls="tab-6-Haskell" role="tab" data-toggle="tab" data-lang="haskell">Haskell</a>
         </li>
     
         <li class="nav-item">
-            <a href="#tab-6-sql" aria-controls="tab-6-sql" role="tab" data-toggle="tab" data-lang="sql">Sql</a>
+            <a href="#tab-6-Sql" aria-controls="tab-6-Sql" role="tab" data-toggle="tab" data-lang="sql">Sql</a>
         </li>
     
         <li class="nav-item">
-            <a href="#tab-6-console" aria-controls="tab-6-console" role="tab" data-toggle="tab" data-lang="console">Console</a>
+            <a href="#tab-6-Console" aria-controls="tab-6-Console" role="tab" data-toggle="tab" data-lang="console">Console</a>
         </li>
     
         </ul>
     
         <div class="tab-content">
             
-        <div role="tabpanel" class="tab-pane active" id="tab-6-haskell">
+        <div role="tabpanel" class="tab-pane active" id="tab-6-Haskell">
             <div class="codehilite"><pre><span></span><span class="p">[</span><span class="n">james</span><span class="p">]</span> <span class="ow">&lt;-</span>
   <span class="n">withDatabaseDebug</span> <span class="n">putStrLn</span> <span class="n">conn</span> <span class="o">$</span>
     <span class="kr">do</span> <span class="n">runUpdate</span> <span class="o">$</span>
          <span class="n">save</span> <span class="p">(</span><span class="n">shoppingCartDb</span> <span class="o">^.</span> <span class="n">shoppingCartUsers</span><span class="p">)</span> <span class="p">(</span><span class="n">james</span> <span class="p">{</span> <span class="n">_userPassword</span> <span class="ow">=</span> <span class="s">&quot;52a516ca6df436828d9c0d26e31ef704&quot;</span> <span class="p">})</span>
 
        <span class="n">runSelectReturningList</span> <span class="o">$</span>
-         <span class="n">lookup</span> <span class="p">(</span><span class="n">shoppingCartDb</span> <span class="o">^.</span> <span class="n">shoppingCartUsers</span><span class="p">)</span> <span class="p">(</span><span class="kt">UserId</span> <span class="s">&quot;james@example.com&quot;</span><span class="p">)</span>
+         <span class="n">lookup_</span> <span class="p">(</span><span class="n">shoppingCartDb</span> <span class="o">^.</span> <span class="n">shoppingCartUsers</span><span class="p">)</span> <span class="p">(</span><span class="kt">UserId</span> <span class="s">&quot;james@example.com&quot;</span><span class="p">)</span>
 
 <span class="nf">putStrLn</span> <span class="p">(</span><span class="s">&quot;James&#39;s new password is &quot;</span> <span class="o">++</span> <span class="n">show</span> <span class="p">(</span><span class="n">james</span> <span class="o">^.</span> <span class="n">userPassword</span><span class="p">))</span>
 </pre></div>
 
         </div>
     
-        <div role="tabpanel" class="tab-pane " id="tab-6-sql">
+        <div role="tabpanel" class="tab-pane " id="tab-6-Sql">
             <div class="codehilite"><pre><span></span><span class="k">UPDATE</span> <span class="ss">&quot;cart_users&quot;</span>
 <span class="k">SET</span> <span class="ss">&quot;first_name&quot;</span><span class="o">=?</span><span class="p">,</span>
     <span class="ss">&quot;last_name&quot;</span><span class="o">=?</span><span class="p">,</span>
@@ -1739,7 +1763,7 @@ update the corresponding record in the database.</p>
 
         </div>
     
-        <div role="tabpanel" class="tab-pane " id="tab-6-console">
+        <div role="tabpanel" class="tab-pane " id="tab-6-Console">
             <div class="codehilite"><pre><span></span><span class="go">James&#39;s new password is &quot;52a516ca6df436828d9c0d26e31ef704&quot; --</span>
 </pre></div>
 
@@ -1751,10 +1775,8 @@ update the corresponding record in the database.</p>
                     </p>
 <div class="admonition tip">
 <p class="admonition-title">Tip</p>
-<p><code>lookup</code> (defined in <code>Database.Beam.Query</code>) can be used to easily lookup a
+<p><code>lookup_</code> (defined in <code>Database.Beam.Query</code>) can be used to easily lookup a
 single entity given a table entity in a database and a primary key.</p>
-<p>You may have to hide <code>lookup</code> from <code>Prelude</code> in order to use <code>lookup</code>
-unqualified.</p>
 </div>
 <p>This works great, but <code>save</code> requires that we have the whole <code>User</code> object at
 our disposal. Additionally, you'll notice that it causes every field to be set
@@ -1772,22 +1794,22 @@ to use the new name and ZIP code.</p>
         <ul class="nav nav-tabs">
             
         <li class="nav-item">
-            <a href="#tab-7-haskell" aria-controls="tab-7-haskell" role="tab" data-toggle="tab" data-lang="haskell">Haskell</a>
+            <a href="#tab-7-Haskell" aria-controls="tab-7-Haskell" role="tab" data-toggle="tab" data-lang="haskell">Haskell</a>
         </li>
     
         <li class="nav-item">
-            <a href="#tab-7-sql" aria-controls="tab-7-sql" role="tab" data-toggle="tab" data-lang="sql">Sql</a>
+            <a href="#tab-7-Sql" aria-controls="tab-7-Sql" role="tab" data-toggle="tab" data-lang="sql">Sql</a>
         </li>
     
         <li class="nav-item">
-            <a href="#tab-7-console" aria-controls="tab-7-console" role="tab" data-toggle="tab" data-lang="console">Console</a>
+            <a href="#tab-7-Console" aria-controls="tab-7-Console" role="tab" data-toggle="tab" data-lang="console">Console</a>
         </li>
     
         </ul>
     
         <div class="tab-content">
             
-        <div role="tabpanel" class="tab-pane active" id="tab-7-haskell">
+        <div role="tabpanel" class="tab-pane active" id="tab-7-Haskell">
             <div class="codehilite"><pre><span></span><span class="nf">addresses</span> <span class="ow">&lt;-</span>
   <span class="n">withDatabaseDebug</span> <span class="n">putStrLn</span> <span class="n">conn</span> <span class="o">$</span>
     <span class="kr">do</span> <span class="n">runUpdate</span> <span class="o">$</span>
@@ -1804,7 +1826,7 @@ to use the new name and ZIP code.</p>
 
         </div>
     
-        <div role="tabpanel" class="tab-pane " id="tab-7-sql">
+        <div role="tabpanel" class="tab-pane " id="tab-7-Sql">
             <div class="codehilite"><pre><span></span><span class="k">UPDATE</span> <span class="ss">&quot;addresses&quot;</span>
 <span class="k">SET</span> <span class="ss">&quot;city&quot;</span><span class="o">=?</span><span class="p">,</span>
     <span class="ss">&quot;zip&quot;</span><span class="o">=?</span>
@@ -1827,25 +1849,28 @@ to use the new name and ZIP code.</p>
 
         </div>
     
-        <div role="tabpanel" class="tab-pane " id="tab-7-console">
-            <div class="codehilite"><pre><span></span><span class="go">Address {_addressId = Auto {unAuto = Just 1}, _addressLine1 = &quot;123 Little Street&quot;,</span>
-<span class="go">                                              _addressLine2 = Nothing,</span>
-<span class="go">                                                              _addressCity = &quot;Boston&quot;,</span>
-<span class="go">                                                              _addressState = &quot;MA&quot;,</span>
-<span class="go">                                                              _addressZip = &quot;12345&quot;,</span>
-<span class="go">                                                              _addressForUser = UserId &quot;james@example.com&quot;} --</span>
-<span class="go">Address {_addressId = Auto {unAuto = Just 2}, _addressLine1 = &quot;222 Main Street&quot;,</span>
-<span class="go">                                              _addressLine2 = Just &quot;Ste 1&quot;,</span>
-<span class="go">                                              _addressCity = &quot;Houston&quot;,</span>
-<span class="go">                                              _addressState = &quot;TX&quot;,</span>
-<span class="go">                                              _addressZip = &quot;8888&quot;,</span>
-<span class="go">                                              _addressForUser = UserId &quot;betty@example.com&quot;} --</span>
-<span class="go">Address {_addressId = Auto {unAuto = Just 3}, _addressLine1 = &quot;9999 Residence Ave&quot;,</span>
-<span class="go">                                              _addressLine2 = Nothing,</span>
-<span class="go">                                                              _addressCity = &quot;Sugarville&quot;,</span>
-<span class="go">                                                              _addressState = &quot;TX&quot;,</span>
-<span class="go">                                                              _addressZip = &quot;12345&quot;,</span>
-<span class="go">                                                              _addressForUser = UserId &quot;betty@example.com&quot;} --</span>
+        <div role="tabpanel" class="tab-pane " id="tab-7-Console">
+            <div class="codehilite"><pre><span></span><span class="go">Address {_addressId = 1,</span>
+<span class="go">         _addressLine1 = &quot;123 Little Street&quot;,</span>
+<span class="go">         _addressLine2 = Nothing,</span>
+<span class="go">                         _addressCity = &quot;Boston&quot;,</span>
+<span class="go">                         _addressState = &quot;MA&quot;,</span>
+<span class="go">                         _addressZip = &quot;12345&quot;,</span>
+<span class="go">                         _addressForUser = UserId &quot;james@example.com&quot;} --</span>
+<span class="go">Address {_addressId = 2,</span>
+<span class="go">         _addressLine1 = &quot;222 Main Street&quot;,</span>
+<span class="go">         _addressLine2 = Just &quot;Ste 1&quot;,</span>
+<span class="go">         _addressCity = &quot;Houston&quot;,</span>
+<span class="go">         _addressState = &quot;TX&quot;,</span>
+<span class="go">         _addressZip = &quot;8888&quot;,</span>
+<span class="go">         _addressForUser = UserId &quot;betty@example.com&quot;} --</span>
+<span class="go">Address {_addressId = 3,</span>
+<span class="go">         _addressLine1 = &quot;9999 Residence Ave&quot;,</span>
+<span class="go">         _addressLine2 = Nothing,</span>
+<span class="go">                         _addressCity = &quot;Sugarville&quot;,</span>
+<span class="go">                         _addressState = &quot;TX&quot;,</span>
+<span class="go">                         _addressZip = &quot;12345&quot;,</span>
+<span class="go">                         _addressForUser = UserId &quot;betty@example.com&quot;} --</span>
 </pre></div>
 
         </div>
@@ -1863,18 +1888,18 @@ to use the new name and ZIP code.</p>
         <ul class="nav nav-tabs">
             
         <li class="nav-item">
-            <a href="#tab-8-haskell" aria-controls="tab-8-haskell" role="tab" data-toggle="tab" data-lang="haskell">Haskell</a>
+            <a href="#tab-8-Haskell" aria-controls="tab-8-Haskell" role="tab" data-toggle="tab" data-lang="haskell">Haskell</a>
         </li>
     
         <li class="nav-item">
-            <a href="#tab-8-sql" aria-controls="tab-8-sql" role="tab" data-toggle="tab" data-lang="sql">Sql</a>
+            <a href="#tab-8-Sql" aria-controls="tab-8-Sql" role="tab" data-toggle="tab" data-lang="sql">Sql</a>
         </li>
     
         </ul>
     
         <div class="tab-content">
             
-        <div role="tabpanel" class="tab-pane active" id="tab-8-haskell">
+        <div role="tabpanel" class="tab-pane active" id="tab-8-Haskell">
             <div class="codehilite"><pre><span></span><span class="nf">withDatabaseDebug</span> <span class="n">putStrLn</span> <span class="n">conn</span> <span class="o">$</span>
   <span class="n">runDelete</span> <span class="o">$</span>
   <span class="n">delete</span> <span class="p">(</span><span class="n">shoppingCartDb</span> <span class="o">^.</span> <span class="n">shoppingCartUserAddresses</span><span class="p">)</span>
@@ -1884,7 +1909,7 @@ to use the new name and ZIP code.</p>
 
         </div>
     
-        <div role="tabpanel" class="tab-pane " id="tab-8-sql">
+        <div role="tabpanel" class="tab-pane " id="tab-8-Sql">
             <div class="codehilite"><pre><span></span><span class="k">DELETE</span>
 <span class="k">FROM</span> <span class="ss">&quot;addresses&quot;</span>
 <span class="k">WHERE</span> <span class="p">((</span><span class="ss">&quot;city&quot;</span><span class="p">)</span><span class="o">=</span><span class="p">(</span><span class="o">?</span><span class="p">))</span>

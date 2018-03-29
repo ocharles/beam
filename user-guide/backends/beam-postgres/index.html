@@ -673,6 +673,13 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
+  <a href="#select-locking-clause" title="SELECT locking clause" class="md-nav__link">
+    SELECT locking clause
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#distinct-on-support" title="DISTINCT ON support" class="md-nav__link">
     DISTINCT ON support
   </a>
@@ -690,6 +697,40 @@
           <li class="md-nav__item">
   <a href="#string_agg" title="string_agg" class="md-nav__link">
     string_agg
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#on-conflict" title="ON CONFLICT" class="md-nav__link">
+    ON CONFLICT
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#acting-on-any-conflict" title="Acting on any conflict" class="md-nav__link">
+    Acting on any conflict
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#acting-only-on-certain-conflicts" title="Acting only on certain conflicts" class="md-nav__link">
+    Acting only on certain conflicts
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#specifying-actions" title="Specifying actions" class="md-nav__link">
+    Specifying actions
   </a>
   
 </li>
@@ -849,6 +890,13 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
+  <a href="#select-locking-clause" title="SELECT locking clause" class="md-nav__link">
+    SELECT locking clause
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#distinct-on-support" title="DISTINCT ON support" class="md-nav__link">
     DISTINCT ON support
   </a>
@@ -866,6 +914,40 @@
           <li class="md-nav__item">
   <a href="#string_agg" title="string_agg" class="md-nav__link">
     string_agg
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#on-conflict" title="ON CONFLICT" class="md-nav__link">
+    ON CONFLICT
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#acting-on-any-conflict" title="Acting on any conflict" class="md-nav__link">
+    Acting on any conflict
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#acting-only-on-certain-conflicts" title="Acting only on certain conflicts" class="md-nav__link">
+    Acting only on certain conflicts
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#specifying-actions" title="Specifying actions" class="md-nav__link">
+    Specifying actions
   </a>
   
 </li>
@@ -911,6 +993,401 @@ with these easier.</p>
 <p>The <code>tsvector</code> and <code>tsquery</code> types form the basis of full-text search in
 Postgres.</p>
 <h2 id="postgres-extensions">Postgres extensions</h2>
+<h3 id="select-locking-clause"><code>SELECT</code> locking clause</h3>
+<p>Postgres allows you to explicitly lock rows retrieved during a select
+using the <a href="https://www.postgresql.org/docs/current/static/explicit-locking.html">locking
+clause</a>.</p>
+<p>Beam supports most of the Postgres locking clause. However, there are some
+invariants that are currently not checked at compile time. For example, Postgres
+does not allow locking clauses with queries that use <code>UNION</code>, <code>EXCEPT</code>, or
+<code>INTERSECT</code> or those with aggregates. Since all these queries have the same type
+in Beam, we cannot catch these errors at compile-time. Current guidance is to
+only use the locking clause in top-level queries that you know to be
+safe.</p>
+<p>The following example finds all customers living in Dublin, and requests a <code>ROW
+SHARE</code> lock for each row. This prevents concurrent updates from updating these
+rows until the current transaction is complete.</p>
+<p>
+                <div class="code-nav-container">
+                    
+        <ul class="nav nav-tabs">
+            
+        <li class="nav-item">
+            <a href="#tab-0-Haskell" aria-controls="tab-0-Haskell" role="tab" data-toggle="tab" data-lang="haskell">Haskell</a>
+        </li>
+    
+        <li class="nav-item">
+            <a href="#tab-0-Postgres" aria-controls="tab-0-Postgres" role="tab" data-toggle="tab" data-lang="sql">Postgres</a>
+        </li>
+    
+        </ul>
+    
+        <div class="tab-content">
+            
+        <div role="tabpanel" class="tab-pane active" id="tab-0-Haskell">
+            <div class="codehilite"><pre><span></span><span class="kt">Pg</span><span class="o">.</span><span class="n">lockingAllTablesFor_</span> <span class="kt">Pg</span><span class="o">.</span><span class="kt">PgSelectLockingStrengthShare</span> <span class="kt">Nothing</span> <span class="o">$</span>
+  <span class="n">filter_</span> <span class="p">(</span><span class="nf">\</span><span class="n">c</span> <span class="ow">-&gt;</span> <span class="n">fromMaybe_</span> <span class="s">&quot;&quot;</span> <span class="p">(</span><span class="n">addressCity</span> <span class="p">(</span><span class="n">customerAddress</span> <span class="n">c</span><span class="p">))</span> <span class="o">==.</span> <span class="s">&quot;Dublin&quot;</span><span class="p">)</span> <span class="o">$</span>
+  <span class="n">all_</span> <span class="p">(</span><span class="n">customer</span> <span class="n">chinookDb</span><span class="p">)</span>
+</pre></div>
+
+        </div>
+    
+        <div role="tabpanel" class="tab-pane " id="tab-0-Postgres">
+            <div class="codehilite"><pre><span></span><span class="k">SELECT</span> <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;CustomerId&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res0&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;FirstName&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res1&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;LastName&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res2&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;Company&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res3&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;Address&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res4&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;City&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res5&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;State&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res6&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;Country&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res7&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;PostalCode&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res8&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;Phone&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res9&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;Fax&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res10&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;Email&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res11&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;SupportRepId&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res12&quot;</span>
+<span class="k">FROM</span> <span class="ss">&quot;Customer&quot;</span> <span class="k">AS</span> <span class="ss">&quot;t0&quot;</span>
+<span class="k">WHERE</span> <span class="p">(</span><span class="n">COALESCE</span><span class="p">(</span><span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;City&quot;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">))</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;Dublin&#39;</span><span class="p">)</span>
+  <span class="k">FOR</span> <span class="k">SHARE</span>
+</pre></div>
+
+        </div>
+    
+        </div>
+    
+                </div>
+                    </p>
+<p>Now, suppose we want to update these rows, so we'll want to lock them for an update.</p>
+<p>
+                <div class="code-nav-container">
+                    
+        <ul class="nav nav-tabs">
+            
+        <li class="nav-item">
+            <a href="#tab-1-Haskell" aria-controls="tab-1-Haskell" role="tab" data-toggle="tab" data-lang="haskell">Haskell</a>
+        </li>
+    
+        <li class="nav-item">
+            <a href="#tab-1-Postgres" aria-controls="tab-1-Postgres" role="tab" data-toggle="tab" data-lang="sql">Postgres</a>
+        </li>
+    
+        </ul>
+    
+        <div class="tab-content">
+            
+        <div role="tabpanel" class="tab-pane active" id="tab-1-Haskell">
+            <div class="codehilite"><pre><span></span><span class="kt">Pg</span><span class="o">.</span><span class="n">lockingAllTablesFor_</span> <span class="kt">Pg</span><span class="o">.</span><span class="kt">PgSelectLockingStrengthUpdate</span> <span class="kt">Nothing</span> <span class="o">$</span>
+  <span class="n">filter_</span> <span class="p">(</span><span class="nf">\</span><span class="n">c</span> <span class="ow">-&gt;</span> <span class="n">fromMaybe_</span> <span class="s">&quot;&quot;</span> <span class="p">(</span><span class="n">addressCity</span> <span class="p">(</span><span class="n">customerAddress</span> <span class="n">c</span><span class="p">))</span> <span class="o">==.</span> <span class="s">&quot;Dublin&quot;</span><span class="p">)</span> <span class="o">$</span>
+  <span class="n">all_</span> <span class="p">(</span><span class="n">customer</span> <span class="n">chinookDb</span><span class="p">)</span>
+</pre></div>
+
+        </div>
+    
+        <div role="tabpanel" class="tab-pane " id="tab-1-Postgres">
+            <div class="codehilite"><pre><span></span><span class="k">SELECT</span> <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;CustomerId&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res0&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;FirstName&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res1&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;LastName&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res2&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;Company&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res3&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;Address&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res4&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;City&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res5&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;State&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res6&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;Country&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res7&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;PostalCode&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res8&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;Phone&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res9&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;Fax&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res10&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;Email&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res11&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;SupportRepId&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res12&quot;</span>
+<span class="k">FROM</span> <span class="ss">&quot;Customer&quot;</span> <span class="k">AS</span> <span class="ss">&quot;t0&quot;</span>
+<span class="k">WHERE</span> <span class="p">(</span><span class="n">COALESCE</span><span class="p">(</span><span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;City&quot;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">))</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;Dublin&#39;</span><span class="p">)</span>
+  <span class="k">FOR</span>
+  <span class="k">UPDATE</span>
+</pre></div>
+
+        </div>
+    
+        </div>
+    
+                </div>
+                    </p>
+<p>However, because there may be a lot of customers in Dublin that we'd like to
+update, this may block for a long time. Perhaps, we'd only like to lock rows
+that aren't already locked. This is inconsistent in general, but we do not
+always care.  Postgres offers the <code>SKIP LOCKED</code> clause for this</p>
+<p>
+                <div class="code-nav-container">
+                    
+        <ul class="nav nav-tabs">
+            
+        <li class="nav-item">
+            <a href="#tab-2-Haskell" aria-controls="tab-2-Haskell" role="tab" data-toggle="tab" data-lang="haskell">Haskell</a>
+        </li>
+    
+        <li class="nav-item">
+            <a href="#tab-2-Postgres" aria-controls="tab-2-Postgres" role="tab" data-toggle="tab" data-lang="sql">Postgres</a>
+        </li>
+    
+        </ul>
+    
+        <div class="tab-content">
+            
+        <div role="tabpanel" class="tab-pane active" id="tab-2-Haskell">
+            <div class="codehilite"><pre><span></span><span class="kt">Pg</span><span class="o">.</span><span class="n">lockingAllTablesFor_</span> <span class="kt">Pg</span><span class="o">.</span><span class="kt">PgSelectLockingStrengthUpdate</span> <span class="p">(</span><span class="kt">Just</span> <span class="kt">Pg</span><span class="o">.</span><span class="kt">PgSelectLockingOptionsSkipLocked</span><span class="p">)</span> <span class="o">$</span>
+  <span class="n">filter_</span> <span class="p">(</span><span class="nf">\</span><span class="n">c</span> <span class="ow">-&gt;</span> <span class="n">fromMaybe_</span> <span class="s">&quot;&quot;</span> <span class="p">(</span><span class="n">addressCity</span> <span class="p">(</span><span class="n">customerAddress</span> <span class="n">c</span><span class="p">))</span> <span class="o">==.</span> <span class="s">&quot;Dublin&quot;</span><span class="p">)</span> <span class="o">$</span>
+  <span class="n">all_</span> <span class="p">(</span><span class="n">customer</span> <span class="n">chinookDb</span><span class="p">)</span>
+</pre></div>
+
+        </div>
+    
+        <div role="tabpanel" class="tab-pane " id="tab-2-Postgres">
+            <div class="codehilite"><pre><span></span><span class="k">SELECT</span> <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;CustomerId&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res0&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;FirstName&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res1&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;LastName&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res2&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;Company&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res3&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;Address&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res4&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;City&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res5&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;State&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res6&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;Country&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res7&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;PostalCode&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res8&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;Phone&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res9&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;Fax&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res10&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;Email&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res11&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;SupportRepId&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res12&quot;</span>
+<span class="k">FROM</span> <span class="ss">&quot;Customer&quot;</span> <span class="k">AS</span> <span class="ss">&quot;t0&quot;</span>
+<span class="k">WHERE</span> <span class="p">(</span><span class="n">COALESCE</span><span class="p">(</span><span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;City&quot;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">))</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;Dublin&#39;</span><span class="p">)</span>
+  <span class="k">FOR</span>
+  <span class="k">UPDATE</span> <span class="n">SKIP</span> <span class="n">LOCKED</span>
+</pre></div>
+
+        </div>
+    
+        </div>
+    
+                </div>
+                    </p>
+<p>Or, if we do care, and don't want to wait anyway, we can ask Postgres to fail
+early instead of blocking, using <code>NO WAIT</code></p>
+<p>
+                <div class="code-nav-container">
+                    
+        <ul class="nav nav-tabs">
+            
+        <li class="nav-item">
+            <a href="#tab-3-Haskell" aria-controls="tab-3-Haskell" role="tab" data-toggle="tab" data-lang="haskell">Haskell</a>
+        </li>
+    
+        <li class="nav-item">
+            <a href="#tab-3-Postgres" aria-controls="tab-3-Postgres" role="tab" data-toggle="tab" data-lang="sql">Postgres</a>
+        </li>
+    
+        </ul>
+    
+        <div class="tab-content">
+            
+        <div role="tabpanel" class="tab-pane active" id="tab-3-Haskell">
+            <div class="codehilite"><pre><span></span><span class="kt">Pg</span><span class="o">.</span><span class="n">lockingAllTablesFor_</span> <span class="kt">Pg</span><span class="o">.</span><span class="kt">PgSelectLockingStrengthUpdate</span> <span class="p">(</span><span class="kt">Just</span> <span class="kt">Pg</span><span class="o">.</span><span class="kt">PgSelectLockingOptionsNoWait</span><span class="p">)</span> <span class="o">$</span>
+  <span class="n">filter_</span> <span class="p">(</span><span class="nf">\</span><span class="n">c</span> <span class="ow">-&gt;</span> <span class="n">fromMaybe_</span> <span class="s">&quot;&quot;</span> <span class="p">(</span><span class="n">addressCity</span> <span class="p">(</span><span class="n">customerAddress</span> <span class="n">c</span><span class="p">))</span> <span class="o">==.</span> <span class="s">&quot;Dublin&quot;</span><span class="p">)</span> <span class="o">$</span>
+  <span class="n">all_</span> <span class="p">(</span><span class="n">customer</span> <span class="n">chinookDb</span><span class="p">)</span>
+</pre></div>
+
+        </div>
+    
+        <div role="tabpanel" class="tab-pane " id="tab-3-Postgres">
+            <div class="codehilite"><pre><span></span><span class="k">SELECT</span> <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;CustomerId&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res0&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;FirstName&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res1&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;LastName&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res2&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;Company&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res3&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;Address&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res4&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;City&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res5&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;State&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res6&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;Country&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res7&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;PostalCode&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res8&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;Phone&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res9&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;Fax&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res10&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;Email&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res11&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;SupportRepId&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res12&quot;</span>
+<span class="k">FROM</span> <span class="ss">&quot;Customer&quot;</span> <span class="k">AS</span> <span class="ss">&quot;t0&quot;</span>
+<span class="k">WHERE</span> <span class="p">(</span><span class="n">COALESCE</span><span class="p">(</span><span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;City&quot;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">))</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;Dublin&#39;</span><span class="p">)</span>
+  <span class="k">FOR</span>
+  <span class="k">UPDATE</span> <span class="n">NOWAIT</span>
+</pre></div>
+
+        </div>
+    
+        </div>
+    
+                </div>
+                    </p>
+<p>We can also specify the locking clauses when <code>JOIN</code>ing. Suppose we want to get
+all customers who live in London <em>and</em> have a support rep who lives in Paris,
+and skipping rows that we can't lock.</p>
+<p>
+                <div class="code-nav-container">
+                    
+        <ul class="nav nav-tabs">
+            
+        <li class="nav-item">
+            <a href="#tab-4-Haskell" aria-controls="tab-4-Haskell" role="tab" data-toggle="tab" data-lang="haskell">Haskell</a>
+        </li>
+    
+        <li class="nav-item">
+            <a href="#tab-4-Postgres" aria-controls="tab-4-Postgres" role="tab" data-toggle="tab" data-lang="sql">Postgres</a>
+        </li>
+    
+        </ul>
+    
+        <div class="tab-content">
+            
+        <div role="tabpanel" class="tab-pane active" id="tab-4-Haskell">
+            <div class="codehilite"><pre><span></span><span class="kt">Pg</span><span class="o">.</span><span class="n">lockingAllTablesFor_</span> <span class="kt">Pg</span><span class="o">.</span><span class="kt">PgSelectLockingStrengthShare</span> <span class="p">(</span><span class="kt">Just</span> <span class="kt">Pg</span><span class="o">.</span><span class="kt">PgSelectLockingOptionsSkipLocked</span><span class="p">)</span> <span class="o">$</span>
+  <span class="kr">do</span> <span class="n">customer</span> <span class="ow">&lt;-</span> <span class="n">filter_</span> <span class="p">(</span><span class="nf">\</span><span class="n">c</span> <span class="ow">-&gt;</span> <span class="n">fromMaybe_</span> <span class="s">&quot;&quot;</span> <span class="p">(</span><span class="n">addressCity</span> <span class="p">(</span><span class="n">customerAddress</span> <span class="n">c</span><span class="p">))</span> <span class="o">==.</span> <span class="s">&quot;London&quot;</span><span class="p">)</span> <span class="o">$</span>
+                 <span class="n">all_</span> <span class="p">(</span><span class="n">customer</span> <span class="n">chinookDb</span><span class="p">)</span>
+     <span class="n">employee</span> <span class="ow">&lt;-</span> <span class="n">join_</span> <span class="p">(</span><span class="n">employee</span> <span class="n">chinookDb</span><span class="p">)</span>
+                       <span class="p">(</span><span class="nf">\</span><span class="n">e</span> <span class="ow">-&gt;</span> <span class="n">fromMaybe_</span> <span class="s">&quot;&quot;</span> <span class="p">(</span><span class="n">addressCity</span> <span class="p">(</span><span class="n">employeeAddress</span> <span class="n">e</span><span class="p">))</span> <span class="o">==.</span> <span class="s">&quot;Paris&quot;</span> <span class="o">&amp;&amp;.</span>
+                              <span class="n">just_</span> <span class="p">(</span><span class="n">pk</span> <span class="n">e</span><span class="p">)</span> <span class="o">==.</span> <span class="n">customerSupportRep</span> <span class="n">customer</span><span class="p">)</span>
+     <span class="n">pure</span> <span class="p">(</span><span class="n">customerFirstName</span> <span class="n">customer</span><span class="p">,</span> <span class="n">customerLastName</span> <span class="n">customer</span><span class="p">,</span> <span class="n">pk</span> <span class="n">employee</span><span class="p">)</span>
+</pre></div>
+
+        </div>
+    
+        <div role="tabpanel" class="tab-pane " id="tab-4-Postgres">
+            <div class="codehilite"><pre><span></span><span class="k">SELECT</span> <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;FirstName&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res0&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;LastName&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res1&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t1&quot;</span><span class="p">.</span><span class="ss">&quot;EmployeeId&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res2&quot;</span>
+<span class="k">FROM</span> <span class="ss">&quot;Customer&quot;</span> <span class="k">AS</span> <span class="ss">&quot;t0&quot;</span>
+<span class="k">INNER</span> <span class="k">JOIN</span> <span class="ss">&quot;Employee&quot;</span> <span class="k">AS</span> <span class="ss">&quot;t1&quot;</span> <span class="k">ON</span> <span class="p">((</span><span class="n">COALESCE</span><span class="p">(</span><span class="ss">&quot;t1&quot;</span><span class="p">.</span><span class="ss">&quot;City&quot;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">))</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;Paris&#39;</span><span class="p">))</span>
+<span class="k">AND</span> <span class="p">((</span><span class="ss">&quot;t1&quot;</span><span class="p">.</span><span class="ss">&quot;EmployeeId&quot;</span><span class="p">)</span> <span class="k">IS</span> <span class="k">NOT</span> <span class="k">DISTINCT</span>
+     <span class="k">FROM</span> <span class="p">(</span><span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;SupportRepId&quot;</span><span class="p">))</span>
+<span class="k">WHERE</span> <span class="p">(</span><span class="n">COALESCE</span><span class="p">(</span><span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;City&quot;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">))</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;London&#39;</span><span class="p">)</span>
+  <span class="k">FOR</span> <span class="k">SHARE</span> <span class="n">SKIP</span> <span class="n">LOCKED</span>
+</pre></div>
+
+        </div>
+    
+        </div>
+    
+                </div>
+                    </p>
+<p>You may notice that this query will lock rows in both the customers and
+employees table. This may not be what you want. You can also specify which
+tables to lock by using the <code>lockingFor_</code> function. This requires you to specify
+which locks you want to hold by returning them from your query. For example, to
+lock only the customers table</p>
+<p>
+                <div class="code-nav-container">
+                    
+        <ul class="nav nav-tabs">
+            
+        <li class="nav-item">
+            <a href="#tab-5-Haskell" aria-controls="tab-5-Haskell" role="tab" data-toggle="tab" data-lang="haskell">Haskell</a>
+        </li>
+    
+        <li class="nav-item">
+            <a href="#tab-5-Postgres" aria-controls="tab-5-Postgres" role="tab" data-toggle="tab" data-lang="sql">Postgres</a>
+        </li>
+    
+        </ul>
+    
+        <div class="tab-content">
+            
+        <div role="tabpanel" class="tab-pane active" id="tab-5-Haskell">
+            <div class="codehilite"><pre><span></span><span class="kt">Pg</span><span class="o">.</span><span class="n">lockingFor_</span> <span class="kt">Pg</span><span class="o">.</span><span class="kt">PgSelectLockingStrengthShare</span> <span class="p">(</span><span class="kt">Just</span> <span class="kt">Pg</span><span class="o">.</span><span class="kt">PgSelectLockingOptionsSkipLocked</span><span class="p">)</span> <span class="o">$</span>
+  <span class="kr">do</span> <span class="p">(</span><span class="n">customerLock</span><span class="p">,</span> <span class="n">customer</span><span class="p">)</span> <span class="ow">&lt;-</span> <span class="kt">Pg</span><span class="o">.</span><span class="n">locked_</span> <span class="p">(</span><span class="n">customer</span> <span class="n">chinookDb</span><span class="p">)</span>
+     <span class="n">guard_</span> <span class="p">(</span><span class="n">fromMaybe_</span> <span class="s">&quot;&quot;</span> <span class="p">(</span><span class="n">addressCity</span> <span class="p">(</span><span class="n">customerAddress</span> <span class="n">customer</span><span class="p">))</span> <span class="o">==.</span> <span class="s">&quot;London&quot;</span><span class="p">)</span>
+     <span class="n">employee</span> <span class="ow">&lt;-</span> <span class="n">filter_</span> <span class="p">(</span><span class="nf">\</span><span class="n">e</span> <span class="ow">-&gt;</span> <span class="n">fromMaybe_</span> <span class="s">&quot;&quot;</span> <span class="p">(</span><span class="n">addressCity</span> <span class="p">(</span><span class="n">employeeAddress</span> <span class="n">e</span><span class="p">))</span> <span class="o">==.</span> <span class="s">&quot;Paris&quot;</span> <span class="o">&amp;&amp;.</span>
+                                <span class="n">just_</span> <span class="p">(</span><span class="n">pk</span> <span class="n">e</span><span class="p">)</span> <span class="o">==.</span> <span class="n">customerSupportRep</span> <span class="n">customer</span><span class="p">)</span> <span class="o">$</span>
+                 <span class="n">all_</span> <span class="p">(</span><span class="n">employee</span> <span class="n">chinookDb</span><span class="p">)</span>
+     <span class="n">pure</span> <span class="p">((</span><span class="n">customerFirstName</span> <span class="n">customer</span><span class="p">,</span> <span class="n">customerLastName</span> <span class="n">customer</span><span class="p">,</span> <span class="n">pk</span> <span class="n">employee</span><span class="p">)</span> <span class="p">`</span><span class="kt">Pg</span><span class="o">.</span><span class="n">withLocks_</span><span class="p">`</span> <span class="n">customerLock</span><span class="p">)</span>
+</pre></div>
+
+        </div>
+    
+        <div role="tabpanel" class="tab-pane " id="tab-5-Postgres">
+            <div class="codehilite"><pre><span></span><span class="k">SELECT</span> <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;FirstName&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res0&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;LastName&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res1&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t1&quot;</span><span class="p">.</span><span class="ss">&quot;EmployeeId&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res2&quot;</span>
+<span class="k">FROM</span> <span class="ss">&quot;Customer&quot;</span> <span class="k">AS</span> <span class="ss">&quot;t0&quot;</span>
+<span class="k">CROSS</span> <span class="k">JOIN</span> <span class="ss">&quot;Employee&quot;</span> <span class="k">AS</span> <span class="ss">&quot;t1&quot;</span>
+<span class="k">WHERE</span> <span class="p">((</span><span class="n">COALESCE</span><span class="p">(</span><span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;City&quot;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">))</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;London&#39;</span><span class="p">))</span>
+  <span class="k">AND</span> <span class="p">(((</span><span class="n">COALESCE</span><span class="p">(</span><span class="ss">&quot;t1&quot;</span><span class="p">.</span><span class="ss">&quot;City&quot;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">))</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;Paris&#39;</span><span class="p">))</span>
+       <span class="k">AND</span> <span class="p">((</span><span class="ss">&quot;t1&quot;</span><span class="p">.</span><span class="ss">&quot;EmployeeId&quot;</span><span class="p">)</span> <span class="k">IS</span> <span class="k">NOT</span> <span class="k">DISTINCT</span>
+            <span class="k">FROM</span> <span class="p">(</span><span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;SupportRepId&quot;</span><span class="p">)))</span>
+  <span class="k">FOR</span> <span class="k">SHARE</span> <span class="k">OF</span> <span class="ss">&quot;t0&quot;</span> <span class="n">SKIP</span> <span class="n">LOCKED</span>
+</pre></div>
+
+        </div>
+    
+        </div>
+    
+                </div>
+                    </p>
+<p>In order to use the explicit locking clause, you need to use the <code>locked_</code>
+function to get a reference to a lock for a particular table. This forces the
+locked table to be part of the join, which is a requirement for the Postgres
+locking clause. You can think of <code>locked_</code> as exactly like <code>all_</code>, except it
+returns a table lock as the first return value.</p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>Locks can be combined monoidally, using <code>mappend</code> or <code>(&lt;&gt;)</code>. You can use this
+to lock multiple tables, by passing the result of <code>mappend</code> to <code>withLocks_</code>.</p>
+<p>If you return <code>mempty</code> as the first argument, then this recovers the standard
+behavior of locking all tables.</p>
+</div>
+<p><code>lockingFor_</code> is the most general locking combinator. You can recover the same
+behavior as <code>lockingAllTablesFor_</code> by using the <code>lockAll_</code> function.</p>
+<p>
+                <div class="code-nav-container">
+                    
+        <ul class="nav nav-tabs">
+            
+        <li class="nav-item">
+            <a href="#tab-6-Haskell" aria-controls="tab-6-Haskell" role="tab" data-toggle="tab" data-lang="haskell">Haskell</a>
+        </li>
+    
+        <li class="nav-item">
+            <a href="#tab-6-Postgres" aria-controls="tab-6-Postgres" role="tab" data-toggle="tab" data-lang="sql">Postgres</a>
+        </li>
+    
+        </ul>
+    
+        <div class="tab-content">
+            
+        <div role="tabpanel" class="tab-pane active" id="tab-6-Haskell">
+            <div class="codehilite"><pre><span></span><span class="kt">Pg</span><span class="o">.</span><span class="n">lockingFor_</span> <span class="kt">Pg</span><span class="o">.</span><span class="kt">PgSelectLockingStrengthShare</span> <span class="p">(</span><span class="kt">Just</span> <span class="kt">Pg</span><span class="o">.</span><span class="kt">PgSelectLockingOptionsSkipLocked</span><span class="p">)</span> <span class="o">$</span>
+  <span class="kr">do</span> <span class="p">(</span><span class="n">customerLock</span><span class="p">,</span> <span class="n">customer</span><span class="p">)</span> <span class="ow">&lt;-</span> <span class="kt">Pg</span><span class="o">.</span><span class="n">locked_</span> <span class="p">(</span><span class="n">customer</span> <span class="n">chinookDb</span><span class="p">)</span>
+     <span class="n">guard_</span> <span class="p">(</span><span class="n">fromMaybe_</span> <span class="s">&quot;&quot;</span> <span class="p">(</span><span class="n">addressCity</span> <span class="p">(</span><span class="n">customerAddress</span> <span class="n">customer</span><span class="p">))</span> <span class="o">==.</span> <span class="s">&quot;London&quot;</span><span class="p">)</span>
+     <span class="n">employee</span> <span class="ow">&lt;-</span> <span class="n">filter_</span> <span class="p">(</span><span class="nf">\</span><span class="n">e</span> <span class="ow">-&gt;</span> <span class="n">fromMaybe_</span> <span class="s">&quot;&quot;</span> <span class="p">(</span><span class="n">addressCity</span> <span class="p">(</span><span class="n">employeeAddress</span> <span class="n">e</span><span class="p">))</span> <span class="o">==.</span> <span class="s">&quot;Paris&quot;</span> <span class="o">&amp;&amp;.</span>
+                                <span class="n">just_</span> <span class="p">(</span><span class="n">pk</span> <span class="n">e</span><span class="p">)</span> <span class="o">==.</span> <span class="n">customerSupportRep</span> <span class="n">customer</span><span class="p">)</span> <span class="o">$</span>
+                 <span class="n">all_</span> <span class="p">(</span><span class="n">employee</span> <span class="n">chinookDb</span><span class="p">)</span>
+     <span class="n">pure</span> <span class="p">(</span><span class="kt">Pg</span><span class="o">.</span><span class="n">lockAll_</span> <span class="p">(</span><span class="n">customerFirstName</span> <span class="n">customer</span><span class="p">,</span> <span class="n">customerLastName</span> <span class="n">customer</span><span class="p">,</span> <span class="n">pk</span> <span class="n">employee</span><span class="p">))</span>
+</pre></div>
+
+        </div>
+    
+        <div role="tabpanel" class="tab-pane " id="tab-6-Postgres">
+            <div class="codehilite"><pre><span></span><span class="k">SELECT</span> <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;FirstName&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res0&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;LastName&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res1&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t1&quot;</span><span class="p">.</span><span class="ss">&quot;EmployeeId&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res2&quot;</span>
+<span class="k">FROM</span> <span class="ss">&quot;Customer&quot;</span> <span class="k">AS</span> <span class="ss">&quot;t0&quot;</span>
+<span class="k">CROSS</span> <span class="k">JOIN</span> <span class="ss">&quot;Employee&quot;</span> <span class="k">AS</span> <span class="ss">&quot;t1&quot;</span>
+<span class="k">WHERE</span> <span class="p">((</span><span class="n">COALESCE</span><span class="p">(</span><span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;City&quot;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">))</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;London&#39;</span><span class="p">))</span>
+  <span class="k">AND</span> <span class="p">(((</span><span class="n">COALESCE</span><span class="p">(</span><span class="ss">&quot;t1&quot;</span><span class="p">.</span><span class="ss">&quot;City&quot;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">))</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;Paris&#39;</span><span class="p">))</span>
+       <span class="k">AND</span> <span class="p">((</span><span class="ss">&quot;t1&quot;</span><span class="p">.</span><span class="ss">&quot;EmployeeId&quot;</span><span class="p">)</span> <span class="k">IS</span> <span class="k">NOT</span> <span class="k">DISTINCT</span>
+            <span class="k">FROM</span> <span class="p">(</span><span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;SupportRepId&quot;</span><span class="p">)))</span>
+  <span class="k">FOR</span> <span class="k">SHARE</span> <span class="n">SKIP</span> <span class="n">LOCKED</span>
+</pre></div>
+
+        </div>
+    
+        </div>
+    
+                </div>
+                    </p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>Table locks have the type <code>PgLockedTables s</code>, where <code>s</code> is the thread
+parameter, as described
+<a href="../../queries/basic/#the-q-data-type">here</a></p>
+</div>
 <h3 id="distinct-on-support"><code>DISTINCT ON</code> support</h3>
 <p>Postgres supports the <code>DISTINCT ON</code> clause with selects to return distinct
 results based on a particular key. The <code>beam-postgres</code> package provides the
@@ -922,39 +1399,39 @@ results based on a particular key. The <code>beam-postgres</code> package provid
         <ul class="nav nav-tabs">
             
         <li class="nav-item">
-            <a href="#tab-0-haskell" aria-controls="tab-0-haskell" role="tab" data-toggle="tab" data-lang="haskell">Haskell</a>
+            <a href="#tab-7-Haskell" aria-controls="tab-7-Haskell" role="tab" data-toggle="tab" data-lang="haskell">Haskell</a>
         </li>
     
         <li class="nav-item">
-            <a href="#tab-0-postgres" aria-controls="tab-0-postgres" role="tab" data-toggle="tab" data-lang="postgres">Postgres</a>
+            <a href="#tab-7-Postgres" aria-controls="tab-7-Postgres" role="tab" data-toggle="tab" data-lang="sql">Postgres</a>
         </li>
     
         </ul>
     
         <div class="tab-content">
             
-        <div role="tabpanel" class="tab-pane active" id="tab-0-haskell">
-            <div class="codehilite"><pre><span></span><span class="nf">pgNubBy_</span> <span class="p">(</span><span class="n">addressPostalCode</span> <span class="o">.</span> <span class="n">customerAddress</span><span class="p">)</span> <span class="o">$</span> 
+        <div role="tabpanel" class="tab-pane active" id="tab-7-Haskell">
+            <div class="codehilite"><pre><span></span><span class="kt">Pg</span><span class="o">.</span><span class="n">pgNubBy_</span> <span class="p">(</span><span class="n">addressPostalCode</span> <span class="o">.</span> <span class="n">customerAddress</span><span class="p">)</span> <span class="o">$</span>
   <span class="n">all_</span> <span class="p">(</span><span class="n">customer</span> <span class="n">chinookDb</span><span class="p">)</span>
 </pre></div>
 
         </div>
     
-        <div role="tabpanel" class="tab-pane " id="tab-0-postgres">
-            <div class="codehilite"><pre><span></span><span class="k">SELECT</span> <span class="k">DISTINCT</span> <span class="k">ON</span> <span class="p">(</span><span class="s s-Name">&quot;t0&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;PostalCode&quot;</span><span class="p">)</span> <span class="s s-Name">&quot;t0&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;CustomerId&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;res0&quot;</span><span class="p">,</span>
-                   <span class="s s-Name">&quot;t0&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;FirstName&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;res1&quot;</span><span class="p">,</span>
-                   <span class="s s-Name">&quot;t0&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;LastName&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;res2&quot;</span><span class="p">,</span>
-                   <span class="s s-Name">&quot;t0&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;Company&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;res3&quot;</span><span class="p">,</span>
-                   <span class="s s-Name">&quot;t0&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;Address&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;res4&quot;</span><span class="p">,</span>
-                   <span class="s s-Name">&quot;t0&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;City&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;res5&quot;</span><span class="p">,</span>
-                   <span class="s s-Name">&quot;t0&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;State&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;res6&quot;</span><span class="p">,</span>
-                   <span class="s s-Name">&quot;t0&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;Country&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;res7&quot;</span><span class="p">,</span>
-                   <span class="s s-Name">&quot;t0&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;PostalCode&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;res8&quot;</span><span class="p">,</span>
-                   <span class="s s-Name">&quot;t0&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;Phone&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;res9&quot;</span><span class="p">,</span>
-                   <span class="s s-Name">&quot;t0&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;Fax&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;res10&quot;</span><span class="p">,</span>
-                   <span class="s s-Name">&quot;t0&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;Email&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;res11&quot;</span><span class="p">,</span>
-                   <span class="s s-Name">&quot;t0&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;SupportRepId&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;res12&quot;</span>
-<span class="k">FROM</span> <span class="s s-Name">&quot;Customer&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;t0&quot;</span>
+        <div role="tabpanel" class="tab-pane " id="tab-7-Postgres">
+            <div class="codehilite"><pre><span></span><span class="k">SELECT</span> <span class="k">DISTINCT</span> <span class="k">ON</span> <span class="p">(</span><span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;PostalCode&quot;</span><span class="p">)</span> <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;CustomerId&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res0&quot;</span><span class="p">,</span>
+                   <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;FirstName&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res1&quot;</span><span class="p">,</span>
+                   <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;LastName&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res2&quot;</span><span class="p">,</span>
+                   <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;Company&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res3&quot;</span><span class="p">,</span>
+                   <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;Address&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res4&quot;</span><span class="p">,</span>
+                   <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;City&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res5&quot;</span><span class="p">,</span>
+                   <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;State&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res6&quot;</span><span class="p">,</span>
+                   <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;Country&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res7&quot;</span><span class="p">,</span>
+                   <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;PostalCode&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res8&quot;</span><span class="p">,</span>
+                   <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;Phone&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res9&quot;</span><span class="p">,</span>
+                   <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;Fax&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res10&quot;</span><span class="p">,</span>
+                   <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;Email&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res11&quot;</span><span class="p">,</span>
+                   <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;SupportRepId&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res12&quot;</span>
+<span class="k">FROM</span> <span class="ss">&quot;Customer&quot;</span> <span class="k">AS</span> <span class="ss">&quot;t0&quot;</span>
 </pre></div>
 
         </div>
@@ -976,30 +1453,30 @@ separated by a given separator. <code>beam-postgres</code> provides <code>pgStri
         <ul class="nav nav-tabs">
             
         <li class="nav-item">
-            <a href="#tab-1-haskell" aria-controls="tab-1-haskell" role="tab" data-toggle="tab" data-lang="haskell">Haskell</a>
+            <a href="#tab-8-Haskell" aria-controls="tab-8-Haskell" role="tab" data-toggle="tab" data-lang="haskell">Haskell</a>
         </li>
     
         <li class="nav-item">
-            <a href="#tab-1-postgres" aria-controls="tab-1-postgres" role="tab" data-toggle="tab" data-lang="postgres">Postgres</a>
+            <a href="#tab-8-Postgres" aria-controls="tab-8-Postgres" role="tab" data-toggle="tab" data-lang="sql">Postgres</a>
         </li>
     
         </ul>
     
         <div class="tab-content">
             
-        <div role="tabpanel" class="tab-pane active" id="tab-1-haskell">
+        <div role="tabpanel" class="tab-pane active" id="tab-8-Haskell">
             <div class="codehilite"><pre><span></span><span class="nf">aggregate_</span> <span class="p">(</span><span class="nf">\</span><span class="n">c</span> <span class="ow">-&gt;</span> <span class="p">(</span> <span class="n">group_</span> <span class="p">(</span><span class="n">addressPostalCode</span> <span class="p">(</span><span class="n">customerAddress</span> <span class="n">c</span><span class="p">))</span>
-                  <span class="p">,</span> <span class="n">pgStringAgg</span> <span class="p">(</span><span class="n">coalesce_</span> <span class="p">[</span><span class="n">addressCity</span> <span class="p">(</span><span class="n">customerAddress</span> <span class="n">c</span><span class="p">)]</span> <span class="s">&quot;&quot;</span><span class="p">)</span> <span class="s">&quot;,&quot;</span><span class="p">)</span> <span class="p">)</span> <span class="o">$</span>
+                  <span class="p">,</span> <span class="kt">Pg</span><span class="o">.</span><span class="n">pgStringAgg</span> <span class="p">(</span><span class="n">coalesce_</span> <span class="p">[</span><span class="n">addressCity</span> <span class="p">(</span><span class="n">customerAddress</span> <span class="n">c</span><span class="p">)]</span> <span class="s">&quot;&quot;</span><span class="p">)</span> <span class="s">&quot;,&quot;</span><span class="p">)</span> <span class="p">)</span> <span class="o">$</span>
   <span class="n">all_</span> <span class="p">(</span><span class="n">customer</span> <span class="n">chinookDb</span><span class="p">)</span>
 </pre></div>
 
         </div>
     
-        <div role="tabpanel" class="tab-pane " id="tab-1-postgres">
-            <div class="codehilite"><pre><span></span><span class="k">SELECT</span> <span class="s s-Name">&quot;t0&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;PostalCode&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;res0&quot;</span><span class="p">,</span>
-       <span class="n">string_agg</span><span class="p">(</span><span class="k">COALESCE</span><span class="p">(</span><span class="s s-Name">&quot;t0&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;City&quot;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">),</span> <span class="s1">&#39;,&#39;</span><span class="p">)</span> <span class="k">AS</span> <span class="s s-Name">&quot;res1&quot;</span>
-<span class="k">FROM</span> <span class="s s-Name">&quot;Customer&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;t0&quot;</span>
-<span class="k">GROUP</span> <span class="k">BY</span> <span class="s s-Name">&quot;t0&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;PostalCode&quot;</span>
+        <div role="tabpanel" class="tab-pane " id="tab-8-Postgres">
+            <div class="codehilite"><pre><span></span><span class="k">SELECT</span> <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;PostalCode&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res0&quot;</span><span class="p">,</span>
+       <span class="n">string_agg</span><span class="p">(</span><span class="n">COALESCE</span><span class="p">(</span><span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;City&quot;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">),</span> <span class="s1">&#39;,&#39;</span><span class="p">)</span> <span class="k">AS</span> <span class="ss">&quot;res1&quot;</span>
+<span class="k">FROM</span> <span class="ss">&quot;Customer&quot;</span> <span class="k">AS</span> <span class="ss">&quot;t0&quot;</span>
+<span class="k">GROUP</span> <span class="k">BY</span> <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;PostalCode&quot;</span>
 </pre></div>
 
         </div>
@@ -1015,30 +1492,460 @@ separated by a given separator. <code>beam-postgres</code> provides <code>pgStri
         <ul class="nav nav-tabs">
             
         <li class="nav-item">
-            <a href="#tab-6-haskell" aria-controls="tab-6-haskell" role="tab" data-toggle="tab" data-lang="haskell">Haskell</a>
+            <a href="#tab-9-Haskell" aria-controls="tab-9-Haskell" role="tab" data-toggle="tab" data-lang="haskell">Haskell</a>
         </li>
     
         <li class="nav-item">
-            <a href="#tab-6-postgres" aria-controls="tab-6-postgres" role="tab" data-toggle="tab" data-lang="postgres">Postgres</a>
+            <a href="#tab-9-Postgres" aria-controls="tab-9-Postgres" role="tab" data-toggle="tab" data-lang="sql">Postgres</a>
         </li>
     
         </ul>
     
         <div class="tab-content">
             
-        <div role="tabpanel" class="tab-pane active" id="tab-6-haskell">
+        <div role="tabpanel" class="tab-pane active" id="tab-9-Haskell">
             <div class="codehilite"><pre><span></span><span class="nf">aggregate_</span> <span class="p">(</span><span class="nf">\</span><span class="n">c</span> <span class="ow">-&gt;</span> <span class="p">(</span> <span class="n">group_</span> <span class="p">(</span><span class="n">addressPostalCode</span> <span class="p">(</span><span class="n">customerAddress</span> <span class="n">c</span><span class="p">))</span>
-                  <span class="p">,</span> <span class="n">pgStringAggOver</span> <span class="n">distinctInGroup_</span> <span class="p">(</span><span class="n">coalesce_</span> <span class="p">[</span><span class="n">addressCity</span> <span class="p">(</span><span class="n">customerAddress</span> <span class="n">c</span><span class="p">)]</span> <span class="s">&quot;&quot;</span><span class="p">)</span> <span class="s">&quot;,&quot;</span><span class="p">)</span> <span class="p">)</span> <span class="o">$</span>
+                  <span class="p">,</span> <span class="kt">Pg</span><span class="o">.</span><span class="n">pgStringAggOver</span> <span class="n">distinctInGroup_</span> <span class="p">(</span><span class="n">coalesce_</span> <span class="p">[</span><span class="n">addressCity</span> <span class="p">(</span><span class="n">customerAddress</span> <span class="n">c</span><span class="p">)]</span> <span class="s">&quot;&quot;</span><span class="p">)</span> <span class="s">&quot;,&quot;</span><span class="p">)</span> <span class="p">)</span> <span class="o">$</span>
   <span class="n">all_</span> <span class="p">(</span><span class="n">customer</span> <span class="n">chinookDb</span><span class="p">)</span>
 </pre></div>
 
         </div>
     
-        <div role="tabpanel" class="tab-pane " id="tab-6-postgres">
-            <div class="codehilite"><pre><span></span><span class="k">SELECT</span> <span class="s s-Name">&quot;t0&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;PostalCode&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;res0&quot;</span><span class="p">,</span>
-       <span class="n">string_agg</span><span class="p">(</span><span class="k">DISTINCT</span> <span class="k">COALESCE</span><span class="p">(</span><span class="s s-Name">&quot;t0&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;City&quot;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">),</span> <span class="s1">&#39;,&#39;</span><span class="p">)</span> <span class="k">AS</span> <span class="s s-Name">&quot;res1&quot;</span>
-<span class="k">FROM</span> <span class="s s-Name">&quot;Customer&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;t0&quot;</span>
-<span class="k">GROUP</span> <span class="k">BY</span> <span class="s s-Name">&quot;t0&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;PostalCode&quot;</span>
+        <div role="tabpanel" class="tab-pane " id="tab-9-Postgres">
+            <div class="codehilite"><pre><span></span><span class="k">SELECT</span> <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;PostalCode&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res0&quot;</span><span class="p">,</span>
+       <span class="n">string_agg</span><span class="p">(</span><span class="k">DISTINCT</span> <span class="n">COALESCE</span><span class="p">(</span><span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;City&quot;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">),</span> <span class="s1">&#39;,&#39;</span><span class="p">)</span> <span class="k">AS</span> <span class="ss">&quot;res1&quot;</span>
+<span class="k">FROM</span> <span class="ss">&quot;Customer&quot;</span> <span class="k">AS</span> <span class="ss">&quot;t0&quot;</span>
+<span class="k">GROUP</span> <span class="k">BY</span> <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;PostalCode&quot;</span>
+</pre></div>
+
+        </div>
+    
+        </div>
+    
+                </div>
+                    </p>
+<h3 id="on-conflict">ON CONFLICT</h3>
+<p>Beam supports <code>ON CONFLICT</code> statements in a Postgres-specific version of
+<code>insert</code>. The code below uses the following imports to ensure the correct <code>insert</code> is used:</p>
+<div class="codehilite"><pre><span></span><span class="kr">import</span> <span class="nn">Database.Beam</span> <span class="k">hiding</span> <span class="p">(</span><span class="nf">insert</span><span class="p">)</span>
+<span class="kr">import</span> <span class="k">qualified</span> <span class="nn">Database.Beam.Postgres</span> <span class="k">as</span> <span class="n">Pg</span>
+</pre></div>
+
+
+<p>The 3rd argument of the <code>insert</code> from <code>Database.Beam.Postgres</code> allows
+you to specify an <code>ON CONFLICT</code> clause. You can use
+<code>onConflictDefault</code> in order to recover the standard behavior.</p>
+<div class="codehilite"><pre><span></span><span class="nf">insert</span> <span class="ow">::</span> <span class="kt">DatabaseEntity</span> <span class="kt">Postgres</span> <span class="n">db</span> <span class="p">(</span><span class="kt">TableEntity</span> <span class="n">table</span><span class="p">)</span>
+       <span class="ow">-&gt;</span> <span class="kt">SqlInsertValues</span> <span class="kt">PgInsertValuesSyntax</span> <span class="n">table</span>
+       <span class="ow">-&gt;</span> <span class="kt">PgInsertOnConflict</span> <span class="n">table</span>
+       <span class="ow">-&gt;</span> <span class="kt">SqlInsert</span> <span class="kt">PgInsertSyntax</span>
+</pre></div>
+
+
+<p>An explicit <code>ON CONFLICT</code> statement requires to specify the indexes
+which are conflicting and an action to take when a conflict is
+discovered. The <code>onConflict</code> function allows you to specify these
+parts of the <code>ON CONFLICT</code> clause.</p>
+<div class="codehilite"><pre><span></span><span class="nf">onConflict</span> <span class="ow">::</span> <span class="kt">Beamable</span> <span class="n">tbl</span>
+           <span class="ow">=&gt;</span> <span class="kt">PgInsertOnConflictTarget</span> <span class="n">tbl</span>
+           <span class="ow">-&gt;</span> <span class="kt">PgConflictAction</span> <span class="n">tbl</span>
+           <span class="ow">-&gt;</span> <span class="kt">PgInsertOnConflict</span> <span class="n">tbl</span>
+</pre></div>
+
+
+<h4 id="acting-on-any-conflict">Acting on any conflict</h4>
+<p>The <code>anyConflict</code> value causes the action to be executed when any
+index or constraint is violated by the specified <code>INSERT</code>. The
+following example causes any conflicting update to be ignored. This
+could be useful if you want to upsert rows into a database.</p>
+<p>
+                <div class="code-nav-container">
+                    
+        <ul class="nav nav-tabs">
+            
+        <li class="nav-item">
+            <a href="#tab-10-Haskell" aria-controls="tab-10-Haskell" role="tab" data-toggle="tab" data-lang="haskell">Haskell</a>
+        </li>
+    
+        <li class="nav-item">
+            <a href="#tab-10-Postgres" aria-controls="tab-10-Postgres" role="tab" data-toggle="tab" data-lang="sql">Postgres</a>
+        </li>
+    
+        </ul>
+    
+        <div class="tab-content">
+            
+        <div role="tabpanel" class="tab-pane active" id="tab-10-Haskell">
+            <div class="codehilite"><pre><span></span><span class="c1">-- import qualified Database.Beam.Postgres as Pg</span>
+<span class="kr">let</span>
+  <span class="n">newCustomer</span> <span class="ow">=</span> <span class="kt">Customer</span> <span class="mi">42</span> <span class="s">&quot;John&quot;</span> <span class="s">&quot;Doe&quot;</span> <span class="kt">Nothing</span> <span class="p">(</span><span class="kt">Address</span> <span class="p">(</span><span class="kt">Just</span> <span class="s">&quot;Street&quot;</span><span class="p">)</span> <span class="p">(</span><span class="kt">Just</span> <span class="s">&quot;City&quot;</span><span class="p">)</span> <span class="p">(</span><span class="kt">Just</span> <span class="s">&quot;State&quot;</span><span class="p">)</span> <span class="kt">Nothing</span> <span class="kt">Nothing</span><span class="p">)</span> <span class="kt">Nothing</span> <span class="kt">Nothing</span> <span class="s">&quot;john.doe@johndoe.com&quot;</span> <span class="n">nothing_</span>
+
+<span class="nf">runInsert</span> <span class="o">$</span>
+  <span class="kt">Pg</span><span class="o">.</span><span class="n">insert</span> <span class="p">(</span><span class="n">customer</span> <span class="n">chinookDb</span><span class="p">)</span> <span class="p">(</span><span class="n">insertValues</span> <span class="p">[</span><span class="n">newCustomer</span><span class="p">])</span> <span class="o">$</span>
+    <span class="kt">Pg</span><span class="o">.</span><span class="n">onConflict</span>
+      <span class="kt">Pg</span><span class="o">.</span><span class="n">anyConflict</span>
+      <span class="kt">Pg</span><span class="o">.</span><span class="n">onConflictDoNothing</span>
+</pre></div>
+
+        </div>
+    
+        <div role="tabpanel" class="tab-pane " id="tab-10-Postgres">
+            <div class="codehilite"><pre><span></span><span class="k">INSERT</span> <span class="k">INTO</span> <span class="ss">&quot;Customer&quot;</span><span class="p">(</span><span class="ss">&quot;CustomerId&quot;</span><span class="p">,</span>
+                       <span class="ss">&quot;FirstName&quot;</span><span class="p">,</span>
+                       <span class="ss">&quot;LastName&quot;</span><span class="p">,</span>
+                       <span class="ss">&quot;Company&quot;</span><span class="p">,</span>
+                       <span class="ss">&quot;Address&quot;</span><span class="p">,</span>
+                       <span class="ss">&quot;City&quot;</span><span class="p">,</span>
+                       <span class="ss">&quot;State&quot;</span><span class="p">,</span>
+                       <span class="ss">&quot;Country&quot;</span><span class="p">,</span>
+                       <span class="ss">&quot;PostalCode&quot;</span><span class="p">,</span>
+                       <span class="ss">&quot;Phone&quot;</span><span class="p">,</span>
+                       <span class="ss">&quot;Fax&quot;</span><span class="p">,</span>
+                       <span class="ss">&quot;Email&quot;</span><span class="p">,</span>
+                       <span class="ss">&quot;SupportRepId&quot;</span><span class="p">)</span>
+<span class="k">VALUES</span> <span class="p">(</span><span class="mi">42</span><span class="p">,</span>
+        <span class="s1">&#39;John&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Doe&#39;</span><span class="p">,</span>
+        <span class="k">null</span><span class="p">,</span>
+        <span class="s1">&#39;Street&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;City&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;State&#39;</span><span class="p">,</span>
+        <span class="k">null</span><span class="p">,</span>
+        <span class="k">null</span><span class="p">,</span>
+        <span class="k">null</span><span class="p">,</span>
+        <span class="k">null</span><span class="p">,</span>
+        <span class="s1">&#39;john.doe@johndoe.com&#39;</span><span class="p">,</span>
+        <span class="k">null</span><span class="p">)</span> <span class="k">ON</span> <span class="n">CONFLICT</span> <span class="k">DO</span> <span class="k">NOTHING</span><span class="p">;</span>
+</pre></div>
+
+        </div>
+    
+        </div>
+    
+                </div>
+                    </p>
+<h4 id="acting-only-on-certain-conflicts">Acting only on certain conflicts</h4>
+<p>Sometimes you only want to perform an action if a certain constraint
+is violated.  If the conflicting index or constraint is on a field,
+you can specify the fields with the function <code>conflictingFields</code>.</p>
+<p>
+                <div class="code-nav-container">
+                    
+        <ul class="nav nav-tabs">
+            
+        <li class="nav-item">
+            <a href="#tab-11-Haskell" aria-controls="tab-11-Haskell" role="tab" data-toggle="tab" data-lang="haskell">Haskell</a>
+        </li>
+    
+        <li class="nav-item">
+            <a href="#tab-11-Postgres" aria-controls="tab-11-Postgres" role="tab" data-toggle="tab" data-lang="sql">Postgres</a>
+        </li>
+    
+        </ul>
+    
+        <div class="tab-content">
+            
+        <div role="tabpanel" class="tab-pane active" id="tab-11-Haskell">
+            <div class="codehilite"><pre><span></span><span class="c1">-- import qualified Database.Beam.Postgres as Pg</span>
+<span class="kr">let</span>
+  <span class="n">newCustomer</span> <span class="ow">=</span> <span class="kt">Customer</span> <span class="mi">42</span> <span class="s">&quot;John&quot;</span> <span class="s">&quot;Doe&quot;</span> <span class="kt">Nothing</span> <span class="p">(</span><span class="kt">Address</span> <span class="p">(</span><span class="kt">Just</span> <span class="s">&quot;Street&quot;</span><span class="p">)</span> <span class="p">(</span><span class="kt">Just</span> <span class="s">&quot;City&quot;</span><span class="p">)</span> <span class="p">(</span><span class="kt">Just</span> <span class="s">&quot;State&quot;</span><span class="p">)</span> <span class="kt">Nothing</span> <span class="kt">Nothing</span><span class="p">)</span> <span class="kt">Nothing</span> <span class="kt">Nothing</span> <span class="s">&quot;john.doe@johndoe.com&quot;</span> <span class="n">nothing_</span>
+
+<span class="nf">runInsert</span> <span class="o">$</span>
+  <span class="kt">Pg</span><span class="o">.</span><span class="n">insert</span> <span class="p">(</span><span class="n">customer</span> <span class="n">chinookDb</span><span class="p">)</span> <span class="p">(</span><span class="n">insertValues</span> <span class="p">[</span><span class="n">newCustomer</span><span class="p">])</span> <span class="o">$</span>
+    <span class="kt">Pg</span><span class="o">.</span><span class="n">onConflict</span>
+      <span class="p">(</span><span class="kt">Pg</span><span class="o">.</span><span class="n">conflictingFields</span> <span class="n">primaryKey</span><span class="p">)</span>
+      <span class="kt">Pg</span><span class="o">.</span><span class="n">onConflictSetAll</span>
+</pre></div>
+
+        </div>
+    
+        <div role="tabpanel" class="tab-pane " id="tab-11-Postgres">
+            <div class="codehilite"><pre><span></span><span class="k">INSERT</span> <span class="k">INTO</span> <span class="ss">&quot;Customer&quot;</span><span class="p">(</span><span class="ss">&quot;CustomerId&quot;</span><span class="p">,</span>
+                       <span class="ss">&quot;FirstName&quot;</span><span class="p">,</span>
+                       <span class="ss">&quot;LastName&quot;</span><span class="p">,</span>
+                       <span class="ss">&quot;Company&quot;</span><span class="p">,</span>
+                       <span class="ss">&quot;Address&quot;</span><span class="p">,</span>
+                       <span class="ss">&quot;City&quot;</span><span class="p">,</span>
+                       <span class="ss">&quot;State&quot;</span><span class="p">,</span>
+                       <span class="ss">&quot;Country&quot;</span><span class="p">,</span>
+                       <span class="ss">&quot;PostalCode&quot;</span><span class="p">,</span>
+                       <span class="ss">&quot;Phone&quot;</span><span class="p">,</span>
+                       <span class="ss">&quot;Fax&quot;</span><span class="p">,</span>
+                       <span class="ss">&quot;Email&quot;</span><span class="p">,</span>
+                       <span class="ss">&quot;SupportRepId&quot;</span><span class="p">)</span>
+<span class="k">VALUES</span> <span class="p">(</span><span class="mi">42</span><span class="p">,</span>
+        <span class="s1">&#39;John&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Doe&#39;</span><span class="p">,</span>
+        <span class="k">null</span><span class="p">,</span>
+        <span class="s1">&#39;Street&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;City&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;State&#39;</span><span class="p">,</span>
+        <span class="k">null</span><span class="p">,</span>
+        <span class="k">null</span><span class="p">,</span>
+        <span class="k">null</span><span class="p">,</span>
+        <span class="k">null</span><span class="p">,</span>
+        <span class="s1">&#39;john.doe@johndoe.com&#39;</span><span class="p">,</span>
+        <span class="k">null</span><span class="p">)</span> <span class="k">ON</span> <span class="n">CONFLICT</span> <span class="p">(</span><span class="ss">&quot;CustomerId&quot;</span><span class="p">)</span> <span class="k">DO</span>
+<span class="k">UPDATE</span>
+<span class="k">SET</span> <span class="ss">&quot;CustomerId&quot;</span><span class="o">=</span><span class="p">(</span><span class="ss">&quot;excluded&quot;</span><span class="p">.</span><span class="ss">&quot;CustomerId&quot;</span><span class="p">),</span>
+    <span class="ss">&quot;FirstName&quot;</span><span class="o">=</span><span class="p">(</span><span class="ss">&quot;excluded&quot;</span><span class="p">.</span><span class="ss">&quot;FirstName&quot;</span><span class="p">),</span>
+    <span class="ss">&quot;LastName&quot;</span><span class="o">=</span><span class="p">(</span><span class="ss">&quot;excluded&quot;</span><span class="p">.</span><span class="ss">&quot;LastName&quot;</span><span class="p">),</span>
+    <span class="ss">&quot;Company&quot;</span><span class="o">=</span><span class="p">(</span><span class="ss">&quot;excluded&quot;</span><span class="p">.</span><span class="ss">&quot;Company&quot;</span><span class="p">),</span>
+    <span class="ss">&quot;Address&quot;</span><span class="o">=</span><span class="p">(</span><span class="ss">&quot;excluded&quot;</span><span class="p">.</span><span class="ss">&quot;Address&quot;</span><span class="p">),</span>
+    <span class="ss">&quot;City&quot;</span><span class="o">=</span><span class="p">(</span><span class="ss">&quot;excluded&quot;</span><span class="p">.</span><span class="ss">&quot;City&quot;</span><span class="p">),</span>
+    <span class="ss">&quot;State&quot;</span><span class="o">=</span><span class="p">(</span><span class="ss">&quot;excluded&quot;</span><span class="p">.</span><span class="ss">&quot;State&quot;</span><span class="p">),</span>
+    <span class="ss">&quot;Country&quot;</span><span class="o">=</span><span class="p">(</span><span class="ss">&quot;excluded&quot;</span><span class="p">.</span><span class="ss">&quot;Country&quot;</span><span class="p">),</span>
+    <span class="ss">&quot;PostalCode&quot;</span><span class="o">=</span><span class="p">(</span><span class="ss">&quot;excluded&quot;</span><span class="p">.</span><span class="ss">&quot;PostalCode&quot;</span><span class="p">),</span>
+    <span class="ss">&quot;Phone&quot;</span><span class="o">=</span><span class="p">(</span><span class="ss">&quot;excluded&quot;</span><span class="p">.</span><span class="ss">&quot;Phone&quot;</span><span class="p">),</span>
+    <span class="ss">&quot;Fax&quot;</span><span class="o">=</span><span class="p">(</span><span class="ss">&quot;excluded&quot;</span><span class="p">.</span><span class="ss">&quot;Fax&quot;</span><span class="p">),</span>
+    <span class="ss">&quot;Email&quot;</span><span class="o">=</span><span class="p">(</span><span class="ss">&quot;excluded&quot;</span><span class="p">.</span><span class="ss">&quot;Email&quot;</span><span class="p">),</span>
+    <span class="ss">&quot;SupportRepId&quot;</span><span class="o">=</span><span class="p">(</span><span class="ss">&quot;excluded&quot;</span><span class="p">.</span><span class="ss">&quot;SupportRepId&quot;</span><span class="p">);</span>
+</pre></div>
+
+        </div>
+    
+        </div>
+    
+                </div>
+                    </p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>To specify a conflict on the primary keys, use <code>conflictingField primaryKey</code>.</p>
+</div>
+<p>If the conflict target is an index, use <code>conflictingConstraint</code>, and supply the name of the constraint</p>
+<p>
+                <div class="code-nav-container">
+                    
+        <ul class="nav nav-tabs">
+            
+        <li class="nav-item">
+            <a href="#tab-12-Haskell" aria-controls="tab-12-Haskell" role="tab" data-toggle="tab" data-lang="haskell">Haskell</a>
+        </li>
+    
+        <li class="nav-item">
+            <a href="#tab-12-Postgres" aria-controls="tab-12-Postgres" role="tab" data-toggle="tab" data-lang="sql">Postgres</a>
+        </li>
+    
+        </ul>
+    
+        <div class="tab-content">
+            
+        <div role="tabpanel" class="tab-pane active" id="tab-12-Haskell">
+            <div class="codehilite"><pre><span></span><span class="c1">-- import qualified Database.Beam.Postgres as Pg</span>
+<span class="kr">let</span>
+  <span class="n">newCustomer</span> <span class="ow">=</span> <span class="kt">Customer</span> <span class="mi">42</span> <span class="s">&quot;John&quot;</span> <span class="s">&quot;Doe&quot;</span> <span class="kt">Nothing</span> <span class="p">(</span><span class="kt">Address</span> <span class="p">(</span><span class="kt">Just</span> <span class="s">&quot;Street&quot;</span><span class="p">)</span> <span class="p">(</span><span class="kt">Just</span> <span class="s">&quot;City&quot;</span><span class="p">)</span> <span class="p">(</span><span class="kt">Just</span> <span class="s">&quot;State&quot;</span><span class="p">)</span> <span class="kt">Nothing</span> <span class="kt">Nothing</span><span class="p">)</span> <span class="kt">Nothing</span> <span class="kt">Nothing</span> <span class="s">&quot;john.doe@johndoe.com&quot;</span> <span class="n">nothing_</span>
+
+<span class="nf">runInsert</span> <span class="o">$</span>
+  <span class="kt">Pg</span><span class="o">.</span><span class="n">insert</span> <span class="p">(</span><span class="n">customer</span> <span class="n">chinookDb</span><span class="p">)</span> <span class="p">(</span><span class="n">insertValues</span> <span class="p">[</span><span class="n">newCustomer</span><span class="p">])</span> <span class="o">$</span>
+    <span class="kt">Pg</span><span class="o">.</span><span class="n">onConflict</span>
+      <span class="p">(</span><span class="kt">Pg</span><span class="o">.</span><span class="n">conflictingConstraint</span> <span class="s">&quot;PK_Customer&quot;</span><span class="p">)</span>
+      <span class="kt">Pg</span><span class="o">.</span><span class="n">onConflictSetAll</span>
+</pre></div>
+
+        </div>
+    
+        <div role="tabpanel" class="tab-pane " id="tab-12-Postgres">
+            <div class="codehilite"><pre><span></span><span class="k">INSERT</span> <span class="k">INTO</span> <span class="ss">&quot;Customer&quot;</span><span class="p">(</span><span class="ss">&quot;CustomerId&quot;</span><span class="p">,</span>
+                       <span class="ss">&quot;FirstName&quot;</span><span class="p">,</span>
+                       <span class="ss">&quot;LastName&quot;</span><span class="p">,</span>
+                       <span class="ss">&quot;Company&quot;</span><span class="p">,</span>
+                       <span class="ss">&quot;Address&quot;</span><span class="p">,</span>
+                       <span class="ss">&quot;City&quot;</span><span class="p">,</span>
+                       <span class="ss">&quot;State&quot;</span><span class="p">,</span>
+                       <span class="ss">&quot;Country&quot;</span><span class="p">,</span>
+                       <span class="ss">&quot;PostalCode&quot;</span><span class="p">,</span>
+                       <span class="ss">&quot;Phone&quot;</span><span class="p">,</span>
+                       <span class="ss">&quot;Fax&quot;</span><span class="p">,</span>
+                       <span class="ss">&quot;Email&quot;</span><span class="p">,</span>
+                       <span class="ss">&quot;SupportRepId&quot;</span><span class="p">)</span>
+<span class="k">VALUES</span> <span class="p">(</span><span class="mi">42</span><span class="p">,</span>
+        <span class="s1">&#39;John&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Doe&#39;</span><span class="p">,</span>
+        <span class="k">null</span><span class="p">,</span>
+        <span class="s1">&#39;Street&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;City&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;State&#39;</span><span class="p">,</span>
+        <span class="k">null</span><span class="p">,</span>
+        <span class="k">null</span><span class="p">,</span>
+        <span class="k">null</span><span class="p">,</span>
+        <span class="k">null</span><span class="p">,</span>
+        <span class="s1">&#39;john.doe@johndoe.com&#39;</span><span class="p">,</span>
+        <span class="k">null</span><span class="p">)</span> <span class="k">ON</span> <span class="n">CONFLICT</span> <span class="k">ON</span> <span class="k">CONSTRAINT</span> <span class="ss">&quot;PK_Customer&quot;</span> <span class="k">DO</span>
+<span class="k">UPDATE</span>
+<span class="k">SET</span> <span class="ss">&quot;CustomerId&quot;</span><span class="o">=</span><span class="p">(</span><span class="ss">&quot;excluded&quot;</span><span class="p">.</span><span class="ss">&quot;CustomerId&quot;</span><span class="p">),</span>
+    <span class="ss">&quot;FirstName&quot;</span><span class="o">=</span><span class="p">(</span><span class="ss">&quot;excluded&quot;</span><span class="p">.</span><span class="ss">&quot;FirstName&quot;</span><span class="p">),</span>
+    <span class="ss">&quot;LastName&quot;</span><span class="o">=</span><span class="p">(</span><span class="ss">&quot;excluded&quot;</span><span class="p">.</span><span class="ss">&quot;LastName&quot;</span><span class="p">),</span>
+    <span class="ss">&quot;Company&quot;</span><span class="o">=</span><span class="p">(</span><span class="ss">&quot;excluded&quot;</span><span class="p">.</span><span class="ss">&quot;Company&quot;</span><span class="p">),</span>
+    <span class="ss">&quot;Address&quot;</span><span class="o">=</span><span class="p">(</span><span class="ss">&quot;excluded&quot;</span><span class="p">.</span><span class="ss">&quot;Address&quot;</span><span class="p">),</span>
+    <span class="ss">&quot;City&quot;</span><span class="o">=</span><span class="p">(</span><span class="ss">&quot;excluded&quot;</span><span class="p">.</span><span class="ss">&quot;City&quot;</span><span class="p">),</span>
+    <span class="ss">&quot;State&quot;</span><span class="o">=</span><span class="p">(</span><span class="ss">&quot;excluded&quot;</span><span class="p">.</span><span class="ss">&quot;State&quot;</span><span class="p">),</span>
+    <span class="ss">&quot;Country&quot;</span><span class="o">=</span><span class="p">(</span><span class="ss">&quot;excluded&quot;</span><span class="p">.</span><span class="ss">&quot;Country&quot;</span><span class="p">),</span>
+    <span class="ss">&quot;PostalCode&quot;</span><span class="o">=</span><span class="p">(</span><span class="ss">&quot;excluded&quot;</span><span class="p">.</span><span class="ss">&quot;PostalCode&quot;</span><span class="p">),</span>
+    <span class="ss">&quot;Phone&quot;</span><span class="o">=</span><span class="p">(</span><span class="ss">&quot;excluded&quot;</span><span class="p">.</span><span class="ss">&quot;Phone&quot;</span><span class="p">),</span>
+    <span class="ss">&quot;Fax&quot;</span><span class="o">=</span><span class="p">(</span><span class="ss">&quot;excluded&quot;</span><span class="p">.</span><span class="ss">&quot;Fax&quot;</span><span class="p">),</span>
+    <span class="ss">&quot;Email&quot;</span><span class="o">=</span><span class="p">(</span><span class="ss">&quot;excluded&quot;</span><span class="p">.</span><span class="ss">&quot;Email&quot;</span><span class="p">),</span>
+    <span class="ss">&quot;SupportRepId&quot;</span><span class="o">=</span><span class="p">(</span><span class="ss">&quot;excluded&quot;</span><span class="p">.</span><span class="ss">&quot;SupportRepId&quot;</span><span class="p">);</span>
+</pre></div>
+
+        </div>
+    
+        </div>
+    
+                </div>
+                    </p>
+<h4 id="specifying-actions">Specifying actions</h4>
+<p>Often times, you do not want to update every field on a conflict. For
+example, for upserts, you rarely want to update the primary key. The
+function <code>onConflictUpdateInstead</code> allows you to restrict which fields
+are updated in the case of a conflict. The required function argument
+is a projection of which fields ought to be updated.</p>
+<p>In the example below, we insert a new row, but if a row with the given
+primary key already exists, we update <em>only</em> the first and last name.</p>
+<p>
+                <div class="code-nav-container">
+                    
+        <ul class="nav nav-tabs">
+            
+        <li class="nav-item">
+            <a href="#tab-13-Haskell" aria-controls="tab-13-Haskell" role="tab" data-toggle="tab" data-lang="haskell">Haskell</a>
+        </li>
+    
+        <li class="nav-item">
+            <a href="#tab-13-Postgres" aria-controls="tab-13-Postgres" role="tab" data-toggle="tab" data-lang="sql">Postgres</a>
+        </li>
+    
+        </ul>
+    
+        <div class="tab-content">
+            
+        <div role="tabpanel" class="tab-pane active" id="tab-13-Haskell">
+            <div class="codehilite"><pre><span></span><span class="c1">-- import qualified Database.Beam.Postgres as Pg</span>
+<span class="kr">let</span>
+  <span class="n">newCustomer</span> <span class="ow">=</span> <span class="kt">Customer</span> <span class="mi">42</span> <span class="s">&quot;John&quot;</span> <span class="s">&quot;Doe&quot;</span> <span class="kt">Nothing</span> <span class="p">(</span><span class="kt">Address</span> <span class="p">(</span><span class="kt">Just</span> <span class="s">&quot;Street&quot;</span><span class="p">)</span> <span class="p">(</span><span class="kt">Just</span> <span class="s">&quot;City&quot;</span><span class="p">)</span> <span class="p">(</span><span class="kt">Just</span> <span class="s">&quot;State&quot;</span><span class="p">)</span> <span class="kt">Nothing</span> <span class="kt">Nothing</span><span class="p">)</span> <span class="kt">Nothing</span> <span class="kt">Nothing</span> <span class="s">&quot;john.doe@johndoe.com&quot;</span> <span class="n">nothing_</span>
+
+<span class="nf">runInsert</span> <span class="o">$</span>
+  <span class="kt">Pg</span><span class="o">.</span><span class="n">insert</span> <span class="p">(</span><span class="n">customer</span> <span class="n">chinookDb</span><span class="p">)</span> <span class="p">(</span><span class="n">insertValues</span> <span class="p">[</span><span class="n">newCustomer</span><span class="p">])</span> <span class="o">$</span>
+    <span class="kt">Pg</span><span class="o">.</span><span class="n">onConflict</span>
+      <span class="p">(</span><span class="kt">Pg</span><span class="o">.</span><span class="n">conflictingFields</span> <span class="n">primaryKey</span><span class="p">)</span>
+      <span class="p">(</span><span class="kt">Pg</span><span class="o">.</span><span class="n">onConflictUpdateInstead</span>
+         <span class="p">(</span><span class="nf">\</span><span class="n">c</span> <span class="ow">-&gt;</span> <span class="p">(</span> <span class="n">customerFirstName</span> <span class="n">c</span>
+                <span class="p">,</span> <span class="n">customerLastName</span> <span class="n">c</span> <span class="p">)))</span>
+</pre></div>
+
+        </div>
+    
+        <div role="tabpanel" class="tab-pane " id="tab-13-Postgres">
+            <div class="codehilite"><pre><span></span><span class="k">INSERT</span> <span class="k">INTO</span> <span class="ss">&quot;Customer&quot;</span><span class="p">(</span><span class="ss">&quot;CustomerId&quot;</span><span class="p">,</span>
+                       <span class="ss">&quot;FirstName&quot;</span><span class="p">,</span>
+                       <span class="ss">&quot;LastName&quot;</span><span class="p">,</span>
+                       <span class="ss">&quot;Company&quot;</span><span class="p">,</span>
+                       <span class="ss">&quot;Address&quot;</span><span class="p">,</span>
+                       <span class="ss">&quot;City&quot;</span><span class="p">,</span>
+                       <span class="ss">&quot;State&quot;</span><span class="p">,</span>
+                       <span class="ss">&quot;Country&quot;</span><span class="p">,</span>
+                       <span class="ss">&quot;PostalCode&quot;</span><span class="p">,</span>
+                       <span class="ss">&quot;Phone&quot;</span><span class="p">,</span>
+                       <span class="ss">&quot;Fax&quot;</span><span class="p">,</span>
+                       <span class="ss">&quot;Email&quot;</span><span class="p">,</span>
+                       <span class="ss">&quot;SupportRepId&quot;</span><span class="p">)</span>
+<span class="k">VALUES</span> <span class="p">(</span><span class="mi">42</span><span class="p">,</span>
+        <span class="s1">&#39;John&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Doe&#39;</span><span class="p">,</span>
+        <span class="k">null</span><span class="p">,</span>
+        <span class="s1">&#39;Street&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;City&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;State&#39;</span><span class="p">,</span>
+        <span class="k">null</span><span class="p">,</span>
+        <span class="k">null</span><span class="p">,</span>
+        <span class="k">null</span><span class="p">,</span>
+        <span class="k">null</span><span class="p">,</span>
+        <span class="s1">&#39;john.doe@johndoe.com&#39;</span><span class="p">,</span>
+        <span class="k">null</span><span class="p">)</span> <span class="k">ON</span> <span class="n">CONFLICT</span> <span class="p">(</span><span class="ss">&quot;CustomerId&quot;</span><span class="p">)</span> <span class="k">DO</span>
+<span class="k">UPDATE</span>
+<span class="k">SET</span> <span class="ss">&quot;FirstName&quot;</span><span class="o">=</span><span class="p">(</span><span class="ss">&quot;excluded&quot;</span><span class="p">.</span><span class="ss">&quot;FirstName&quot;</span><span class="p">),</span>
+    <span class="ss">&quot;LastName&quot;</span><span class="o">=</span><span class="p">(</span><span class="ss">&quot;excluded&quot;</span><span class="p">.</span><span class="ss">&quot;LastName&quot;</span><span class="p">);</span>
+</pre></div>
+
+        </div>
+    
+        </div>
+    
+                </div>
+                    </p>
+<p>You can also specify a more specific update, using the
+<code>onConflictUpdateSet</code> function. This is the most general form of the
+postgres <code>ON CONFLICT</code> action. The <code>excluded</code> table is provided as the
+second argument. The syntax of the updates is similar to that of
+<code>update</code>.</p>
+<p>In the following example, we append the old first name to the new
+first name and replace the old last name.</p>
+<p>
+                <div class="code-nav-container">
+                    
+        <ul class="nav nav-tabs">
+            
+        <li class="nav-item">
+            <a href="#tab-33-Haskell" aria-controls="tab-33-Haskell" role="tab" data-toggle="tab" data-lang="haskell">Haskell</a>
+        </li>
+    
+        <li class="nav-item">
+            <a href="#tab-33-Postgres" aria-controls="tab-33-Postgres" role="tab" data-toggle="tab" data-lang="sql">Postgres</a>
+        </li>
+    
+        </ul>
+    
+        <div class="tab-content">
+            
+        <div role="tabpanel" class="tab-pane active" id="tab-33-Haskell">
+            <div class="codehilite"><pre><span></span><span class="c1">-- import qualified Database.Beam.Postgres as Pg</span>
+<span class="kr">let</span>
+  <span class="n">newCustomer</span> <span class="ow">=</span> <span class="kt">Customer</span> <span class="mi">42</span> <span class="s">&quot;John&quot;</span> <span class="s">&quot;Doe&quot;</span> <span class="kt">Nothing</span> <span class="p">(</span><span class="kt">Address</span> <span class="p">(</span><span class="kt">Just</span> <span class="s">&quot;Street&quot;</span><span class="p">)</span> <span class="p">(</span><span class="kt">Just</span> <span class="s">&quot;City&quot;</span><span class="p">)</span> <span class="p">(</span><span class="kt">Just</span> <span class="s">&quot;State&quot;</span><span class="p">)</span> <span class="kt">Nothing</span> <span class="kt">Nothing</span><span class="p">)</span> <span class="kt">Nothing</span> <span class="kt">Nothing</span> <span class="s">&quot;john.doe@johndoe.com&quot;</span> <span class="n">nothing_</span>
+
+<span class="nf">runInsert</span> <span class="o">$</span>
+  <span class="kt">Pg</span><span class="o">.</span><span class="n">insert</span> <span class="p">(</span><span class="n">customer</span> <span class="n">chinookDb</span><span class="p">)</span> <span class="p">(</span><span class="n">insertValues</span> <span class="p">[</span><span class="n">newCustomer</span><span class="p">])</span> <span class="o">$</span>
+    <span class="kt">Pg</span><span class="o">.</span><span class="n">onConflict</span>
+      <span class="p">(</span><span class="kt">Pg</span><span class="o">.</span><span class="n">conflictingFields</span> <span class="n">primaryKey</span><span class="p">)</span>
+      <span class="p">(</span><span class="kt">Pg</span><span class="o">.</span><span class="n">onConflictUpdateSet</span>
+        <span class="c1">-- tbl is the old row, tblExcluded is the row proposed for insertion</span>
+        <span class="p">(</span><span class="nf">\</span><span class="n">tbl</span> <span class="n">tblExcluded</span> <span class="ow">-&gt;</span>
+          <span class="p">[</span> <span class="p">(</span><span class="n">customerFirstName</span> <span class="n">tbl</span><span class="p">)</span> <span class="o">&lt;-.</span> <span class="n">concat_</span> <span class="p">[</span> <span class="n">current_</span> <span class="p">(</span><span class="n">customerFirstName</span> <span class="n">tbl</span><span class="p">),</span>  <span class="n">customerFirstName</span> <span class="n">tblExcluded</span> <span class="p">]</span>
+          <span class="p">,</span> <span class="p">(</span><span class="n">customerLastName</span> <span class="n">tbl</span><span class="p">)</span> <span class="o">&lt;-.</span> <span class="p">(</span><span class="n">customerLastName</span> <span class="n">tblExcluded</span><span class="p">)</span> <span class="p">]</span>
+        <span class="p">)</span>
+      <span class="p">)</span>
+</pre></div>
+
+        </div>
+    
+        <div role="tabpanel" class="tab-pane " id="tab-33-Postgres">
+            <div class="codehilite"><pre><span></span><span class="k">INSERT</span> <span class="k">INTO</span> <span class="ss">&quot;Customer&quot;</span><span class="p">(</span><span class="ss">&quot;CustomerId&quot;</span><span class="p">,</span>
+                       <span class="ss">&quot;FirstName&quot;</span><span class="p">,</span>
+                       <span class="ss">&quot;LastName&quot;</span><span class="p">,</span>
+                       <span class="ss">&quot;Company&quot;</span><span class="p">,</span>
+                       <span class="ss">&quot;Address&quot;</span><span class="p">,</span>
+                       <span class="ss">&quot;City&quot;</span><span class="p">,</span>
+                       <span class="ss">&quot;State&quot;</span><span class="p">,</span>
+                       <span class="ss">&quot;Country&quot;</span><span class="p">,</span>
+                       <span class="ss">&quot;PostalCode&quot;</span><span class="p">,</span>
+                       <span class="ss">&quot;Phone&quot;</span><span class="p">,</span>
+                       <span class="ss">&quot;Fax&quot;</span><span class="p">,</span>
+                       <span class="ss">&quot;Email&quot;</span><span class="p">,</span>
+                       <span class="ss">&quot;SupportRepId&quot;</span><span class="p">)</span>
+<span class="k">VALUES</span> <span class="p">(</span><span class="mi">42</span><span class="p">,</span>
+        <span class="s1">&#39;John&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Doe&#39;</span><span class="p">,</span>
+        <span class="k">null</span><span class="p">,</span>
+        <span class="s1">&#39;Street&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;City&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;State&#39;</span><span class="p">,</span>
+        <span class="k">null</span><span class="p">,</span>
+        <span class="k">null</span><span class="p">,</span>
+        <span class="k">null</span><span class="p">,</span>
+        <span class="k">null</span><span class="p">,</span>
+        <span class="s1">&#39;john.doe@johndoe.com&#39;</span><span class="p">,</span>
+        <span class="k">null</span><span class="p">)</span> <span class="k">ON</span> <span class="n">CONFLICT</span> <span class="p">(</span><span class="ss">&quot;CustomerId&quot;</span><span class="p">)</span> <span class="k">DO</span>
+<span class="k">UPDATE</span>
+<span class="k">SET</span> <span class="ss">&quot;FirstName&quot;</span><span class="o">=</span><span class="p">(</span><span class="n">CONCAT</span><span class="p">(</span><span class="ss">&quot;Customer&quot;</span><span class="p">.</span><span class="ss">&quot;FirstName&quot;</span><span class="p">,</span> <span class="ss">&quot;excluded&quot;</span><span class="p">.</span><span class="ss">&quot;FirstName&quot;</span><span class="p">)),</span>
+    <span class="ss">&quot;LastName&quot;</span><span class="o">=</span><span class="p">(</span><span class="ss">&quot;excluded&quot;</span><span class="p">.</span><span class="ss">&quot;LastName&quot;</span><span class="p">);</span>
 </pre></div>
 
         </div>

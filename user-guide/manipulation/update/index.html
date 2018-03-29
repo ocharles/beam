@@ -837,144 +837,144 @@ save the entire row.</p>
         <ul class="nav nav-tabs">
             
         <li class="nav-item">
-            <a href="#tab-0-haskell" aria-controls="tab-0-haskell" role="tab" data-toggle="tab" data-lang="haskell">Haskell</a>
+            <a href="#tab-0-Haskell" aria-controls="tab-0-Haskell" role="tab" data-toggle="tab" data-lang="haskell">Haskell</a>
         </li>
     
         <li class="nav-item">
-            <a href="#tab-0-sqlite3" aria-controls="tab-0-sqlite3" role="tab" data-toggle="tab" data-lang="sqlite3">Sqlite3</a>
+            <a href="#tab-0-Sqlite" aria-controls="tab-0-Sqlite" role="tab" data-toggle="tab" data-lang="sql">Sqlite</a>
         </li>
     
         <li class="nav-item">
-            <a href="#tab-0-postgres" aria-controls="tab-0-postgres" role="tab" data-toggle="tab" data-lang="postgres">Postgres</a>
+            <a href="#tab-0-Postgres" aria-controls="tab-0-Postgres" role="tab" data-toggle="tab" data-lang="sql">Postgres</a>
         </li>
     
         </ul>
     
         <div class="tab-content">
             
-        <div role="tabpanel" class="tab-pane active" id="tab-0-haskell">
-            <div class="codehilite"><pre><span></span><span class="kt">Just</span> <span class="n">c</span> <span class="ow">&lt;-</span> <span class="n">runSelectReturningOne</span> <span class="o">$</span> <span class="n">lookup</span> <span class="p">(</span><span class="n">customer</span> <span class="n">chinookDb</span><span class="p">)</span> <span class="p">(</span><span class="kt">CustomerId</span> <span class="mi">14</span><span class="p">)</span>
+        <div role="tabpanel" class="tab-pane active" id="tab-0-Haskell">
+            <div class="codehilite"><pre><span></span><span class="kt">Just</span> <span class="n">c</span> <span class="ow">&lt;-</span> <span class="n">runSelectReturningOne</span> <span class="o">$</span> <span class="n">lookup_</span> <span class="p">(</span><span class="n">customer</span> <span class="n">chinookDb</span><span class="p">)</span> <span class="p">(</span><span class="kt">CustomerId</span> <span class="mi">14</span><span class="p">)</span>
 <span class="nf">putStrLn</span> <span class="p">(</span><span class="s">&quot;Old phone number is &quot;</span> <span class="o">++</span> <span class="n">show</span> <span class="p">(</span><span class="n">customerPhone</span> <span class="n">c</span><span class="p">))</span>
 
 <span class="nf">runUpdate</span> <span class="o">$</span>
   <span class="n">save</span> <span class="p">(</span><span class="n">customer</span> <span class="n">chinookDb</span><span class="p">)</span>
        <span class="p">(</span><span class="n">c</span> <span class="p">{</span> <span class="n">customerPhone</span> <span class="ow">=</span> <span class="kt">Just</span> <span class="s">&quot;+1 (123) 456-7890&quot;</span> <span class="p">})</span>
 
-<span class="kt">Just</span> <span class="n">c&#39;</span> <span class="ow">&lt;-</span> <span class="n">runSelectReturningOne</span> <span class="o">$</span> <span class="n">lookup</span> <span class="p">(</span><span class="n">customer</span> <span class="n">chinookDb</span><span class="p">)</span> <span class="p">(</span><span class="kt">CustomerId</span> <span class="mi">14</span><span class="p">)</span>
+<span class="kt">Just</span> <span class="n">c&#39;</span> <span class="ow">&lt;-</span> <span class="n">runSelectReturningOne</span> <span class="o">$</span> <span class="n">lookup_</span> <span class="p">(</span><span class="n">customer</span> <span class="n">chinookDb</span><span class="p">)</span> <span class="p">(</span><span class="kt">CustomerId</span> <span class="mi">14</span><span class="p">)</span>
 <span class="nf">putStrLn</span> <span class="p">(</span><span class="s">&quot;New phone number is &quot;</span> <span class="o">++</span> <span class="n">show</span> <span class="p">(</span><span class="n">customerPhone</span> <span class="n">c&#39;</span><span class="p">))</span>
 </pre></div>
 
         </div>
     
-        <div role="tabpanel" class="tab-pane " id="tab-0-sqlite3">
-            <div class="codehilite"><pre><span></span><span class="go">SELECT &quot;t0&quot;.&quot;CustomerId&quot; AS &quot;res0&quot;,</span>
-<span class="go">       &quot;t0&quot;.&quot;FirstName&quot; AS &quot;res1&quot;,</span>
-<span class="go">       &quot;t0&quot;.&quot;LastName&quot; AS &quot;res2&quot;,</span>
-<span class="go">       &quot;t0&quot;.&quot;Company&quot; AS &quot;res3&quot;,</span>
-<span class="go">       &quot;t0&quot;.&quot;Address&quot; AS &quot;res4&quot;,</span>
-<span class="go">       &quot;t0&quot;.&quot;City&quot; AS &quot;res5&quot;,</span>
-<span class="go">       &quot;t0&quot;.&quot;State&quot; AS &quot;res6&quot;,</span>
-<span class="go">       &quot;t0&quot;.&quot;Country&quot; AS &quot;res7&quot;,</span>
-<span class="go">       &quot;t0&quot;.&quot;PostalCode&quot; AS &quot;res8&quot;,</span>
-<span class="go">       &quot;t0&quot;.&quot;Phone&quot; AS &quot;res9&quot;,</span>
-<span class="go">       &quot;t0&quot;.&quot;Fax&quot; AS &quot;res10&quot;,</span>
-<span class="go">       &quot;t0&quot;.&quot;Email&quot; AS &quot;res11&quot;,</span>
-<span class="go">       &quot;t0&quot;.&quot;SupportRepId&quot; AS &quot;res12&quot;</span>
-<span class="go">FROM &quot;Customer&quot; AS &quot;t0&quot;</span>
-<span class="go">WHERE (&quot;t0&quot;.&quot;CustomerId&quot;)=(?);</span>
+        <div role="tabpanel" class="tab-pane " id="tab-0-Sqlite">
+            <div class="codehilite"><pre><span></span><span class="k">SELECT</span> <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;CustomerId&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res0&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;FirstName&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res1&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;LastName&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res2&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;Company&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res3&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;Address&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res4&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;City&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res5&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;State&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res6&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;Country&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res7&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;PostalCode&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res8&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;Phone&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res9&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;Fax&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res10&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;Email&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res11&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;SupportRepId&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res12&quot;</span>
+<span class="k">FROM</span> <span class="ss">&quot;Customer&quot;</span> <span class="k">AS</span> <span class="ss">&quot;t0&quot;</span>
+<span class="k">WHERE</span> <span class="p">(</span><span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;CustomerId&quot;</span><span class="p">)</span><span class="o">=</span><span class="p">(</span><span class="o">?</span><span class="p">);</span>
 
-<span class="go">-- With values: [SQLInteger 14]</span>
-<span class="go">-- Output: Old phone number is Just &quot;+1 (780) 434-4554&quot;</span>
+<span class="c1">-- With values: [SQLInteger 14];</span>
+<span class="c1">-- Output: Old phone number is Just &quot;+1 (780) 434-4554&quot;</span>
 
-<span class="go">UPDATE &quot;Customer&quot;</span>
-<span class="go">SET &quot;FirstName&quot;=?,</span>
-<span class="go">    &quot;LastName&quot;=?,</span>
-<span class="go">    &quot;Company&quot;=?,</span>
-<span class="go">    &quot;Address&quot;=?,</span>
-<span class="go">    &quot;City&quot;=?,</span>
-<span class="go">    &quot;State&quot;=?,</span>
-<span class="go">    &quot;Country&quot;=?,</span>
-<span class="go">    &quot;PostalCode&quot;=?,</span>
-<span class="go">    &quot;Phone&quot;=?,</span>
-<span class="go">    &quot;Fax&quot;=?,</span>
-<span class="go">    &quot;Email&quot;=?,</span>
-<span class="go">    &quot;SupportRepId&quot;=?</span>
-<span class="go">WHERE (&quot;CustomerId&quot;)=(?);</span>
+<span class="k">UPDATE</span> <span class="ss">&quot;Customer&quot;</span>
+<span class="k">SET</span> <span class="ss">&quot;FirstName&quot;</span><span class="o">=?</span><span class="p">,</span>
+    <span class="ss">&quot;LastName&quot;</span><span class="o">=?</span><span class="p">,</span>
+    <span class="ss">&quot;Company&quot;</span><span class="o">=?</span><span class="p">,</span>
+    <span class="ss">&quot;Address&quot;</span><span class="o">=?</span><span class="p">,</span>
+    <span class="ss">&quot;City&quot;</span><span class="o">=?</span><span class="p">,</span>
+    <span class="ss">&quot;State&quot;</span><span class="o">=?</span><span class="p">,</span>
+    <span class="ss">&quot;Country&quot;</span><span class="o">=?</span><span class="p">,</span>
+    <span class="ss">&quot;PostalCode&quot;</span><span class="o">=?</span><span class="p">,</span>
+    <span class="ss">&quot;Phone&quot;</span><span class="o">=?</span><span class="p">,</span>
+    <span class="ss">&quot;Fax&quot;</span><span class="o">=?</span><span class="p">,</span>
+    <span class="ss">&quot;Email&quot;</span><span class="o">=?</span><span class="p">,</span>
+    <span class="ss">&quot;SupportRepId&quot;</span><span class="o">=?</span>
+<span class="k">WHERE</span> <span class="p">(</span><span class="ss">&quot;CustomerId&quot;</span><span class="p">)</span><span class="o">=</span><span class="p">(</span><span class="o">?</span><span class="p">);</span>
 
-<span class="go">-- With values: [SQLText &quot;Mark&quot;,SQLText &quot;Philips&quot;,SQLText &quot;Telus&quot;,SQLText &quot;8210 111 ST NW&quot;,SQLText &quot;Edmonton&quot;,SQLText &quot;AB&quot;,SQLText &quot;Canada&quot;,SQLText &quot;T6G 2C7&quot;,SQLText &quot;+1 (123) 456-7890&quot;,SQLText &quot;+1 (780) 434-5565&quot;,SQLText &quot;mphilips12@shaw.ca&quot;,SQLInteger 5,SQLInteger 14]</span>
+<span class="c1">-- With values: [SQLText &quot;Mark&quot;,SQLText &quot;Philips&quot;,SQLText &quot;Telus&quot;,SQLText &quot;8210 111 ST NW&quot;,SQLText &quot;Edmonton&quot;,SQLText &quot;AB&quot;,SQLText &quot;Canada&quot;,SQLText &quot;T6G 2C7&quot;,SQLText &quot;+1 (123) 456-7890&quot;,SQLText &quot;+1 (780) 434-5565&quot;,SQLText &quot;mphilips12@shaw.ca&quot;,SQLInteger 5,SQLInteger 14];</span>
 
-<span class="go">SELECT &quot;t0&quot;.&quot;CustomerId&quot; AS &quot;res0&quot;,</span>
-<span class="go">       &quot;t0&quot;.&quot;FirstName&quot; AS &quot;res1&quot;,</span>
-<span class="go">       &quot;t0&quot;.&quot;LastName&quot; AS &quot;res2&quot;,</span>
-<span class="go">       &quot;t0&quot;.&quot;Company&quot; AS &quot;res3&quot;,</span>
-<span class="go">       &quot;t0&quot;.&quot;Address&quot; AS &quot;res4&quot;,</span>
-<span class="go">       &quot;t0&quot;.&quot;City&quot; AS &quot;res5&quot;,</span>
-<span class="go">       &quot;t0&quot;.&quot;State&quot; AS &quot;res6&quot;,</span>
-<span class="go">       &quot;t0&quot;.&quot;Country&quot; AS &quot;res7&quot;,</span>
-<span class="go">       &quot;t0&quot;.&quot;PostalCode&quot; AS &quot;res8&quot;,</span>
-<span class="go">       &quot;t0&quot;.&quot;Phone&quot; AS &quot;res9&quot;,</span>
-<span class="go">       &quot;t0&quot;.&quot;Fax&quot; AS &quot;res10&quot;,</span>
-<span class="go">       &quot;t0&quot;.&quot;Email&quot; AS &quot;res11&quot;,</span>
-<span class="go">       &quot;t0&quot;.&quot;SupportRepId&quot; AS &quot;res12&quot;</span>
-<span class="go">FROM &quot;Customer&quot; AS &quot;t0&quot;</span>
-<span class="go">WHERE (&quot;t0&quot;.&quot;CustomerId&quot;)=(?);</span>
+<span class="k">SELECT</span> <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;CustomerId&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res0&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;FirstName&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res1&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;LastName&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res2&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;Company&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res3&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;Address&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res4&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;City&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res5&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;State&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res6&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;Country&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res7&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;PostalCode&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res8&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;Phone&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res9&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;Fax&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res10&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;Email&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res11&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;SupportRepId&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res12&quot;</span>
+<span class="k">FROM</span> <span class="ss">&quot;Customer&quot;</span> <span class="k">AS</span> <span class="ss">&quot;t0&quot;</span>
+<span class="k">WHERE</span> <span class="p">(</span><span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;CustomerId&quot;</span><span class="p">)</span><span class="o">=</span><span class="p">(</span><span class="o">?</span><span class="p">);</span>
 
-<span class="go">-- With values: [SQLInteger 14]</span>
-<span class="go">-- Output: New phone number is Just &quot;+1 (123) 456-7890&quot;</span>
+<span class="c1">-- With values: [SQLInteger 14];</span>
+<span class="c1">-- Output: New phone number is Just &quot;+1 (123) 456-7890&quot;</span>
 </pre></div>
 
         </div>
     
-        <div role="tabpanel" class="tab-pane " id="tab-0-postgres">
-            <div class="codehilite"><pre><span></span><span class="k">SELECT</span> <span class="s s-Name">&quot;t0&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;CustomerId&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;res0&quot;</span><span class="p">,</span>
-       <span class="s s-Name">&quot;t0&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;FirstName&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;res1&quot;</span><span class="p">,</span>
-       <span class="s s-Name">&quot;t0&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;LastName&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;res2&quot;</span><span class="p">,</span>
-       <span class="s s-Name">&quot;t0&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;Company&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;res3&quot;</span><span class="p">,</span>
-       <span class="s s-Name">&quot;t0&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;Address&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;res4&quot;</span><span class="p">,</span>
-       <span class="s s-Name">&quot;t0&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;City&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;res5&quot;</span><span class="p">,</span>
-       <span class="s s-Name">&quot;t0&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;State&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;res6&quot;</span><span class="p">,</span>
-       <span class="s s-Name">&quot;t0&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;Country&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;res7&quot;</span><span class="p">,</span>
-       <span class="s s-Name">&quot;t0&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;PostalCode&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;res8&quot;</span><span class="p">,</span>
-       <span class="s s-Name">&quot;t0&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;Phone&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;res9&quot;</span><span class="p">,</span>
-       <span class="s s-Name">&quot;t0&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;Fax&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;res10&quot;</span><span class="p">,</span>
-       <span class="s s-Name">&quot;t0&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;Email&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;res11&quot;</span><span class="p">,</span>
-       <span class="s s-Name">&quot;t0&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;SupportRepId&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;res12&quot;</span>
-<span class="k">FROM</span> <span class="s s-Name">&quot;Customer&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;t0&quot;</span>
-<span class="k">WHERE</span> <span class="p">(</span><span class="s s-Name">&quot;t0&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;CustomerId&quot;</span><span class="p">)</span> <span class="o">=</span> <span class="p">(</span><span class="mf">14</span><span class="p">);</span>
+        <div role="tabpanel" class="tab-pane " id="tab-0-Postgres">
+            <div class="codehilite"><pre><span></span><span class="k">SELECT</span> <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;CustomerId&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res0&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;FirstName&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res1&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;LastName&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res2&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;Company&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res3&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;Address&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res4&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;City&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res5&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;State&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res6&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;Country&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res7&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;PostalCode&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res8&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;Phone&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res9&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;Fax&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res10&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;Email&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res11&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;SupportRepId&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res12&quot;</span>
+<span class="k">FROM</span> <span class="ss">&quot;Customer&quot;</span> <span class="k">AS</span> <span class="ss">&quot;t0&quot;</span>
+<span class="k">WHERE</span> <span class="p">(</span><span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;CustomerId&quot;</span><span class="p">)</span> <span class="o">=</span> <span class="p">(</span><span class="mi">14</span><span class="p">);</span>
 
 <span class="c1">-- Output: Old phone number is Just &quot;+1 (780) 434-4554&quot;</span>
 
-<span class="k">UPDATE</span> <span class="s s-Name">&quot;Customer&quot;</span>
-<span class="k">SET</span> <span class="s s-Name">&quot;FirstName&quot;</span><span class="o">=</span><span class="s1">&#39;Mark&#39;</span><span class="p">,</span>
-    <span class="s s-Name">&quot;LastName&quot;</span><span class="o">=</span><span class="s1">&#39;Philips&#39;</span><span class="p">,</span>
-    <span class="s s-Name">&quot;Company&quot;</span><span class="o">=</span><span class="s1">&#39;Telus&#39;</span><span class="p">,</span>
-    <span class="s s-Name">&quot;Address&quot;</span><span class="o">=</span><span class="s1">&#39;8210 111 ST NW&#39;</span><span class="p">,</span>
-    <span class="s s-Name">&quot;City&quot;</span><span class="o">=</span><span class="s1">&#39;Edmonton&#39;</span><span class="p">,</span>
-    <span class="s s-Name">&quot;State&quot;</span><span class="o">=</span><span class="s1">&#39;AB&#39;</span><span class="p">,</span>
-    <span class="s s-Name">&quot;Country&quot;</span><span class="o">=</span><span class="s1">&#39;Canada&#39;</span><span class="p">,</span>
-    <span class="s s-Name">&quot;PostalCode&quot;</span><span class="o">=</span><span class="s1">&#39;T6G 2C7&#39;</span><span class="p">,</span>
-    <span class="s s-Name">&quot;Phone&quot;</span><span class="o">=</span><span class="s1">&#39;+1 (123) 456-7890&#39;</span><span class="p">,</span>
-    <span class="s s-Name">&quot;Fax&quot;</span><span class="o">=</span><span class="s1">&#39;+1 (780) 434-5565&#39;</span><span class="p">,</span>
-    <span class="s s-Name">&quot;Email&quot;</span><span class="o">=</span><span class="s1">&#39;mphilips12@shaw.ca&#39;</span><span class="p">,</span>
-    <span class="s s-Name">&quot;SupportRepId&quot;</span><span class="o">=</span><span class="mf">5</span>
-<span class="k">WHERE</span> <span class="p">(</span><span class="s s-Name">&quot;CustomerId&quot;</span><span class="p">)</span> <span class="o">=</span> <span class="p">(</span><span class="mf">14</span><span class="p">);</span>
+<span class="k">UPDATE</span> <span class="ss">&quot;Customer&quot;</span>
+<span class="k">SET</span> <span class="ss">&quot;FirstName&quot;</span><span class="o">=</span><span class="s1">&#39;Mark&#39;</span><span class="p">,</span>
+    <span class="ss">&quot;LastName&quot;</span><span class="o">=</span><span class="s1">&#39;Philips&#39;</span><span class="p">,</span>
+    <span class="ss">&quot;Company&quot;</span><span class="o">=</span><span class="s1">&#39;Telus&#39;</span><span class="p">,</span>
+    <span class="ss">&quot;Address&quot;</span><span class="o">=</span><span class="s1">&#39;8210 111 ST NW&#39;</span><span class="p">,</span>
+    <span class="ss">&quot;City&quot;</span><span class="o">=</span><span class="s1">&#39;Edmonton&#39;</span><span class="p">,</span>
+    <span class="ss">&quot;State&quot;</span><span class="o">=</span><span class="s1">&#39;AB&#39;</span><span class="p">,</span>
+    <span class="ss">&quot;Country&quot;</span><span class="o">=</span><span class="s1">&#39;Canada&#39;</span><span class="p">,</span>
+    <span class="ss">&quot;PostalCode&quot;</span><span class="o">=</span><span class="s1">&#39;T6G 2C7&#39;</span><span class="p">,</span>
+    <span class="ss">&quot;Phone&quot;</span><span class="o">=</span><span class="s1">&#39;+1 (123) 456-7890&#39;</span><span class="p">,</span>
+    <span class="ss">&quot;Fax&quot;</span><span class="o">=</span><span class="s1">&#39;+1 (780) 434-5565&#39;</span><span class="p">,</span>
+    <span class="ss">&quot;Email&quot;</span><span class="o">=</span><span class="s1">&#39;mphilips12@shaw.ca&#39;</span><span class="p">,</span>
+    <span class="ss">&quot;SupportRepId&quot;</span><span class="o">=</span><span class="mi">5</span>
+<span class="k">WHERE</span> <span class="p">(</span><span class="ss">&quot;CustomerId&quot;</span><span class="p">)</span> <span class="o">=</span> <span class="p">(</span><span class="mi">14</span><span class="p">);</span>
 
 
-<span class="k">SELECT</span> <span class="s s-Name">&quot;t0&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;CustomerId&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;res0&quot;</span><span class="p">,</span>
-       <span class="s s-Name">&quot;t0&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;FirstName&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;res1&quot;</span><span class="p">,</span>
-       <span class="s s-Name">&quot;t0&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;LastName&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;res2&quot;</span><span class="p">,</span>
-       <span class="s s-Name">&quot;t0&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;Company&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;res3&quot;</span><span class="p">,</span>
-       <span class="s s-Name">&quot;t0&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;Address&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;res4&quot;</span><span class="p">,</span>
-       <span class="s s-Name">&quot;t0&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;City&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;res5&quot;</span><span class="p">,</span>
-       <span class="s s-Name">&quot;t0&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;State&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;res6&quot;</span><span class="p">,</span>
-       <span class="s s-Name">&quot;t0&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;Country&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;res7&quot;</span><span class="p">,</span>
-       <span class="s s-Name">&quot;t0&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;PostalCode&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;res8&quot;</span><span class="p">,</span>
-       <span class="s s-Name">&quot;t0&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;Phone&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;res9&quot;</span><span class="p">,</span>
-       <span class="s s-Name">&quot;t0&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;Fax&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;res10&quot;</span><span class="p">,</span>
-       <span class="s s-Name">&quot;t0&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;Email&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;res11&quot;</span><span class="p">,</span>
-       <span class="s s-Name">&quot;t0&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;SupportRepId&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;res12&quot;</span>
-<span class="k">FROM</span> <span class="s s-Name">&quot;Customer&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;t0&quot;</span>
-<span class="k">WHERE</span> <span class="p">(</span><span class="s s-Name">&quot;t0&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;CustomerId&quot;</span><span class="p">)</span> <span class="o">=</span> <span class="p">(</span><span class="mf">14</span><span class="p">);</span>
+<span class="k">SELECT</span> <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;CustomerId&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res0&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;FirstName&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res1&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;LastName&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res2&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;Company&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res3&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;Address&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res4&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;City&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res5&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;State&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res6&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;Country&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res7&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;PostalCode&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res8&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;Phone&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res9&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;Fax&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res10&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;Email&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res11&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;SupportRepId&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res12&quot;</span>
+<span class="k">FROM</span> <span class="ss">&quot;Customer&quot;</span> <span class="k">AS</span> <span class="ss">&quot;t0&quot;</span>
+<span class="k">WHERE</span> <span class="p">(</span><span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;CustomerId&quot;</span><span class="p">)</span> <span class="o">=</span> <span class="p">(</span><span class="mi">14</span><span class="p">);</span>
 
 <span class="c1">-- Output: New phone number is Just &quot;+1 (123) 456-7890&quot;</span>
 </pre></div>
@@ -1006,22 +1006,22 @@ update all customer addresses to reflect that.</p>
         <ul class="nav nav-tabs">
             
         <li class="nav-item">
-            <a href="#tab-1-haskell" aria-controls="tab-1-haskell" role="tab" data-toggle="tab" data-lang="haskell">Haskell</a>
+            <a href="#tab-1-Haskell" aria-controls="tab-1-Haskell" role="tab" data-toggle="tab" data-lang="haskell">Haskell</a>
         </li>
     
         <li class="nav-item">
-            <a href="#tab-1-sqlite3" aria-controls="tab-1-sqlite3" role="tab" data-toggle="tab" data-lang="sqlite3">Sqlite3</a>
+            <a href="#tab-1-Sqlite" aria-controls="tab-1-Sqlite" role="tab" data-toggle="tab" data-lang="sql">Sqlite</a>
         </li>
     
         <li class="nav-item">
-            <a href="#tab-1-postgres" aria-controls="tab-1-postgres" role="tab" data-toggle="tab" data-lang="postgres">Postgres</a>
+            <a href="#tab-1-Postgres" aria-controls="tab-1-Postgres" role="tab" data-toggle="tab" data-lang="sql">Postgres</a>
         </li>
     
         </ul>
     
         <div class="tab-content">
             
-        <div role="tabpanel" class="tab-pane active" id="tab-1-haskell">
+        <div role="tabpanel" class="tab-pane active" id="tab-1-Haskell">
             <div class="codehilite"><pre><span></span><span class="kt">Just</span> <span class="n">canadianCount</span> <span class="ow">&lt;-</span>
   <span class="n">runSelectReturningOne</span> <span class="o">$</span> <span class="n">select</span> <span class="o">$</span>
   <span class="n">aggregate_</span> <span class="p">(</span><span class="nf">\</span><span class="kr">_</span> <span class="ow">-&gt;</span> <span class="n">as_</span> <span class="o">@</span><span class="kt">Int</span> <span class="n">countAll_</span><span class="p">)</span> <span class="o">$</span>
@@ -1054,69 +1054,104 @@ update all customer addresses to reflect that.</p>
 
         </div>
     
-        <div role="tabpanel" class="tab-pane " id="tab-1-sqlite3">
-            <div class="codehilite"><pre><span></span><span class="go">SELECT COUNT(*) AS &quot;res0&quot;</span>
-<span class="go">FROM &quot;Customer&quot; AS &quot;t0&quot;</span>
-<span class="go">WHERE (&quot;t0&quot;.&quot;Country&quot;)=(?);</span>
+        <div role="tabpanel" class="tab-pane " id="tab-1-Sqlite">
+            <div class="codehilite"><pre><span></span><span class="k">SELECT</span> <span class="k">COUNT</span><span class="p">(</span><span class="o">*</span><span class="p">)</span> <span class="k">AS</span> <span class="ss">&quot;res0&quot;</span>
+<span class="k">FROM</span> <span class="ss">&quot;Customer&quot;</span> <span class="k">AS</span> <span class="ss">&quot;t0&quot;</span>
+<span class="k">WHERE</span> <span class="k">CASE</span>
+          <span class="k">WHEN</span> <span class="p">((</span><span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;Country&quot;</span><span class="p">)</span> <span class="k">IS</span> <span class="k">NULL</span><span class="p">)</span>
+               <span class="k">AND</span> <span class="p">((</span><span class="o">?</span><span class="p">)</span> <span class="k">IS</span> <span class="k">NULL</span><span class="p">)</span> <span class="k">THEN</span> <span class="o">?</span>
+          <span class="k">WHEN</span> <span class="p">((</span><span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;Country&quot;</span><span class="p">)</span> <span class="k">IS</span> <span class="k">NULL</span><span class="p">)</span>
+               <span class="k">OR</span> <span class="p">((</span><span class="o">?</span><span class="p">)</span> <span class="k">IS</span> <span class="k">NULL</span><span class="p">)</span> <span class="k">THEN</span> <span class="o">?</span>
+          <span class="k">ELSE</span> <span class="p">(</span><span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;Country&quot;</span><span class="p">)</span><span class="o">=</span><span class="p">(</span><span class="o">?</span><span class="p">)</span>
+      <span class="k">END</span><span class="p">;</span>
 
-<span class="go">-- With values: [SQLText &quot;Canada&quot;]</span>
+<span class="c1">-- With values: [SQLText &quot;Canada&quot;,SQLInteger 1,SQLText &quot;Canada&quot;,SQLInteger 0,SQLText &quot;Canada&quot;];</span>
 
-<span class="go">SELECT COUNT(*) AS &quot;res0&quot;</span>
-<span class="go">FROM &quot;Customer&quot; AS &quot;t0&quot;</span>
-<span class="go">WHERE (&quot;t0&quot;.&quot;Country&quot;)=(?);</span>
+<span class="k">SELECT</span> <span class="k">COUNT</span><span class="p">(</span><span class="o">*</span><span class="p">)</span> <span class="k">AS</span> <span class="ss">&quot;res0&quot;</span>
+<span class="k">FROM</span> <span class="ss">&quot;Customer&quot;</span> <span class="k">AS</span> <span class="ss">&quot;t0&quot;</span>
+<span class="k">WHERE</span> <span class="k">CASE</span>
+          <span class="k">WHEN</span> <span class="p">((</span><span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;Country&quot;</span><span class="p">)</span> <span class="k">IS</span> <span class="k">NULL</span><span class="p">)</span>
+               <span class="k">AND</span> <span class="p">((</span><span class="o">?</span><span class="p">)</span> <span class="k">IS</span> <span class="k">NULL</span><span class="p">)</span> <span class="k">THEN</span> <span class="o">?</span>
+          <span class="k">WHEN</span> <span class="p">((</span><span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;Country&quot;</span><span class="p">)</span> <span class="k">IS</span> <span class="k">NULL</span><span class="p">)</span>
+               <span class="k">OR</span> <span class="p">((</span><span class="o">?</span><span class="p">)</span> <span class="k">IS</span> <span class="k">NULL</span><span class="p">)</span> <span class="k">THEN</span> <span class="o">?</span>
+          <span class="k">ELSE</span> <span class="p">(</span><span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;Country&quot;</span><span class="p">)</span><span class="o">=</span><span class="p">(</span><span class="o">?</span><span class="p">)</span>
+      <span class="k">END</span><span class="p">;</span>
 
-<span class="go">-- With values: [SQLText &quot;USA&quot;]</span>
-<span class="go">-- Output: Before, there were 8 addresses in Canada and 13 in the USA.</span>
+<span class="c1">-- With values: [SQLText &quot;USA&quot;,SQLInteger 1,SQLText &quot;USA&quot;,SQLInteger 0,SQLText &quot;USA&quot;];</span>
+<span class="c1">-- Output: Before, there were 8 addresses in Canada and 13 in the USA.</span>
 
-<span class="go">UPDATE &quot;Customer&quot;</span>
-<span class="go">SET &quot;Country&quot;=?</span>
-<span class="go">WHERE (&quot;Country&quot;)=(?);</span>
+<span class="k">UPDATE</span> <span class="ss">&quot;Customer&quot;</span>
+<span class="k">SET</span> <span class="ss">&quot;Country&quot;</span><span class="o">=?</span>
+<span class="k">WHERE</span> <span class="k">CASE</span>
+          <span class="k">WHEN</span> <span class="p">((</span><span class="ss">&quot;Country&quot;</span><span class="p">)</span> <span class="k">IS</span> <span class="k">NULL</span><span class="p">)</span>
+               <span class="k">AND</span> <span class="p">((</span><span class="o">?</span><span class="p">)</span> <span class="k">IS</span> <span class="k">NULL</span><span class="p">)</span> <span class="k">THEN</span> <span class="o">?</span>
+          <span class="k">WHEN</span> <span class="p">((</span><span class="ss">&quot;Country&quot;</span><span class="p">)</span> <span class="k">IS</span> <span class="k">NULL</span><span class="p">)</span>
+               <span class="k">OR</span> <span class="p">((</span><span class="o">?</span><span class="p">)</span> <span class="k">IS</span> <span class="k">NULL</span><span class="p">)</span> <span class="k">THEN</span> <span class="o">?</span>
+          <span class="k">ELSE</span> <span class="p">(</span><span class="ss">&quot;Country&quot;</span><span class="p">)</span><span class="o">=</span><span class="p">(</span><span class="o">?</span><span class="p">)</span>
+      <span class="k">END</span><span class="p">;</span>
 
-<span class="go">-- With values: [SQLText &quot;USA&quot;,SQLText &quot;Canada&quot;]</span>
+<span class="c1">-- With values: [SQLText &quot;USA&quot;,SQLText &quot;Canada&quot;,SQLInteger 1,SQLText &quot;Canada&quot;,SQLInteger 0,SQLText &quot;Canada&quot;];</span>
 
-<span class="go">SELECT COUNT(*) AS &quot;res0&quot;</span>
-<span class="go">FROM &quot;Customer&quot; AS &quot;t0&quot;</span>
-<span class="go">WHERE (&quot;t0&quot;.&quot;Country&quot;)=(?);</span>
+<span class="k">SELECT</span> <span class="k">COUNT</span><span class="p">(</span><span class="o">*</span><span class="p">)</span> <span class="k">AS</span> <span class="ss">&quot;res0&quot;</span>
+<span class="k">FROM</span> <span class="ss">&quot;Customer&quot;</span> <span class="k">AS</span> <span class="ss">&quot;t0&quot;</span>
+<span class="k">WHERE</span> <span class="k">CASE</span>
+          <span class="k">WHEN</span> <span class="p">((</span><span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;Country&quot;</span><span class="p">)</span> <span class="k">IS</span> <span class="k">NULL</span><span class="p">)</span>
+               <span class="k">AND</span> <span class="p">((</span><span class="o">?</span><span class="p">)</span> <span class="k">IS</span> <span class="k">NULL</span><span class="p">)</span> <span class="k">THEN</span> <span class="o">?</span>
+          <span class="k">WHEN</span> <span class="p">((</span><span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;Country&quot;</span><span class="p">)</span> <span class="k">IS</span> <span class="k">NULL</span><span class="p">)</span>
+               <span class="k">OR</span> <span class="p">((</span><span class="o">?</span><span class="p">)</span> <span class="k">IS</span> <span class="k">NULL</span><span class="p">)</span> <span class="k">THEN</span> <span class="o">?</span>
+          <span class="k">ELSE</span> <span class="p">(</span><span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;Country&quot;</span><span class="p">)</span><span class="o">=</span><span class="p">(</span><span class="o">?</span><span class="p">)</span>
+      <span class="k">END</span><span class="p">;</span>
 
-<span class="go">-- With values: [SQLText &quot;Canada&quot;]</span>
+<span class="c1">-- With values: [SQLText &quot;Canada&quot;,SQLInteger 1,SQLText &quot;Canada&quot;,SQLInteger 0,SQLText &quot;Canada&quot;];</span>
 
-<span class="go">SELECT COUNT(*) AS &quot;res0&quot;</span>
-<span class="go">FROM &quot;Customer&quot; AS &quot;t0&quot;</span>
-<span class="go">WHERE (&quot;t0&quot;.&quot;Country&quot;)=(?);</span>
+<span class="k">SELECT</span> <span class="k">COUNT</span><span class="p">(</span><span class="o">*</span><span class="p">)</span> <span class="k">AS</span> <span class="ss">&quot;res0&quot;</span>
+<span class="k">FROM</span> <span class="ss">&quot;Customer&quot;</span> <span class="k">AS</span> <span class="ss">&quot;t0&quot;</span>
+<span class="k">WHERE</span> <span class="k">CASE</span>
+          <span class="k">WHEN</span> <span class="p">((</span><span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;Country&quot;</span><span class="p">)</span> <span class="k">IS</span> <span class="k">NULL</span><span class="p">)</span>
+               <span class="k">AND</span> <span class="p">((</span><span class="o">?</span><span class="p">)</span> <span class="k">IS</span> <span class="k">NULL</span><span class="p">)</span> <span class="k">THEN</span> <span class="o">?</span>
+          <span class="k">WHEN</span> <span class="p">((</span><span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;Country&quot;</span><span class="p">)</span> <span class="k">IS</span> <span class="k">NULL</span><span class="p">)</span>
+               <span class="k">OR</span> <span class="p">((</span><span class="o">?</span><span class="p">)</span> <span class="k">IS</span> <span class="k">NULL</span><span class="p">)</span> <span class="k">THEN</span> <span class="o">?</span>
+          <span class="k">ELSE</span> <span class="p">(</span><span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;Country&quot;</span><span class="p">)</span><span class="o">=</span><span class="p">(</span><span class="o">?</span><span class="p">)</span>
+      <span class="k">END</span><span class="p">;</span>
 
-<span class="go">-- With values: [SQLText &quot;USA&quot;]</span>
-<span class="go">-- Output: Now, there are 0 addresses in Canada and 21 in the USA.</span>
+<span class="c1">-- With values: [SQLText &quot;USA&quot;,SQLInteger 1,SQLText &quot;USA&quot;,SQLInteger 0,SQLText &quot;USA&quot;];</span>
+<span class="c1">-- Output: Now, there are 0 addresses in Canada and 21 in the USA.</span>
 </pre></div>
 
         </div>
     
-        <div role="tabpanel" class="tab-pane " id="tab-1-postgres">
-            <div class="codehilite"><pre><span></span><span class="k">SELECT</span> <span class="n">COUNT</span><span class="p">(</span><span class="o">*</span><span class="p">)</span> <span class="k">AS</span> <span class="s s-Name">&quot;res0&quot;</span>
-<span class="k">FROM</span> <span class="s s-Name">&quot;Customer&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;t0&quot;</span>
-<span class="k">WHERE</span> <span class="p">(</span><span class="s s-Name">&quot;t0&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;Country&quot;</span><span class="p">)</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;Canada&#39;</span><span class="p">);</span>
+        <div role="tabpanel" class="tab-pane " id="tab-1-Postgres">
+            <div class="codehilite"><pre><span></span><span class="k">SELECT</span> <span class="k">COUNT</span><span class="p">(</span><span class="o">*</span><span class="p">)</span> <span class="k">AS</span> <span class="ss">&quot;res0&quot;</span>
+<span class="k">FROM</span> <span class="ss">&quot;Customer&quot;</span> <span class="k">AS</span> <span class="ss">&quot;t0&quot;</span>
+<span class="k">WHERE</span> <span class="p">(</span><span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;Country&quot;</span><span class="p">)</span> <span class="k">IS</span> <span class="k">NOT</span> <span class="k">DISTINCT</span>
+  <span class="k">FROM</span> <span class="p">(</span><span class="s1">&#39;Canada&#39;</span><span class="p">);</span>
 
 
-<span class="k">SELECT</span> <span class="n">COUNT</span><span class="p">(</span><span class="o">*</span><span class="p">)</span> <span class="k">AS</span> <span class="s s-Name">&quot;res0&quot;</span>
-<span class="k">FROM</span> <span class="s s-Name">&quot;Customer&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;t0&quot;</span>
-<span class="k">WHERE</span> <span class="p">(</span><span class="s s-Name">&quot;t0&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;Country&quot;</span><span class="p">)</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;USA&#39;</span><span class="p">);</span>
+<span class="k">SELECT</span> <span class="k">COUNT</span><span class="p">(</span><span class="o">*</span><span class="p">)</span> <span class="k">AS</span> <span class="ss">&quot;res0&quot;</span>
+<span class="k">FROM</span> <span class="ss">&quot;Customer&quot;</span> <span class="k">AS</span> <span class="ss">&quot;t0&quot;</span>
+<span class="k">WHERE</span> <span class="p">(</span><span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;Country&quot;</span><span class="p">)</span> <span class="k">IS</span> <span class="k">NOT</span> <span class="k">DISTINCT</span>
+  <span class="k">FROM</span> <span class="p">(</span><span class="s1">&#39;USA&#39;</span><span class="p">);</span>
 
-<span class="c1">-- Output: Before, there were 7 addresses in Canada and 13 in the USA.</span>
+<span class="c1">-- Output: Before, there were 8 addresses in Canada and 13 in the USA.</span>
 
-<span class="k">UPDATE</span> <span class="s s-Name">&quot;Customer&quot;</span>
-<span class="k">SET</span> <span class="s s-Name">&quot;Country&quot;</span><span class="o">=</span><span class="s1">&#39;USA&#39;</span>
-<span class="k">WHERE</span> <span class="p">(</span><span class="s s-Name">&quot;Country&quot;</span><span class="p">)</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;Canada&#39;</span><span class="p">);</span>
-
-
-<span class="k">SELECT</span> <span class="n">COUNT</span><span class="p">(</span><span class="o">*</span><span class="p">)</span> <span class="k">AS</span> <span class="s s-Name">&quot;res0&quot;</span>
-<span class="k">FROM</span> <span class="s s-Name">&quot;Customer&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;t0&quot;</span>
-<span class="k">WHERE</span> <span class="p">(</span><span class="s s-Name">&quot;t0&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;Country&quot;</span><span class="p">)</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;Canada&#39;</span><span class="p">);</span>
+<span class="k">UPDATE</span> <span class="ss">&quot;Customer&quot;</span>
+<span class="k">SET</span> <span class="ss">&quot;Country&quot;</span><span class="o">=</span><span class="s1">&#39;USA&#39;</span>
+<span class="k">WHERE</span> <span class="p">(</span><span class="ss">&quot;Country&quot;</span><span class="p">)</span> <span class="k">IS</span> <span class="k">NOT</span> <span class="k">DISTINCT</span>
+  <span class="k">FROM</span> <span class="p">(</span><span class="s1">&#39;Canada&#39;</span><span class="p">);</span>
 
 
-<span class="k">SELECT</span> <span class="n">COUNT</span><span class="p">(</span><span class="o">*</span><span class="p">)</span> <span class="k">AS</span> <span class="s s-Name">&quot;res0&quot;</span>
-<span class="k">FROM</span> <span class="s s-Name">&quot;Customer&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;t0&quot;</span>
-<span class="k">WHERE</span> <span class="p">(</span><span class="s s-Name">&quot;t0&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;Country&quot;</span><span class="p">)</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;USA&#39;</span><span class="p">);</span>
+<span class="k">SELECT</span> <span class="k">COUNT</span><span class="p">(</span><span class="o">*</span><span class="p">)</span> <span class="k">AS</span> <span class="ss">&quot;res0&quot;</span>
+<span class="k">FROM</span> <span class="ss">&quot;Customer&quot;</span> <span class="k">AS</span> <span class="ss">&quot;t0&quot;</span>
+<span class="k">WHERE</span> <span class="p">(</span><span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;Country&quot;</span><span class="p">)</span> <span class="k">IS</span> <span class="k">NOT</span> <span class="k">DISTINCT</span>
+  <span class="k">FROM</span> <span class="p">(</span><span class="s1">&#39;Canada&#39;</span><span class="p">);</span>
 
-<span class="c1">-- Output: Now, there are 0 addresses in Canada and 20 in the USA.</span>
+
+<span class="k">SELECT</span> <span class="k">COUNT</span><span class="p">(</span><span class="o">*</span><span class="p">)</span> <span class="k">AS</span> <span class="ss">&quot;res0&quot;</span>
+<span class="k">FROM</span> <span class="ss">&quot;Customer&quot;</span> <span class="k">AS</span> <span class="ss">&quot;t0&quot;</span>
+<span class="k">WHERE</span> <span class="p">(</span><span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;Country&quot;</span><span class="p">)</span> <span class="k">IS</span> <span class="k">NOT</span> <span class="k">DISTINCT</span>
+  <span class="k">FROM</span> <span class="p">(</span><span class="s1">&#39;USA&#39;</span><span class="p">);</span>
+
+<span class="c1">-- Output: Now, there are 0 addresses in Canada and 21 in the USA.</span>
 </pre></div>
 
         </div>
@@ -1134,22 +1169,22 @@ quantity of every line item.</p>
         <ul class="nav nav-tabs">
             
         <li class="nav-item">
-            <a href="#tab-2-haskell" aria-controls="tab-2-haskell" role="tab" data-toggle="tab" data-lang="haskell">Haskell</a>
+            <a href="#tab-2-Haskell" aria-controls="tab-2-Haskell" role="tab" data-toggle="tab" data-lang="haskell">Haskell</a>
         </li>
     
         <li class="nav-item">
-            <a href="#tab-2-sqlite3" aria-controls="tab-2-sqlite3" role="tab" data-toggle="tab" data-lang="sqlite3">Sqlite3</a>
+            <a href="#tab-2-Sqlite" aria-controls="tab-2-Sqlite" role="tab" data-toggle="tab" data-lang="sql">Sqlite</a>
         </li>
     
         <li class="nav-item">
-            <a href="#tab-2-postgres" aria-controls="tab-2-postgres" role="tab" data-toggle="tab" data-lang="postgres">Postgres</a>
+            <a href="#tab-2-Postgres" aria-controls="tab-2-Postgres" role="tab" data-toggle="tab" data-lang="sql">Postgres</a>
         </li>
     
         </ul>
     
         <div class="tab-content">
             
-        <div role="tabpanel" class="tab-pane active" id="tab-2-haskell">
+        <div role="tabpanel" class="tab-pane active" id="tab-2-Haskell">
             <div class="codehilite"><pre><span></span><span class="kt">Just</span> <span class="n">totalLineItems</span> <span class="ow">&lt;-</span>
   <span class="n">runSelectReturningOne</span> <span class="o">$</span> <span class="n">select</span> <span class="o">$</span>
   <span class="n">aggregate_</span> <span class="p">(</span><span class="nf">\</span><span class="n">ln</span> <span class="ow">-&gt;</span> <span class="n">sum_</span> <span class="p">(</span><span class="n">invoiceLineQuantity</span> <span class="n">ln</span><span class="p">))</span> <span class="o">$</span>
@@ -1169,43 +1204,43 @@ quantity of every line item.</p>
 
         </div>
     
-        <div role="tabpanel" class="tab-pane " id="tab-2-sqlite3">
-            <div class="codehilite"><pre><span></span><span class="go">SELECT SUM(&quot;t0&quot;.&quot;Quantity&quot;) AS &quot;res0&quot;</span>
-<span class="go">FROM &quot;InvoiceLine&quot; AS &quot;t0&quot;;</span>
+        <div role="tabpanel" class="tab-pane " id="tab-2-Sqlite">
+            <div class="codehilite"><pre><span></span><span class="k">SELECT</span> <span class="k">SUM</span><span class="p">(</span><span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;Quantity&quot;</span><span class="p">)</span> <span class="k">AS</span> <span class="ss">&quot;res0&quot;</span>
+<span class="k">FROM</span> <span class="ss">&quot;InvoiceLine&quot;</span> <span class="k">AS</span> <span class="ss">&quot;t0&quot;</span><span class="p">;</span>
 
-<span class="go">-- With values: []</span>
-<span class="go">-- Output: Before, we had 2240 total products sold</span>
+<span class="c1">-- With values: [];</span>
+<span class="c1">-- Output: Before, we had Just 2240 total products sold</span>
 
-<span class="go">UPDATE &quot;InvoiceLine&quot;</span>
-<span class="go">SET &quot;Quantity&quot;=(&quot;Quantity&quot;) * (?)</span>
-<span class="go">WHERE ?;</span>
+<span class="k">UPDATE</span> <span class="ss">&quot;InvoiceLine&quot;</span>
+<span class="k">SET</span> <span class="ss">&quot;Quantity&quot;</span><span class="o">=</span><span class="p">(</span><span class="ss">&quot;Quantity&quot;</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="o">?</span><span class="p">)</span>
+<span class="k">WHERE</span> <span class="o">?</span><span class="p">;</span>
 
-<span class="go">-- With values: [SQLInteger 2,SQLInteger 1]</span>
+<span class="c1">-- With values: [SQLInteger 2,SQLInteger 1];</span>
 
-<span class="go">SELECT SUM(&quot;t0&quot;.&quot;Quantity&quot;) AS &quot;res0&quot;</span>
-<span class="go">FROM &quot;InvoiceLine&quot; AS &quot;t0&quot;;</span>
+<span class="k">SELECT</span> <span class="k">SUM</span><span class="p">(</span><span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;Quantity&quot;</span><span class="p">)</span> <span class="k">AS</span> <span class="ss">&quot;res0&quot;</span>
+<span class="k">FROM</span> <span class="ss">&quot;InvoiceLine&quot;</span> <span class="k">AS</span> <span class="ss">&quot;t0&quot;</span><span class="p">;</span>
 
-<span class="go">-- With values: []</span>
-<span class="go">-- Output: With a few simple lines, we&#39;ve double our sales figure to 4480 products sold!</span>
+<span class="c1">-- With values: [];</span>
+<span class="c1">-- Output: With a few simple lines, we&#39;ve double our sales figure to Just 4480 products sold!</span>
 </pre></div>
 
         </div>
     
-        <div role="tabpanel" class="tab-pane " id="tab-2-postgres">
-            <div class="codehilite"><pre><span></span><span class="k">SELECT</span> <span class="n">SUM</span><span class="p">(</span><span class="s s-Name">&quot;t0&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;Quantity&quot;</span><span class="p">)</span> <span class="k">AS</span> <span class="s s-Name">&quot;res0&quot;</span>
-<span class="k">FROM</span> <span class="s s-Name">&quot;InvoiceLine&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;t0&quot;</span><span class="p">;</span>
+        <div role="tabpanel" class="tab-pane " id="tab-2-Postgres">
+            <div class="codehilite"><pre><span></span><span class="k">SELECT</span> <span class="k">SUM</span><span class="p">(</span><span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;Quantity&quot;</span><span class="p">)</span> <span class="k">AS</span> <span class="ss">&quot;res0&quot;</span>
+<span class="k">FROM</span> <span class="ss">&quot;InvoiceLine&quot;</span> <span class="k">AS</span> <span class="ss">&quot;t0&quot;</span><span class="p">;</span>
 
-<span class="c1">-- Output: Before, we had 1107 total products sold</span>
+<span class="c1">-- Output: Before, we had Just 2240 total products sold</span>
 
-<span class="k">UPDATE</span> <span class="s s-Name">&quot;InvoiceLine&quot;</span>
-<span class="k">SET</span> <span class="s s-Name">&quot;Quantity&quot;</span><span class="o">=</span><span class="p">(</span><span class="s s-Name">&quot;Quantity&quot;</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="mf">2</span><span class="p">)</span>
+<span class="k">UPDATE</span> <span class="ss">&quot;InvoiceLine&quot;</span>
+<span class="k">SET</span> <span class="ss">&quot;Quantity&quot;</span><span class="o">=</span><span class="p">(</span><span class="ss">&quot;Quantity&quot;</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="mi">2</span><span class="p">)</span>
 <span class="k">WHERE</span> <span class="k">true</span><span class="p">;</span>
 
 
-<span class="k">SELECT</span> <span class="n">SUM</span><span class="p">(</span><span class="s s-Name">&quot;t0&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;Quantity&quot;</span><span class="p">)</span> <span class="k">AS</span> <span class="s s-Name">&quot;res0&quot;</span>
-<span class="k">FROM</span> <span class="s s-Name">&quot;InvoiceLine&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;t0&quot;</span><span class="p">;</span>
+<span class="k">SELECT</span> <span class="k">SUM</span><span class="p">(</span><span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;Quantity&quot;</span><span class="p">)</span> <span class="k">AS</span> <span class="ss">&quot;res0&quot;</span>
+<span class="k">FROM</span> <span class="ss">&quot;InvoiceLine&quot;</span> <span class="k">AS</span> <span class="ss">&quot;t0&quot;</span><span class="p">;</span>
 
-<span class="c1">-- Output: With a few simple lines, we&#39;ve double our sales figure to 2214 products sold!</span>
+<span class="c1">-- Output: With a few simple lines, we&#39;ve double our sales figure to Just 4480 products sold!</span>
 </pre></div>
 
         </div>

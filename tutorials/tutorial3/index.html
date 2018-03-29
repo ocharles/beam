@@ -766,7 +766,7 @@ to create optional foreign key references.</p>
 <p>Let's create our products table. By now, the pattern for adding a new table to
 the schema should be pretty familiar, so I'm going to skip the explanation.</p>
 <div class="codehilite"><pre><span></span><span class="kr">data</span> <span class="kt">ProductT</span> <span class="n">f</span> <span class="ow">=</span> <span class="kt">Product</span>
-                <span class="p">{</span> <span class="n">_productId</span>          <span class="ow">::</span> <span class="kt">C</span> <span class="n">f</span> <span class="p">(</span><span class="kt">Auto</span> <span class="kt">Int</span><span class="p">)</span>
+                <span class="p">{</span> <span class="n">_productId</span>          <span class="ow">::</span> <span class="kt">C</span> <span class="n">f</span> <span class="kt">Int</span>
                 <span class="p">,</span> <span class="n">_productTitle</span>       <span class="ow">::</span> <span class="kt">C</span> <span class="n">f</span> <span class="kt">Text</span>
                 <span class="p">,</span> <span class="n">_productDescription</span> <span class="ow">::</span> <span class="kt">C</span> <span class="n">f</span> <span class="kt">Text</span>
                 <span class="p">,</span> <span class="n">_productPrice</span>       <span class="ow">::</span> <span class="kt">C</span> <span class="n">f</span> <span class="kt">Int</span> <span class="cm">{- Price in cents -}</span> <span class="p">}</span>
@@ -775,7 +775,7 @@ the schema should be pretty familiar, so I'm going to skip the explanation.</p>
 <span class="kr">deriving</span> <span class="kr">instance</span> <span class="kt">Show</span> <span class="kt">Product</span>
 
 <span class="kr">instance</span> <span class="kt">Table</span> <span class="kt">ProductT</span> <span class="kr">where</span>
-  <span class="kr">data</span> <span class="kt">PrimaryKey</span> <span class="kt">ProductT</span> <span class="n">f</span> <span class="ow">=</span> <span class="kt">ProductId</span> <span class="p">(</span><span class="kt">Columnar</span> <span class="n">f</span> <span class="p">(</span><span class="kt">Auto</span> <span class="kt">Int</span><span class="p">))</span>
+  <span class="kr">data</span> <span class="kt">PrimaryKey</span> <span class="kt">ProductT</span> <span class="n">f</span> <span class="ow">=</span> <span class="kt">ProductId</span> <span class="p">(</span><span class="kt">Columnar</span> <span class="n">f</span> <span class="kt">Int</span><span class="p">)</span>
                                <span class="kr">deriving</span> <span class="kt">Generic</span>
   <span class="n">primaryKey</span> <span class="ow">=</span> <span class="kt">ProductId</span> <span class="o">.</span> <span class="n">_productId</span>
 
@@ -799,7 +799,7 @@ exists in many existing databases.</p>
 <span class="kr">deriving</span> <span class="kr">instance</span> <span class="kt">Show</span> <span class="p">(</span><span class="kt">PrimaryKey</span> <span class="kt">AddressT</span> <span class="kt">Identity</span><span class="p">)</span>
 
 <span class="kr">data</span> <span class="kt">OrderT</span> <span class="n">f</span> <span class="ow">=</span> <span class="kt">Order</span>
-              <span class="p">{</span> <span class="n">_orderId</span>      <span class="ow">::</span> <span class="kt">Columnar</span> <span class="n">f</span> <span class="p">(</span><span class="kt">Auto</span> <span class="kt">Int</span><span class="p">)</span>
+              <span class="p">{</span> <span class="n">_orderId</span>      <span class="ow">::</span> <span class="kt">Columnar</span> <span class="n">f</span> <span class="kt">Int</span>
               <span class="p">,</span> <span class="n">_orderDate</span>    <span class="ow">::</span> <span class="kt">Columnar</span> <span class="n">f</span> <span class="kt">LocalTime</span>
               <span class="p">,</span> <span class="n">_orderForUser</span> <span class="ow">::</span> <span class="kt">PrimaryKey</span> <span class="kt">UserT</span> <span class="n">f</span>
               <span class="p">,</span> <span class="n">_orderShipToAddress</span> <span class="ow">::</span> <span class="kt">PrimaryKey</span> <span class="kt">AddressT</span> <span class="n">f</span>
@@ -809,7 +809,7 @@ exists in many existing databases.</p>
 <span class="kr">deriving</span> <span class="kr">instance</span> <span class="kt">Show</span> <span class="kt">Order</span>
 
 <span class="kr">instance</span> <span class="kt">Table</span> <span class="kt">OrderT</span> <span class="kr">where</span>
-    <span class="kr">data</span> <span class="kt">PrimaryKey</span> <span class="kt">OrderT</span> <span class="n">f</span> <span class="ow">=</span> <span class="kt">OrderId</span> <span class="p">(</span><span class="kt">Columnar</span> <span class="n">f</span> <span class="p">(</span><span class="kt">Auto</span> <span class="kt">Int</span><span class="p">))</span>
+    <span class="kr">data</span> <span class="kt">PrimaryKey</span> <span class="kt">OrderT</span> <span class="n">f</span> <span class="ow">=</span> <span class="kt">OrderId</span> <span class="p">(</span><span class="kt">Columnar</span> <span class="n">f</span> <span class="kt">Int</span><span class="p">)</span>
                                <span class="kr">deriving</span> <span class="kt">Generic</span>
     <span class="n">primaryKey</span> <span class="ow">=</span> <span class="kt">OrderId</span> <span class="o">.</span> <span class="n">_orderId</span>
 
@@ -820,7 +820,7 @@ exists in many existing databases.</p>
                        <span class="kr">deriving</span> <span class="p">(</span><span class="kt">Show</span><span class="p">,</span> <span class="kt">Read</span><span class="p">,</span> <span class="kt">Eq</span><span class="p">,</span> <span class="kt">Ord</span><span class="p">,</span> <span class="kt">Enum</span><span class="p">)</span>
 
 <span class="kr">data</span> <span class="kt">ShippingInfoT</span> <span class="n">f</span> <span class="ow">=</span> <span class="kt">ShippingInfo</span>
-                     <span class="p">{</span> <span class="n">_shippingInfoId</span>             <span class="ow">::</span> <span class="kt">Columnar</span> <span class="n">f</span> <span class="p">(</span><span class="kt">Auto</span> <span class="kt">Int</span><span class="p">)</span>
+                     <span class="p">{</span> <span class="n">_shippingInfoId</span>             <span class="ow">::</span> <span class="kt">Columnar</span> <span class="n">f</span> <span class="kt">Int</span>
                      <span class="p">,</span> <span class="n">_shippingInfoCarrier</span>        <span class="ow">::</span> <span class="kt">Columnar</span> <span class="n">f</span> <span class="kt">ShippingCarrier</span>
                      <span class="p">,</span> <span class="n">_shippingInfoTrackingNumber</span> <span class="ow">::</span> <span class="kt">Columnar</span> <span class="n">f</span> <span class="kt">Text</span> <span class="p">}</span>
                        <span class="kr">deriving</span> <span class="kt">Generic</span>
@@ -828,7 +828,7 @@ exists in many existing databases.</p>
 <span class="kr">deriving</span> <span class="kr">instance</span> <span class="kt">Show</span> <span class="kt">ShippingInfo</span>
 
 <span class="kr">instance</span> <span class="kt">Table</span> <span class="kt">ShippingInfoT</span> <span class="kr">where</span>
-    <span class="kr">data</span> <span class="kt">PrimaryKey</span> <span class="kt">ShippingInfoT</span> <span class="n">f</span> <span class="ow">=</span> <span class="kt">ShippingInfoId</span> <span class="p">(</span><span class="kt">Columnar</span> <span class="n">f</span> <span class="p">(</span><span class="kt">Auto</span> <span class="kt">Int</span><span class="p">))</span>
+    <span class="kr">data</span> <span class="kt">PrimaryKey</span> <span class="kt">ShippingInfoT</span> <span class="n">f</span> <span class="ow">=</span> <span class="kt">ShippingInfoId</span> <span class="p">(</span><span class="kt">Columnar</span> <span class="n">f</span> <span class="kt">Int</span><span class="p">)</span>
                                       <span class="kr">deriving</span> <span class="kt">Generic</span>
     <span class="n">primaryKey</span> <span class="ow">=</span> <span class="kt">ShippingInfoId</span> <span class="o">.</span> <span class="n">_shippingInfoId</span>
 
@@ -888,7 +888,7 @@ unwrapper <code>Reader</code> of <code>a</code>. The applicative actions are the
                       <span class="p">,</span> <span class="n">_shoppingCartLineItems</span>     <span class="ow">::</span> <span class="n">f</span> <span class="p">(</span><span class="kt">TableEntity</span> <span class="kt">LineItemT</span><span class="p">)</span> <span class="p">}</span>
                         <span class="kr">deriving</span> <span class="kt">Generic</span>
 
-<span class="kr">instance</span> <span class="kt">Database</span> <span class="kt">ShoppingCartDb</span>
+<span class="kr">instance</span> <span class="kt">Database</span> <span class="n">be</span> <span class="kt">ShoppingCartDb</span>
 
 <span class="kt">ShoppingCartDb</span> <span class="p">(</span><span class="kt">TableLens</span> <span class="n">shoppingCartUsers</span><span class="p">)</span> <span class="p">(</span><span class="kt">TableLens</span> <span class="n">shoppingCartUserAddresses</span><span class="p">)</span>
                <span class="p">(</span><span class="kt">TableLens</span> <span class="n">shoppingCartProducts</span><span class="p">)</span> <span class="p">(</span><span class="kt">TableLens</span> <span class="n">shoppingCartOrders</span><span class="p">)</span>
@@ -941,15 +941,14 @@ create references to these inserted rows.</p>
           <span class="p">[</span> <span class="kt">User</span> <span class="s">&quot;james@example.com&quot;</span> <span class="s">&quot;James&quot;</span> <span class="s">&quot;Smith&quot;</span>  <span class="s">&quot;b4cc344d25a2efe540adbf2678e2304c&quot;</span> <span class="cm">{- james -}</span>
           <span class="p">,</span> <span class="kt">User</span> <span class="s">&quot;betty@example.com&quot;</span> <span class="s">&quot;Betty&quot;</span> <span class="s">&quot;Jones&quot;</span>  <span class="s">&quot;82b054bd83ffad9b6cf8bdb98ce3cc2f&quot;</span> <span class="cm">{- betty -}</span>
           <span class="p">,</span> <span class="kt">User</span> <span class="s">&quot;sam@example.com&quot;</span>   <span class="s">&quot;Sam&quot;</span>   <span class="s">&quot;Taylor&quot;</span> <span class="s">&quot;332532dcfaa1cbf61e2a266bd723612c&quot;</span> <span class="cm">{- sam -}</span> <span class="p">]</span>
-    <span class="n">addresses</span> <span class="ow">=</span> <span class="p">[</span> <span class="kt">Address</span> <span class="p">(</span><span class="kt">Auto</span> <span class="kt">Nothing</span><span class="p">)</span> <span class="s">&quot;123 Little Street&quot;</span> <span class="kt">Nothing</span> <span class="s">&quot;Boston&quot;</span> <span class="s">&quot;MA&quot;</span> <span class="s">&quot;12345&quot;</span> <span class="p">(</span><span class="n">pk</span> <span class="n">james</span><span class="p">)</span>
+    <span class="n">addresses</span> <span class="ow">=</span> <span class="p">[</span> <span class="kt">Address</span> <span class="n">default_</span> <span class="p">(</span><span class="n">val_</span> <span class="s">&quot;123 Little Street&quot;</span><span class="p">)</span> <span class="p">(</span><span class="n">val_</span> <span class="kt">Nothing</span><span class="p">)</span> <span class="p">(</span><span class="n">val_</span> <span class="s">&quot;Boston&quot;</span><span class="p">)</span> <span class="p">(</span><span class="n">val_</span> <span class="s">&quot;MA&quot;</span><span class="p">)</span> <span class="p">(</span><span class="n">val_</span> <span class="s">&quot;12345&quot;</span><span class="p">)</span> <span class="p">(</span><span class="n">pk</span> <span class="n">james</span><span class="p">)</span>
+                <span class="p">,</span> <span class="kt">Address</span> <span class="n">default_</span> <span class="p">(</span><span class="n">val_</span> <span class="s">&quot;222 Main Street&quot;</span><span class="p">)</span> <span class="p">(</span><span class="n">val_</span> <span class="p">(</span><span class="kt">Just</span> <span class="s">&quot;Ste 1&quot;</span><span class="p">))</span> <span class="p">(</span><span class="n">val_</span> <span class="s">&quot;Houston&quot;</span><span class="p">)</span> <span class="p">(</span><span class="n">val_</span> <span class="s">&quot;TX&quot;</span><span class="p">)</span> <span class="p">(</span><span class="n">val_</span> <span class="s">&quot;8888&quot;</span><span class="p">)</span> <span class="p">(</span><span class="n">pk</span> <span class="n">betty</span><span class="p">)</span>
+                <span class="p">,</span> <span class="kt">Address</span> <span class="n">default_</span> <span class="p">(</span><span class="n">val_</span> <span class="s">&quot;9999 Residence Ave&quot;</span><span class="p">)</span> <span class="p">(</span><span class="n">val_</span> <span class="kt">Nothing</span><span class="p">)</span> <span class="p">(</span><span class="n">val_</span> <span class="s">&quot;Sugarland&quot;</span><span class="p">)</span> <span class="p">(</span><span class="n">val_</span> <span class="s">&quot;TX&quot;</span><span class="p">)</span> <span class="p">(</span><span class="n">val_</span> <span class="s">&quot;8989&quot;</span><span class="p">)</span> <span class="p">(</span><span class="n">pk</span> <span class="n">betty</span><span class="p">)</span> <span class="p">]</span>
 
-                <span class="p">,</span> <span class="kt">Address</span> <span class="p">(</span><span class="kt">Auto</span> <span class="kt">Nothing</span><span class="p">)</span> <span class="s">&quot;222 Main Street&quot;</span> <span class="p">(</span><span class="kt">Just</span> <span class="s">&quot;Ste 1&quot;</span><span class="p">)</span> <span class="s">&quot;Houston&quot;</span> <span class="s">&quot;TX&quot;</span> <span class="s">&quot;8888&quot;</span> <span class="p">(</span><span class="n">pk</span> <span class="n">betty</span><span class="p">)</span>
-                <span class="p">,</span> <span class="kt">Address</span> <span class="p">(</span><span class="kt">Auto</span> <span class="kt">Nothing</span><span class="p">)</span> <span class="s">&quot;9999 Residence Ave&quot;</span> <span class="kt">Nothing</span> <span class="s">&quot;Sugarland&quot;</span> <span class="s">&quot;TX&quot;</span> <span class="s">&quot;8989&quot;</span> <span class="p">(</span><span class="n">pk</span> <span class="n">betty</span><span class="p">)</span> <span class="p">]</span>
-
-    <span class="n">products</span> <span class="ow">=</span> <span class="p">[</span> <span class="kt">Product</span> <span class="p">(</span><span class="kt">Auto</span> <span class="kt">Nothing</span><span class="p">)</span> <span class="s">&quot;Red Ball&quot;</span> <span class="s">&quot;A bright red, very spherical ball&quot;</span> <span class="mi">1000</span>
-               <span class="p">,</span> <span class="kt">Product</span> <span class="p">(</span><span class="kt">Auto</span> <span class="kt">Nothing</span><span class="p">)</span> <span class="s">&quot;Math Textbook&quot;</span> <span class="s">&quot;Contains a lot of important math theorems and formulae&quot;</span> <span class="mi">2500</span>
-               <span class="p">,</span> <span class="kt">Product</span> <span class="p">(</span><span class="kt">Auto</span> <span class="kt">Nothing</span><span class="p">)</span> <span class="s">&quot;Intro to Haskell&quot;</span> <span class="s">&quot;Learn the best programming language in the world&quot;</span> <span class="mi">3000</span>
-               <span class="p">,</span> <span class="kt">Product</span> <span class="p">(</span><span class="kt">Auto</span> <span class="kt">Nothing</span><span class="p">)</span> <span class="s">&quot;Suitcase&quot;</span> <span class="s">&quot;A hard durable suitcase&quot;</span> <span class="mi">15000</span> <span class="p">]</span>
+    <span class="n">products</span> <span class="ow">=</span> <span class="p">[</span> <span class="kt">Product</span> <span class="n">default_</span> <span class="p">(</span><span class="n">val_</span> <span class="s">&quot;Red Ball&quot;</span><span class="p">)</span> <span class="p">(</span><span class="n">val_</span> <span class="s">&quot;A bright red, very spherical ball&quot;</span><span class="p">)</span> <span class="p">(</span><span class="n">val_</span> <span class="mi">1000</span><span class="p">)</span>
+               <span class="p">,</span> <span class="kt">Product</span> <span class="n">default_</span> <span class="p">(</span><span class="n">val_</span> <span class="s">&quot;Math Textbook&quot;</span><span class="p">)</span> <span class="p">(</span><span class="n">val_</span> <span class="s">&quot;Contains a lot of important math theorems and formulae&quot;</span><span class="p">)</span> <span class="p">(</span><span class="n">val_</span> <span class="mi">2500</span><span class="p">)</span>
+               <span class="p">,</span> <span class="kt">Product</span> <span class="n">default_</span> <span class="p">(</span><span class="n">val_</span> <span class="s">&quot;Intro to Haskell&quot;</span><span class="p">)</span> <span class="p">(</span><span class="n">val_</span> <span class="s">&quot;Learn the best programming language in the world&quot;</span><span class="p">)</span> <span class="p">(</span><span class="n">val_</span> <span class="mi">3000</span><span class="p">)</span>
+               <span class="p">,</span> <span class="kt">Product</span> <span class="n">default_</span> <span class="p">(</span><span class="n">val_</span> <span class="s">&quot;Suitcase&quot;</span><span class="p">)</span> <span class="s">&quot;A hard durable suitcase&quot;</span> <span class="mi">15000</span> <span class="p">]</span>
 
 <span class="p">(</span><span class="n">jamesAddress1</span><span class="p">,</span> <span class="n">bettyAddress1</span><span class="p">,</span> <span class="n">bettyAddress2</span><span class="p">,</span> <span class="n">redBall</span><span class="p">,</span> <span class="n">mathTextbook</span><span class="p">,</span> <span class="n">introToHaskell</span><span class="p">,</span> <span class="n">suitcase</span><span class="p">)</span> <span class="ow">&lt;-</span>
   <span class="n">withDatabaseDebug</span> <span class="n">putStrLn</span> <span class="n">conn</span> <span class="o">$</span> <span class="kr">do</span>
@@ -958,20 +957,21 @@ create references to these inserted rows.</p>
 
     <span class="p">[</span><span class="n">jamesAddress1</span><span class="p">,</span> <span class="n">bettyAddress1</span><span class="p">,</span> <span class="n">bettyAddress2</span><span class="p">]</span> <span class="ow">&lt;-</span>
       <span class="n">runInsertReturningList</span> <span class="o">$</span>
-      <span class="n">insertReturning</span> <span class="p">(</span><span class="n">shoppingCartDb</span> <span class="o">^.</span> <span class="n">shoppingCartUserAddresses</span><span class="p">)</span> <span class="o">$</span> <span class="n">insertValues</span> <span class="n">addresses</span>
+      <span class="n">insertReturning</span> <span class="p">(</span><span class="n">shoppingCartDb</span> <span class="o">^.</span> <span class="n">shoppingCartUserAddresses</span><span class="p">)</span> <span class="o">$</span> <span class="n">insertExpressions</span> <span class="n">addresses</span>
 
     <span class="p">[</span><span class="n">redBall</span><span class="p">,</span> <span class="n">mathTextbook</span><span class="p">,</span> <span class="n">introToHaskell</span><span class="p">,</span> <span class="n">suitcase</span><span class="p">]</span> <span class="ow">&lt;-</span>
       <span class="n">runInsertReturningList</span> <span class="o">$</span>
-      <span class="n">insertReturning</span> <span class="p">(</span><span class="n">shoppingCartDb</span> <span class="o">^.</span> <span class="n">shoppingCartProducts</span><span class="p">)</span> <span class="o">$</span> <span class="n">insertValues</span> <span class="n">products</span>
+      <span class="n">insertReturning</span> <span class="p">(</span><span class="n">shoppingCartDb</span> <span class="o">^.</span> <span class="n">shoppingCartProducts</span><span class="p">)</span> <span class="o">$</span> <span class="n">insertExpressions</span> <span class="n">products</span>
 
     <span class="n">pure</span> <span class="p">(</span> <span class="n">jamesAddress1</span><span class="p">,</span> <span class="n">bettyAddress1</span><span class="p">,</span> <span class="n">bettyAddress2</span><span class="p">,</span> <span class="n">redBall</span><span class="p">,</span> <span class="n">mathTextbook</span><span class="p">,</span> <span class="n">introToHaskell</span><span class="p">,</span> <span class="n">suitcase</span> <span class="p">)</span>
 </pre></div>
 
 
-<p>Now, if we take a look at one of the returned addresses, like <code>jamesAddress1</code>,
-we see it has had it's <code>Auto</code> field assigned correctly.</p>
+<p>Now, if we take a look at one of the returned addresses, like
+<code>jamesAddress1</code>, we see it has had the <code>default_</code> values assigned
+correctly.</p>
 <div class="codehilite"><pre><span></span><span class="kt">Prelude</span> <span class="kt">Database</span><span class="o">.</span><span class="kt">Beam</span> <span class="kt">Database</span><span class="o">.</span><span class="kt">Beam</span><span class="o">.</span><span class="kt">Sqlite</span> <span class="kt">Data</span><span class="o">.</span><span class="kt">Time</span> <span class="kt">Database</span><span class="o">.</span><span class="kt">SQLite</span><span class="o">.</span><span class="kt">Simple</span> <span class="kt">Data</span><span class="o">.</span><span class="kt">Text</span> <span class="kt">Lens</span><span class="o">.</span><span class="kt">Micro</span><span class="o">&gt;</span> <span class="n">jamesAddress1</span>
-<span class="kt">Address</span> <span class="p">{</span><span class="n">_addressId</span> <span class="ow">=</span> <span class="kt">Auto</span> <span class="p">{</span><span class="n">unAuto</span> <span class="ow">=</span> <span class="kt">Just</span> <span class="mi">1</span><span class="p">},</span> <span class="n">_addressLine1</span> <span class="ow">=</span> <span class="s">&quot;123 Little Street&quot;</span><span class="p">,</span> <span class="n">_addressLine2</span> <span class="ow">=</span> <span class="kt">Nothing</span><span class="p">,</span> <span class="n">_addressCity</span> <span class="ow">=</span> <span class="s">&quot;Boston&quot;</span><span class="p">,</span> <span class="n">_addressState</span> <span class="ow">=</span> <span class="s">&quot;MA&quot;</span><span class="p">,</span> <span class="n">_addressZip</span> <span class="ow">=</span> <span class="s">&quot;12345&quot;</span><span class="p">,</span> <span class="n">_addressForUser</span> <span class="ow">=</span> <span class="kt">UserId</span> <span class="s">&quot;james@example.com&quot;</span><span class="p">}</span>
+<span class="kt">Address</span> <span class="p">{</span><span class="n">_addressId</span> <span class="ow">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">_addressLine1</span> <span class="ow">=</span> <span class="s">&quot;123 Little Street&quot;</span><span class="p">,</span> <span class="n">_addressLine2</span> <span class="ow">=</span> <span class="kt">Nothing</span><span class="p">,</span> <span class="n">_addressCity</span> <span class="ow">=</span> <span class="s">&quot;Boston&quot;</span><span class="p">,</span> <span class="n">_addressState</span> <span class="ow">=</span> <span class="s">&quot;MA&quot;</span><span class="p">,</span> <span class="n">_addressZip</span> <span class="ow">=</span> <span class="s">&quot;12345&quot;</span><span class="p">,</span> <span class="n">_addressForUser</span> <span class="ow">=</span> <span class="kt">UserId</span> <span class="s">&quot;james@example.com&quot;</span><span class="p">}</span>
 </pre></div>
 
 
@@ -988,12 +988,12 @@ implementation.</p>
 <h2 id="marshalling-a-custom-type">Marshalling a custom type</h2>
 <p>Now we can insert shipping information. Of course, the shipping information
 contains the <code>ShippingCarrier</code> enumeration.</p>
-<div class="codehilite"><pre><span></span><span class="nf">bettyShippingInfo</span> <span class="ow">&lt;-</span> 
+<div class="codehilite"><pre><span></span><span class="nf">bettyShippingInfo</span> <span class="ow">&lt;-</span>
   <span class="n">withDatabaseDebug</span> <span class="n">putStrLn</span> <span class="n">conn</span> <span class="o">$</span> <span class="kr">do</span>
     <span class="p">[</span><span class="n">bettyShippingInfo</span><span class="p">]</span> <span class="ow">&lt;-</span>
       <span class="n">runInsertReturningList</span> <span class="o">$</span>
       <span class="n">insertReturning</span> <span class="p">(</span><span class="n">shoppingCartDb</span> <span class="o">^.</span> <span class="n">shoppingCartShippingInfos</span><span class="p">)</span> <span class="o">$</span>
-      <span class="n">insertValues</span> <span class="p">[</span> <span class="kt">ShippingInfo</span> <span class="p">(</span><span class="kt">Auto</span> <span class="kt">Nothing</span><span class="p">)</span> <span class="kt">USPS</span> <span class="s">&quot;12345790ABCDEFGHI&quot;</span> <span class="p">]</span>
+      <span class="n">insertExpressions</span> <span class="p">[</span> <span class="kt">ShippingInfo</span> <span class="n">default_</span> <span class="p">(</span><span class="n">val_</span> <span class="kt">USPS</span><span class="p">)</span> <span class="p">(</span><span class="n">val_</span> <span class="s">&quot;12345790ABCDEFGHI&quot;</span><span class="p">)</span> <span class="p">]</span>
     <span class="n">pure</span> <span class="n">bettyShippingInfo</span>
 </pre></div>
 
@@ -1006,13 +1006,13 @@ contains the <code>ShippingCarrier</code> enumeration.</p>
     <span class="o">*</span> In a stmt of a <span class="s">&#39;do&#39;</span> block<span class="o">:</span>
         <span class="p">[</span>bettyShippingInfo<span class="p">]</span> <span class="o">&lt;-</span> runInsertReturningList
                                <span class="o">$</span> insertReturning <span class="p">(</span>shoppingCartDb <span class="o">^</span><span class="m">.</span> shoppingCartShippingInfos<span class="p">)</span>
-                                 <span class="o">$</span> insertValues
-                                     <span class="p">[</span>ShippingInfo <span class="p">(</span>Auto Nothing<span class="p">)</span> USPS <span class="s">&quot;12345790ABCDEFGHI&quot;</span><span class="p">]</span>
+                                 <span class="o">$</span> insertExpressions
+                                     <span class="p">[</span>ShippingInfo default_ <span class="p">(</span>val_ USPS<span class="p">)</span> <span class="p">(</span>val_ <span class="s">&quot;12345790ABCDEFGHI&quot;</span><span class="p">)]</span>
       In the second argument of <span class="s">&#39;($)&#39;</span><span class="p">,</span> namely
         <span class="s">&#39;do { [bettyShippingInfo] &lt;- runInsertReturningList</span>
 <span class="s">                                     $ insertReturning (shoppingCartDb ^. shoppingCartShippingInfos)</span>
-<span class="s">                                       $ insertValues</span>
-<span class="s">                                           [ShippingInfo (Auto Nothing) USPS &quot;12345790ABCDEFGHI&quot;];</span>
+<span class="s">                                       $ insertExpressions</span>
+<span class="s">                                           [ShippingInfo default_ (val_ USPS) (val_ &quot;12345790ABCDEFGHI&quot;)];</span>
 <span class="s">              pure bettyShippingInfo }&#39;&#39;</span>
 <span class="s">      In the first argument of &#39;</span>GHC.GHCi.ghciStepIO <span class="o">::</span>
                                   forall a. IO a <span class="o">-&gt;</span> IO a<span class="s">&#39;, namely</span>
@@ -1020,26 +1020,26 @@ contains the <code>ShippingCarrier</code> enumeration.</p>
          <span class="o">$</span> do <span class="p">{</span> <span class="p">[</span>bettyShippingInfo<span class="p">]</span> <span class="o">&lt;-</span> runInsertReturningList
                                        <span class="o">$</span> insertReturning
                                            <span class="p">(</span>shoppingCartDb <span class="o">^</span><span class="m">.</span> shoppingCartShippingInfos<span class="p">)</span>
-                                         <span class="o">$</span> insertValues
-                                             <span class="p">[</span>ShippingInfo <span class="p">(</span>Auto Nothing<span class="p">)</span> USPS <span class="s">&quot;12345790ABCDEFGHI&quot;</span><span class="p">];</span>
+                                         <span class="o">$</span> insertExpressions
+                                             <span class="p">[</span>ShippingInfo default_ <span class="p">(</span>val_ USPS<span class="p">)</span> <span class="p">(</span>val_ <span class="s">&quot;12345790ABCDEFGHI&quot;</span><span class="p">)];</span>
                 pure bettyShippingInfo <span class="p">}</span><span class="s">&#39;</span>
 
 <span class="s">&lt;interactive&gt;:265:7: error:</span>
 <span class="s">    * No instance for (Database.Beam.Backend.SQL.SQL92.HasSqlValueSyntax</span>
 <span class="s">                         SqliteValueSyntax ShippingCarrier)</span>
-<span class="s">        arising from a use of &#39;</span>insertValues<span class="s">&#39;</span>
+<span class="s">        arising from a use of &#39;</span>insertExpressions<span class="s">&#39;</span>
 <span class="s">    * In the second argument of &#39;</span><span class="p">(</span><span class="o">$</span><span class="p">)</span><span class="s">&#39;, namely</span>
-<span class="s">        &#39;</span>insertValues
-           <span class="p">[</span>ShippingInfo <span class="p">(</span>Auto Nothing<span class="p">)</span> USPS <span class="s">&quot;12345790ABCDEFGHI&quot;</span><span class="p">]</span><span class="s">&#39;&#39;</span>
+<span class="s">        &#39;</span>insertExpressions
+           <span class="p">[</span>ShippingInfo default_ <span class="p">(</span>val_ USPS<span class="p">)</span> <span class="p">(</span>val_ <span class="s">&quot;12345790ABCDEFGHI&quot;</span><span class="p">)]</span><span class="s">&#39;&#39;</span>
       In the second argument of <span class="s">&#39;($)&#39;</span><span class="p">,</span> namely
         <span class="s">&#39;insertReturning (shoppingCartDb ^. shoppingCartShippingInfos)</span>
-<span class="s">         $ insertValues</span>
-<span class="s">             [ShippingInfo (Auto Nothing) USPS &quot;12345790ABCDEFGHI&quot;]&#39;</span>
+<span class="s">         $ insertExpressions</span>
+<span class="s">             [ShippingInfo default_ (val_ USPS) (val_ &quot;12345790ABCDEFGHI&quot;)]&#39;</span>
       In a stmt of a <span class="s">&#39;do&#39;</span> block<span class="o">:</span>
         <span class="p">[</span>bettyShippingInfo<span class="p">]</span> <span class="o">&lt;-</span> runInsertReturningList
                                <span class="o">$</span> insertReturning <span class="p">(</span>shoppingCartDb <span class="o">^</span><span class="m">.</span> shoppingCartShippingInfos<span class="p">)</span>
-                                 <span class="o">$</span> insertValues
-                                     <span class="p">[</span>ShippingInfo <span class="p">(</span>Auto Nothing<span class="p">)</span> USPS <span class="s">&quot;12345790ABCDEFGHI&quot;</span><span class="p">]</span>
+                                 <span class="o">$</span> insertExpressions
+                                     <span class="p">[</span>ShippingInfo default_ <span class="p">(</span>val_ USPS<span class="p">)</span> <span class="p">(</span>val_ <span class="s">&quot;12345790ABCDEFGHI&quot;</span><span class="p">)]</span>
 </pre></div>
 
 
@@ -1097,12 +1097,12 @@ for <code>ShippingCarrier</code> and then let's try re-instantiating <code>FromB
 
 
 <p>Now, if we try to insert the shipping info again, it works.</p>
-<div class="codehilite"><pre><span></span><span class="nf">bettyShippingInfo</span> <span class="ow">&lt;-</span> 
+<div class="codehilite"><pre><span></span><span class="nf">bettyShippingInfo</span> <span class="ow">&lt;-</span>
   <span class="n">withDatabaseDebug</span> <span class="n">putStrLn</span> <span class="n">conn</span> <span class="o">$</span> <span class="kr">do</span>
     <span class="p">[</span><span class="n">bettyShippingInfo</span><span class="p">]</span> <span class="ow">&lt;-</span>
       <span class="n">runInsertReturningList</span> <span class="o">$</span>
       <span class="n">insertReturning</span> <span class="p">(</span><span class="n">shoppingCartDb</span> <span class="o">^.</span> <span class="n">shoppingCartShippingInfos</span><span class="p">)</span> <span class="o">$</span>
-      <span class="n">insertValues</span> <span class="p">[</span> <span class="kt">ShippingInfo</span> <span class="p">(</span><span class="kt">Auto</span> <span class="kt">Nothing</span><span class="p">)</span> <span class="kt">USPS</span> <span class="s">&quot;12345790ABCDEFGHI&quot;</span> <span class="p">]</span>
+      <span class="n">insertExpressions</span> <span class="p">[</span> <span class="kt">ShippingInfo</span> <span class="n">default_</span> <span class="p">(</span><span class="n">val_</span> <span class="kt">USPS</span><span class="p">)</span> <span class="p">(</span><span class="n">val_</span> <span class="s">&quot;12345790ABCDEFGHI&quot;</span><span class="p">)</span> <span class="p">]</span>
     <span class="n">pure</span> <span class="n">bettyShippingInfo</span>
 </pre></div>
 
@@ -1110,46 +1110,45 @@ for <code>ShippingCarrier</code> and then let's try re-instantiating <code>FromB
 <p>And if we look at the value of <code>bettyShippingInfo</code>, <code>ShippingCarrier</code> has been
 stored correctly.</p>
 <div class="codehilite"><pre><span></span><span class="o">&gt;</span> <span class="n">bettyShippingInfo</span>
-<span class="kt">ShippingInfo</span> <span class="p">{</span><span class="n">_shippingInfoId</span> <span class="ow">=</span> <span class="kt">Auto</span> <span class="p">{</span><span class="n">unAuto</span> <span class="ow">=</span> <span class="kt">Just</span> <span class="mi">1</span><span class="p">},</span> <span class="n">_shippingInfoCarrier</span> <span class="ow">=</span> <span class="kt">USPS</span><span class="p">,</span> <span class="n">_shippingInfoTrackingNumber</span> <span class="ow">=</span> <span class="s">&quot;12345790ABCDEFGHI&quot;</span><span class="p">}</span>
+<span class="kt">ShippingInfo</span> <span class="p">{</span><span class="n">_shippingInfoId</span> <span class="ow">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">_shippingInfoCarrier</span> <span class="ow">=</span> <span class="kt">USPS</span><span class="p">,</span> <span class="n">_shippingInfoTrackingNumber</span> <span class="ow">=</span> <span class="s">&quot;12345790ABCDEFGHI&quot;</span><span class="p">}</span>
 </pre></div>
 
 
-<p>Now, let's insert some orders that just came in. In the previous <code>INSERT</code>
-examples, we used <code>insertValues</code> to insert arbitrary values into the database.
-Now, we want to insert transactions with the current database timestamp (i.e.,
-<code>CURRENT_TIMESTAMP</code> in SQL). We can insert rows containing arbitrary expressions
-using the <code>insertExpressions</code> function. As you can see, the resulting rows have
-a timestamp set by the database.</p>
+<p>Now, let's insert some orders that just came in. We want to insert
+transactions with the current database timestamp (i.e.,
+<code>CURRENT_TIMESTAMP</code> in SQL). We can do this using
+<code>insertExpressions</code>. If you run the example below, you'll see the
+resulting rows have a timestamp set by the database.</p>
 <p>
                 <div class="code-nav-container">
                     
         <ul class="nav nav-tabs">
             
         <li class="nav-item">
-            <a href="#tab-0-haskell" aria-controls="tab-0-haskell" role="tab" data-toggle="tab" data-lang="haskell">Haskell</a>
+            <a href="#tab-0-Haskell" aria-controls="tab-0-Haskell" role="tab" data-toggle="tab" data-lang="haskell">Haskell</a>
         </li>
     
         <li class="nav-item">
-            <a href="#tab-0-sql" aria-controls="tab-0-sql" role="tab" data-toggle="tab" data-lang="sql">Sql</a>
+            <a href="#tab-0-Sql" aria-controls="tab-0-Sql" role="tab" data-toggle="tab" data-lang="sql">Sql</a>
         </li>
     
         <li class="nav-item">
-            <a href="#tab-0-console" aria-controls="tab-0-console" role="tab" data-toggle="tab" data-lang="console">Console</a>
+            <a href="#tab-0-Console" aria-controls="tab-0-Console" role="tab" data-toggle="tab" data-lang="console">Console</a>
         </li>
     
         </ul>
     
         <div class="tab-content">
             
-        <div role="tabpanel" class="tab-pane active" id="tab-0-haskell">
+        <div role="tabpanel" class="tab-pane active" id="tab-0-Haskell">
             <div class="codehilite"><pre><span></span><span class="p">[</span> <span class="n">jamesOrder1</span><span class="p">,</span> <span class="n">bettyOrder1</span><span class="p">,</span> <span class="n">jamesOrder2</span> <span class="p">]</span> <span class="ow">&lt;-</span>
   <span class="n">withDatabaseDebug</span> <span class="n">putStrLn</span> <span class="n">conn</span> <span class="o">$</span> <span class="kr">do</span>
     <span class="n">runInsertReturningList</span> <span class="o">$</span>
       <span class="n">insertReturning</span> <span class="p">(</span><span class="n">shoppingCartDb</span> <span class="o">^.</span> <span class="n">shoppingCartOrders</span><span class="p">)</span> <span class="o">$</span>
       <span class="n">insertExpressions</span> <span class="o">$</span>
-      <span class="p">[</span> <span class="kt">Order</span> <span class="p">(</span><span class="n">val_</span> <span class="p">(</span><span class="kt">Auto</span> <span class="kt">Nothing</span><span class="p">))</span> <span class="n">currentTimestamp_</span> <span class="p">(</span><span class="n">val_</span> <span class="p">(</span><span class="n">pk</span> <span class="n">james</span><span class="p">))</span> <span class="p">(</span><span class="n">val_</span> <span class="p">(</span><span class="n">pk</span> <span class="n">jamesAddress1</span><span class="p">))</span> <span class="n">nothing_</span> 
-      <span class="p">,</span> <span class="kt">Order</span> <span class="p">(</span><span class="n">val_</span> <span class="p">(</span><span class="kt">Auto</span> <span class="kt">Nothing</span><span class="p">))</span> <span class="n">currentTimestamp_</span> <span class="p">(</span><span class="n">val_</span> <span class="p">(</span><span class="n">pk</span> <span class="n">betty</span><span class="p">))</span> <span class="p">(</span><span class="n">val_</span> <span class="p">(</span><span class="n">pk</span> <span class="n">bettyAddress1</span><span class="p">))</span> <span class="p">(</span><span class="n">just_</span> <span class="p">(</span><span class="n">val_</span> <span class="p">(</span><span class="n">pk</span> <span class="n">bettyShippingInfo</span><span class="p">)))</span> 
-      <span class="p">,</span> <span class="kt">Order</span> <span class="p">(</span><span class="n">val_</span> <span class="p">(</span><span class="kt">Auto</span> <span class="kt">Nothing</span><span class="p">))</span> <span class="n">currentTimestamp_</span> <span class="p">(</span><span class="n">val_</span> <span class="p">(</span><span class="n">pk</span> <span class="n">james</span><span class="p">))</span> <span class="p">(</span><span class="n">val_</span> <span class="p">(</span><span class="n">pk</span> <span class="n">jamesAddress1</span><span class="p">))</span> <span class="n">nothing_</span> <span class="p">]</span>
+      <span class="p">[</span> <span class="kt">Order</span> <span class="n">default_</span> <span class="n">currentTimestamp_</span> <span class="p">(</span><span class="n">val_</span> <span class="p">(</span><span class="n">pk</span> <span class="n">james</span><span class="p">))</span> <span class="p">(</span><span class="n">val_</span> <span class="p">(</span><span class="n">pk</span> <span class="n">jamesAddress1</span><span class="p">))</span> <span class="n">nothing_</span>
+      <span class="p">,</span> <span class="kt">Order</span> <span class="n">default_</span> <span class="n">currentTimestamp_</span> <span class="p">(</span><span class="n">val_</span> <span class="p">(</span><span class="n">pk</span> <span class="n">betty</span><span class="p">))</span> <span class="p">(</span><span class="n">val_</span> <span class="p">(</span><span class="n">pk</span> <span class="n">bettyAddress1</span><span class="p">))</span> <span class="p">(</span><span class="n">just_</span> <span class="p">(</span><span class="n">val_</span> <span class="p">(</span><span class="n">pk</span> <span class="n">bettyShippingInfo</span><span class="p">)))</span>
+      <span class="p">,</span> <span class="kt">Order</span> <span class="n">default_</span> <span class="n">currentTimestamp_</span> <span class="p">(</span><span class="n">val_</span> <span class="p">(</span><span class="n">pk</span> <span class="n">james</span><span class="p">))</span> <span class="p">(</span><span class="n">val_</span> <span class="p">(</span><span class="n">pk</span> <span class="n">jamesAddress1</span><span class="p">))</span> <span class="n">nothing_</span> <span class="p">]</span>
 
 <span class="nf">print</span> <span class="n">jamesOrder1</span>
 <span class="nf">print</span> <span class="n">bettyOrder1</span>
@@ -1158,44 +1157,59 @@ a timestamp set by the database.</p>
 
         </div>
     
-        <div role="tabpanel" class="tab-pane " id="tab-0-sql">
-            <div class="codehilite"><pre><span></span><span class="k">INSERT</span> <span class="k">INTO</span> <span class="ss">&quot;orders&quot;</span><span class="p">(</span><span class="ss">&quot;id&quot;</span><span class="p">,</span>
-                     <span class="ss">&quot;date&quot;</span><span class="p">,</span>
+        <div role="tabpanel" class="tab-pane " id="tab-0-Sql">
+            <div class="codehilite"><pre><span></span><span class="k">INSERT</span> <span class="k">INTO</span> <span class="ss">&quot;orders&quot;</span><span class="p">(</span><span class="ss">&quot;date&quot;</span><span class="p">,</span>
                      <span class="ss">&quot;for_user__email&quot;</span><span class="p">,</span>
                      <span class="ss">&quot;ship_to_address__id&quot;</span><span class="p">,</span>
                      <span class="ss">&quot;shipping_info__id&quot;</span><span class="p">)</span>
-<span class="k">VALUES</span> <span class="p">(</span><span class="k">NULL</span><span class="p">,</span>
-        <span class="k">CURRENT_TIMESTAMP</span><span class="p">,</span>
+<span class="k">VALUES</span> <span class="p">(</span><span class="k">CURRENT_TIMESTAMP</span><span class="p">,</span>
         <span class="o">?</span><span class="p">,</span>
         <span class="o">?</span><span class="p">,</span>
-        <span class="k">NULL</span><span class="p">),</span> <span class="p">(</span><span class="k">NULL</span><span class="p">,</span>
-                <span class="k">CURRENT_TIMESTAMP</span><span class="p">,</span>
-                <span class="o">?</span><span class="p">,</span>
-                <span class="o">?</span><span class="p">,</span>
-                <span class="o">?</span><span class="p">),</span> <span class="p">(</span><span class="k">NULL</span><span class="p">,</span>
-                     <span class="k">CURRENT_TIMESTAMP</span><span class="p">,</span>
-                     <span class="o">?</span><span class="p">,</span>
-                     <span class="o">?</span><span class="p">,</span>
-                     <span class="k">NULL</span><span class="p">);</span>
+        <span class="k">NULL</span><span class="p">);</span>
 
-<span class="c1">-- With values: [SQLText &quot;james@example.com&quot;,SQLInteger 1,SQLText &quot;betty@example.com&quot;,SQLInteger 2,SQLInteger 1,SQLText &quot;james@example.com&quot;,SQLInteger 1]</span>
+<span class="c1">-- With values: [SQLText &quot;james@example.com&quot;,SQLInteger 1]</span>
+
+<span class="k">INSERT</span> <span class="k">INTO</span> <span class="ss">&quot;orders&quot;</span><span class="p">(</span><span class="ss">&quot;date&quot;</span><span class="p">,</span>
+                     <span class="ss">&quot;for_user__email&quot;</span><span class="p">,</span>
+                     <span class="ss">&quot;ship_to_address__id&quot;</span><span class="p">,</span>
+                     <span class="ss">&quot;shipping_info__id&quot;</span><span class="p">)</span>
+<span class="k">VALUES</span> <span class="p">(</span><span class="k">CURRENT_TIMESTAMP</span><span class="p">,</span>
+        <span class="o">?</span><span class="p">,</span>
+        <span class="o">?</span><span class="p">,</span>
+        <span class="o">?</span><span class="p">);</span>
+
+<span class="c1">-- With values: [SQLText &quot;betty@example.com&quot;,SQLInteger 2,SQLInteger 1]</span>
+
+<span class="k">INSERT</span> <span class="k">INTO</span> <span class="ss">&quot;orders&quot;</span><span class="p">(</span><span class="ss">&quot;date&quot;</span><span class="p">,</span>
+                     <span class="ss">&quot;for_user__email&quot;</span><span class="p">,</span>
+                     <span class="ss">&quot;ship_to_address__id&quot;</span><span class="p">,</span>
+                     <span class="ss">&quot;shipping_info__id&quot;</span><span class="p">)</span>
+<span class="k">VALUES</span> <span class="p">(</span><span class="k">CURRENT_TIMESTAMP</span><span class="p">,</span>
+        <span class="o">?</span><span class="p">,</span>
+        <span class="o">?</span><span class="p">,</span>
+        <span class="k">NULL</span><span class="p">);</span>
+
+<span class="c1">-- With values: [SQLText &quot;james@example.com&quot;,SQLInteger 1]</span>
 </pre></div>
 
         </div>
     
-        <div role="tabpanel" class="tab-pane " id="tab-0-console">
-            <div class="codehilite"><pre><span></span><span class="go">Order {_orderId = Auto {unAuto = Just 1}, _orderDate = 2018-01-17 23:02:20,</span>
-<span class="go">                                                                        _orderForUser = UserId &quot;james@example.com&quot;,</span>
-<span class="go">                                                                        _orderShipToAddress = AddressId (Auto {unAuto = Just 1}),</span>
-<span class="go">                                                                        _orderShippingInfo = ShippingInfoId Nothing} --</span>
-<span class="go">Order {_orderId = Auto {unAuto = Just 2}, _orderDate = 2018-01-17 23:02:20,</span>
-<span class="go">                                                                        _orderForUser = UserId &quot;betty@example.com&quot;,</span>
-<span class="go">                                                                        _orderShipToAddress = AddressId (Auto {unAuto = Just 2}),</span>
-<span class="go">                                                                        _orderShippingInfo = ShippingInfoId (Just (Auto {unAuto = Just 1}))} --</span>
-<span class="go">Order {_orderId = Auto {unAuto = Just 3}, _orderDate = 2018-01-17 23:02:20,</span>
-<span class="go">                                                                        _orderForUser = UserId &quot;james@example.com&quot;,</span>
-<span class="go">                                                                        _orderShipToAddress = AddressId (Auto {unAuto = Just 1}),</span>
-<span class="go">                                                                        _orderShippingInfo = ShippingInfoId Nothing} --</span>
+        <div role="tabpanel" class="tab-pane " id="tab-0-Console">
+            <div class="codehilite"><pre><span></span><span class="go">Order {_orderId = 1,</span>
+<span class="go">       _orderDate = 2018-03-23 00:16:43,</span>
+<span class="go">                                     _orderForUser = UserId &quot;james@example.com&quot;,</span>
+<span class="go">                                     _orderShipToAddress = AddressId 1,</span>
+<span class="go">                                                                     _orderShippingInfo = ShippingInfoId Nothing} --</span>
+<span class="go">Order {_orderId = 2,</span>
+<span class="go">       _orderDate = 2018-03-23 00:16:43,</span>
+<span class="go">                                     _orderForUser = UserId &quot;betty@example.com&quot;,</span>
+<span class="go">                                     _orderShipToAddress = AddressId 2,</span>
+<span class="go">                                                                     _orderShippingInfo = ShippingInfoId (Just 1)} --</span>
+<span class="go">Order {_orderId = 3,</span>
+<span class="go">       _orderDate = 2018-03-23 00:16:43,</span>
+<span class="go">                                     _orderForUser = UserId &quot;james@example.com&quot;,</span>
+<span class="go">                                     _orderShipToAddress = AddressId 1,</span>
+<span class="go">                                                                     _orderShippingInfo = ShippingInfoId Nothing} --</span>
 </pre></div>
 
         </div>
@@ -1211,18 +1225,18 @@ a timestamp set by the database.</p>
         <ul class="nav nav-tabs">
             
         <li class="nav-item">
-            <a href="#tab-1-haskell" aria-controls="tab-1-haskell" role="tab" data-toggle="tab" data-lang="haskell">Haskell</a>
+            <a href="#tab-1-Haskell" aria-controls="tab-1-Haskell" role="tab" data-toggle="tab" data-lang="haskell">Haskell</a>
         </li>
     
         <li class="nav-item">
-            <a href="#tab-1-sql" aria-controls="tab-1-sql" role="tab" data-toggle="tab" data-lang="sql">Sql</a>
+            <a href="#tab-1-Sql" aria-controls="tab-1-Sql" role="tab" data-toggle="tab" data-lang="sql">Sql</a>
         </li>
     
         </ul>
     
         <div class="tab-content">
             
-        <div role="tabpanel" class="tab-pane active" id="tab-1-haskell">
+        <div role="tabpanel" class="tab-pane active" id="tab-1-Haskell">
             <div class="codehilite"><pre><span></span><span class="kr">let</span> <span class="n">lineItems</span> <span class="ow">=</span> <span class="p">[</span> <span class="kt">LineItem</span> <span class="p">(</span><span class="n">pk</span> <span class="n">jamesOrder1</span><span class="p">)</span> <span class="p">(</span><span class="n">pk</span> <span class="n">redBall</span><span class="p">)</span> <span class="mi">10</span>
                 <span class="p">,</span> <span class="kt">LineItem</span> <span class="p">(</span><span class="n">pk</span> <span class="n">jamesOrder1</span><span class="p">)</span> <span class="p">(</span><span class="n">pk</span> <span class="n">mathTextbook</span><span class="p">)</span> <span class="mi">1</span>
                 <span class="p">,</span> <span class="kt">LineItem</span> <span class="p">(</span><span class="n">pk</span> <span class="n">jamesOrder1</span><span class="p">)</span> <span class="p">(</span><span class="n">pk</span> <span class="n">introToHaskell</span><span class="p">)</span> <span class="mi">4</span>
@@ -1239,7 +1253,7 @@ a timestamp set by the database.</p>
 
         </div>
     
-        <div role="tabpanel" class="tab-pane " id="tab-1-sql">
+        <div role="tabpanel" class="tab-pane " id="tab-1-Sql">
             <div class="codehilite"><pre><span></span><span class="k">INSERT</span> <span class="k">INTO</span> <span class="ss">&quot;line_items&quot;</span><span class="p">(</span><span class="ss">&quot;item_in_order__id&quot;</span><span class="p">,</span>
                          <span class="ss">&quot;item_for_product__id&quot;</span><span class="p">,</span>
                          <span class="ss">&quot;item_quantity&quot;</span><span class="p">)</span>
@@ -1278,22 +1292,22 @@ orders.</p>
         <ul class="nav nav-tabs">
             
         <li class="nav-item">
-            <a href="#tab-2-haskell" aria-controls="tab-2-haskell" role="tab" data-toggle="tab" data-lang="haskell">Haskell</a>
+            <a href="#tab-2-Haskell" aria-controls="tab-2-Haskell" role="tab" data-toggle="tab" data-lang="haskell">Haskell</a>
         </li>
     
         <li class="nav-item">
-            <a href="#tab-2-sql" aria-controls="tab-2-sql" role="tab" data-toggle="tab" data-lang="sql">Sql</a>
+            <a href="#tab-2-Sql" aria-controls="tab-2-Sql" role="tab" data-toggle="tab" data-lang="sql">Sql</a>
         </li>
     
         <li class="nav-item">
-            <a href="#tab-2-out" aria-controls="tab-2-out" role="tab" data-toggle="tab" data-lang="out">Out</a>
+            <a href="#tab-2-Out" aria-controls="tab-2-Out" role="tab" data-toggle="tab" data-lang="out">Out</a>
         </li>
     
         </ul>
     
         <div class="tab-content">
             
-        <div role="tabpanel" class="tab-pane active" id="tab-2-haskell">
+        <div role="tabpanel" class="tab-pane active" id="tab-2-Haskell">
             <div class="codehilite"><pre><span></span><span class="nf">usersAndOrders</span> <span class="ow">&lt;-</span>
   <span class="n">withDatabaseDebug</span> <span class="n">putStrLn</span> <span class="n">conn</span> <span class="o">$</span>
     <span class="n">runSelectReturningList</span> <span class="o">$</span>
@@ -1307,7 +1321,7 @@ orders.</p>
 
         </div>
     
-        <div role="tabpanel" class="tab-pane " id="tab-2-sql">
+        <div role="tabpanel" class="tab-pane " id="tab-2-Sql">
             <div class="codehilite"><pre><span></span><span class="k">SELECT</span> <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;email&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res0&quot;</span><span class="p">,</span>
        <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;first_name&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res1&quot;</span><span class="p">,</span>
        <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;last_name&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res2&quot;</span><span class="p">,</span>
@@ -1325,22 +1339,22 @@ orders.</p>
 
         </div>
     
-        <div role="tabpanel" class="tab-pane " id="tab-2-out">
+        <div role="tabpanel" class="tab-pane " id="tab-2-Out">
             <div class="codehilite"><pre><span></span>(User {_userEmail = &quot;james@example.com&quot;,
        _userFirstName = &quot;James&quot;,
        _userLastName = &quot;Smith&quot;,
        _userPassword = &quot;b4cc344d25a2efe540adbf2678e2304c&quot;},Just (
-                                                                 Order {_orderId = Auto {unAuto = Just 1}, _orderDate = 2018-01-17 23:02:27, _orderForUser = UserId &quot;james@example.com&quot;, _orderShipToAddress = AddressId (Auto {unAuto = Just 1}), _orderShippingInfo = ShippingInfoId Nothing})) --
+                                                                 Order {_orderId = 1, _orderDate = 2018-03-23 00:16:52, _orderForUser = UserId &quot;james@example.com&quot;, _orderShipToAddress = AddressId 1, _orderShippingInfo = ShippingInfoId Nothing})) --
 (User {_userEmail = &quot;james@example.com&quot;,
        _userFirstName = &quot;James&quot;,
        _userLastName = &quot;Smith&quot;,
        _userPassword = &quot;b4cc344d25a2efe540adbf2678e2304c&quot;},Just (
-                                                                 Order {_orderId = Auto {unAuto = Just 3}, _orderDate = 2018-01-17 23:02:27, _orderForUser = UserId &quot;james@example.com&quot;, _orderShipToAddress = AddressId (Auto {unAuto = Just 1}), _orderShippingInfo = ShippingInfoId Nothing})) --
+                                                                 Order {_orderId = 3, _orderDate = 2018-03-23 00:16:52, _orderForUser = UserId &quot;james@example.com&quot;, _orderShipToAddress = AddressId 1, _orderShippingInfo = ShippingInfoId Nothing})) --
 (User {_userEmail = &quot;betty@example.com&quot;,
        _userFirstName = &quot;Betty&quot;,
        _userLastName = &quot;Jones&quot;,
        _userPassword = &quot;82b054bd83ffad9b6cf8bdb98ce3cc2f&quot;},Just (
-                                                                 Order {_orderId = Auto {unAuto = Just 2}, _orderDate = 2018-01-17 23:02:27, _orderForUser = UserId &quot;betty@example.com&quot;, _orderShipToAddress = AddressId (Auto {unAuto = Just 2}), _orderShippingInfo = ShippingInfoId (Just (Auto {unAuto = Just 1}))})) --
+                                                                 Order {_orderId = 2, _orderDate = 2018-03-23 00:16:52, _orderForUser = UserId &quot;betty@example.com&quot;, _orderShipToAddress = AddressId 2, _orderShippingInfo = ShippingInfoId (Just 1)})) --
 (User {_userEmail = &quot;sam@example.com&quot;,
        _userFirstName = &quot;Sam&quot;,
        _userLastName = &quot;Taylor&quot;,
@@ -1353,7 +1367,7 @@ orders.</p>
     
                 </div>
                     </p>
-<p>Notice that sam is included in the result set, even though he doesn't have any
+<p>Notice that Sam is included in the result set, even though he doesn't have any
 associated orders. Instead of a <code>Just (Order ..)</code>, <code>Nothing</code> is returned
 instead.</p>
 <p>Next, perhaps our marketing team wanted to send e-mails out to all users with no
@@ -1366,22 +1380,22 @@ find users who have no associated orders.</p>
         <ul class="nav nav-tabs">
             
         <li class="nav-item">
-            <a href="#tab-3-haskell" aria-controls="tab-3-haskell" role="tab" data-toggle="tab" data-lang="haskell">Haskell</a>
+            <a href="#tab-3-Haskell" aria-controls="tab-3-Haskell" role="tab" data-toggle="tab" data-lang="haskell">Haskell</a>
         </li>
     
         <li class="nav-item">
-            <a href="#tab-3-sql" aria-controls="tab-3-sql" role="tab" data-toggle="tab" data-lang="sql">Sql</a>
+            <a href="#tab-3-Sql" aria-controls="tab-3-Sql" role="tab" data-toggle="tab" data-lang="sql">Sql</a>
         </li>
     
         <li class="nav-item">
-            <a href="#tab-3-out" aria-controls="tab-3-out" role="tab" data-toggle="tab" data-lang="out">Out</a>
+            <a href="#tab-3-Out" aria-controls="tab-3-Out" role="tab" data-toggle="tab" data-lang="out">Out</a>
         </li>
     
         </ul>
     
         <div class="tab-content">
             
-        <div role="tabpanel" class="tab-pane active" id="tab-3-haskell">
+        <div role="tabpanel" class="tab-pane active" id="tab-3-Haskell">
             <div class="codehilite"><pre><span></span><span class="nf">usersWithNoOrders</span> <span class="ow">&lt;-</span>
   <span class="n">withDatabaseDebug</span> <span class="n">putStrLn</span> <span class="n">conn</span> <span class="o">$</span>
     <span class="n">runSelectReturningList</span> <span class="o">$</span>
@@ -1396,7 +1410,7 @@ find users who have no associated orders.</p>
 
         </div>
     
-        <div role="tabpanel" class="tab-pane " id="tab-3-sql">
+        <div role="tabpanel" class="tab-pane " id="tab-3-Sql">
             <div class="codehilite"><pre><span></span><span class="k">SELECT</span> <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;email&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res0&quot;</span><span class="p">,</span>
        <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;first_name&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res1&quot;</span><span class="p">,</span>
        <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;last_name&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res2&quot;</span><span class="p">,</span>
@@ -1414,7 +1428,7 @@ find users who have no associated orders.</p>
 
         </div>
     
-        <div role="tabpanel" class="tab-pane " id="tab-3-out">
+        <div role="tabpanel" class="tab-pane " id="tab-3-Out">
             <div class="codehilite"><pre><span></span>User {_userEmail = &quot;sam@example.com&quot;,
       _userFirstName = &quot;Sam&quot;,
       _userLastName = &quot;Taylor&quot;,
@@ -1435,22 +1449,22 @@ find users who have no associated orders.</p>
         <ul class="nav nav-tabs">
             
         <li class="nav-item">
-            <a href="#tab-4-haskell" aria-controls="tab-4-haskell" role="tab" data-toggle="tab" data-lang="haskell">Haskell</a>
+            <a href="#tab-4-Haskell" aria-controls="tab-4-Haskell" role="tab" data-toggle="tab" data-lang="haskell">Haskell</a>
         </li>
     
         <li class="nav-item">
-            <a href="#tab-4-sql" aria-controls="tab-4-sql" role="tab" data-toggle="tab" data-lang="sql">Sql</a>
+            <a href="#tab-4-Sql" aria-controls="tab-4-Sql" role="tab" data-toggle="tab" data-lang="sql">Sql</a>
         </li>
     
         <li class="nav-item">
-            <a href="#tab-4-out" aria-controls="tab-4-out" role="tab" data-toggle="tab" data-lang="out">Out</a>
+            <a href="#tab-4-Out" aria-controls="tab-4-Out" role="tab" data-toggle="tab" data-lang="out">Out</a>
         </li>
     
         </ul>
     
         <div class="tab-content">
             
-        <div role="tabpanel" class="tab-pane active" id="tab-4-haskell">
+        <div role="tabpanel" class="tab-pane active" id="tab-4-Haskell">
             <div class="codehilite"><pre><span></span><span class="nf">usersWithNoOrders</span> <span class="ow">&lt;-</span>
   <span class="n">withDatabaseDebug</span> <span class="n">putStrLn</span> <span class="n">conn</span> <span class="o">$</span>
     <span class="n">runSelectReturningList</span> <span class="o">$</span>
@@ -1464,7 +1478,7 @@ find users who have no associated orders.</p>
 
         </div>
     
-        <div role="tabpanel" class="tab-pane " id="tab-4-sql">
+        <div role="tabpanel" class="tab-pane " id="tab-4-Sql">
             <div class="codehilite"><pre><span></span><span class="k">SELECT</span> <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;email&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res0&quot;</span><span class="p">,</span>
        <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;first_name&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res1&quot;</span><span class="p">,</span>
        <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;last_name&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res2&quot;</span><span class="p">,</span>
@@ -1480,7 +1494,7 @@ find users who have no associated orders.</p>
 
         </div>
     
-        <div role="tabpanel" class="tab-pane " id="tab-4-out">
+        <div role="tabpanel" class="tab-pane " id="tab-4-Out">
             <div class="codehilite"><pre><span></span>User {_userEmail = &quot;sam@example.com&quot;,
       _userFirstName = &quot;Sam&quot;,
       _userLastName = &quot;Taylor&quot;,
@@ -1503,22 +1517,22 @@ order.</p>
         <ul class="nav nav-tabs">
             
         <li class="nav-item">
-            <a href="#tab-5-haskell" aria-controls="tab-5-haskell" role="tab" data-toggle="tab" data-lang="haskell">Haskell</a>
+            <a href="#tab-5-Haskell" aria-controls="tab-5-Haskell" role="tab" data-toggle="tab" data-lang="haskell">Haskell</a>
         </li>
     
         <li class="nav-item">
-            <a href="#tab-5-sql" aria-controls="tab-5-sql" role="tab" data-toggle="tab" data-lang="sql">Sql</a>
+            <a href="#tab-5-Sql" aria-controls="tab-5-Sql" role="tab" data-toggle="tab" data-lang="sql">Sql</a>
         </li>
     
         <li class="nav-item">
-            <a href="#tab-5-out" aria-controls="tab-5-out" role="tab" data-toggle="tab" data-lang="out">Out</a>
+            <a href="#tab-5-Out" aria-controls="tab-5-Out" role="tab" data-toggle="tab" data-lang="out">Out</a>
         </li>
     
         </ul>
     
         <div class="tab-content">
             
-        <div role="tabpanel" class="tab-pane active" id="tab-5-haskell">
+        <div role="tabpanel" class="tab-pane active" id="tab-5-Haskell">
             <div class="codehilite"><pre><span></span><span class="nf">ordersWithCostOrdered</span> <span class="ow">&lt;-</span>
   <span class="n">withDatabaseDebug</span> <span class="n">putStrLn</span> <span class="n">conn</span> <span class="o">$</span>
     <span class="n">runSelectReturningList</span> <span class="o">$</span>
@@ -1536,7 +1550,7 @@ order.</p>
 
         </div>
     
-        <div role="tabpanel" class="tab-pane " id="tab-5-sql">
+        <div role="tabpanel" class="tab-pane " id="tab-5-Sql">
             <div class="codehilite"><pre><span></span><span class="k">SELECT</span> <span class="ss">&quot;t1&quot;</span><span class="p">.</span><span class="ss">&quot;id&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res0&quot;</span><span class="p">,</span>
        <span class="ss">&quot;t1&quot;</span><span class="p">.</span><span class="ss">&quot;date&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res1&quot;</span><span class="p">,</span>
        <span class="ss">&quot;t1&quot;</span><span class="p">.</span><span class="ss">&quot;for_user__email&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res2&quot;</span><span class="p">,</span>
@@ -1558,22 +1572,25 @@ order.</p>
 
         </div>
     
-        <div role="tabpanel" class="tab-pane " id="tab-5-out">
+        <div role="tabpanel" class="tab-pane " id="tab-5-Out">
             <div class="codehilite"><pre><span></span>(
- Order {_orderId = Auto {unAuto = Just 1}, _orderDate = 2018-01-17 23:02:41,
-                                                                         _orderForUser = UserId &quot;james@example.com&quot;,
-                                                                         _orderShipToAddress = AddressId (Auto {unAuto = Just 1}),
-                                                                         _orderShippingInfo = ShippingInfoId Nothing},24500) --
+ Order {_orderId = 1,
+        _orderDate = 2018-03-23 00:17:11,
+                                      _orderForUser = UserId &quot;james@example.com&quot;,
+                                      _orderShipToAddress = AddressId 1,
+                                                                      _orderShippingInfo = ShippingInfoId Nothing},Just 24500) --
 (
-                                                                                                                                Order {_orderId = Auto {unAuto = Just 2}, _orderDate = 2018-01-17 23:02:41,
-                                                                                                                                                                                                        _orderForUser = UserId &quot;betty@example.com&quot;,
-                                                                                                                                                                                                        _orderShipToAddress = AddressId (Auto {unAuto = Just 2}),
-                                                                                                                                                                                                        _orderShippingInfo = ShippingInfoId (Just (Auto {unAuto = Just 1}))},16500) --
+                                                                                                                                  Order {_orderId = 2,
+                                                                                                                                         _orderDate = 2018-03-23 00:17:11,
+                                                                                                                                                                       _orderForUser = UserId &quot;betty@example.com&quot;,
+                                                                                                                                                                       _orderShipToAddress = AddressId 2,
+                                                                                                                                                                                                       _orderShippingInfo = ShippingInfoId (Just 1)},Just 16500) --
 (
-                                                                                                                                                                                                                                                                                       Order {_orderId = Auto {unAuto = Just 3}, _orderDate = 2018-01-17 23:02:41,
-                                                                                                                                                                                                                                                                                                                                                               _orderForUser = UserId &quot;james@example.com&quot;,
-                                                                                                                                                                                                                                                                                                                                                               _orderShipToAddress = AddressId (Auto {unAuto = Just 1}),
-                                                                                                                                                                                                                                                                                                                                                               _orderShippingInfo = ShippingInfoId Nothing},2500) --
+                                                                                                                                                                                                                                                                    Order {_orderId = 3,
+                                                                                                                                                                                                                                                                           _orderDate = 2018-03-23 00:17:11,
+                                                                                                                                                                                                                                                                                                         _orderForUser = UserId &quot;james@example.com&quot;,
+                                                                                                                                                                                                                                                                                                         _orderShipToAddress = AddressId 1,
+                                                                                                                                                                                                                                                                                                                                         _orderShippingInfo = ShippingInfoId Nothing},Just 2500) --
 </pre></div>
 
         </div>
@@ -1598,22 +1615,22 @@ the type of <code>maybe_</code> is</p>
         <ul class="nav nav-tabs">
             
         <li class="nav-item">
-            <a href="#tab-6-haskell" aria-controls="tab-6-haskell" role="tab" data-toggle="tab" data-lang="haskell">Haskell</a>
+            <a href="#tab-6-Haskell" aria-controls="tab-6-Haskell" role="tab" data-toggle="tab" data-lang="haskell">Haskell</a>
         </li>
     
         <li class="nav-item">
-            <a href="#tab-6-sql" aria-controls="tab-6-sql" role="tab" data-toggle="tab" data-lang="sql">Sql</a>
+            <a href="#tab-6-Sql" aria-controls="tab-6-Sql" role="tab" data-toggle="tab" data-lang="sql">Sql</a>
         </li>
     
         <li class="nav-item">
-            <a href="#tab-6-out" aria-controls="tab-6-out" role="tab" data-toggle="tab" data-lang="out">Out</a>
+            <a href="#tab-6-Out" aria-controls="tab-6-Out" role="tab" data-toggle="tab" data-lang="out">Out</a>
         </li>
     
         </ul>
     
         <div class="tab-content">
             
-        <div role="tabpanel" class="tab-pane active" id="tab-6-haskell">
+        <div role="tabpanel" class="tab-pane active" id="tab-6-Haskell">
             <div class="codehilite"><pre><span></span><span class="nf">allUsersAndTotals</span> <span class="ow">&lt;-</span>
   <span class="n">withDatabaseDebug</span> <span class="n">putStrLn</span> <span class="n">conn</span> <span class="o">$</span>
     <span class="n">runSelectReturningList</span> <span class="o">$</span>
@@ -1635,7 +1652,7 @@ the type of <code>maybe_</code> is</p>
 
         </div>
     
-        <div role="tabpanel" class="tab-pane " id="tab-6-sql">
+        <div role="tabpanel" class="tab-pane " id="tab-6-Sql">
             <div class="codehilite"><pre><span></span><span class="k">SELECT</span> <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;email&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res0&quot;</span><span class="p">,</span>
        <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;first_name&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res1&quot;</span><span class="p">,</span>
        <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;last_name&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res2&quot;</span><span class="p">,</span>
@@ -1680,19 +1697,19 @@ the type of <code>maybe_</code> is</p>
 
         </div>
     
-        <div role="tabpanel" class="tab-pane " id="tab-6-out">
+        <div role="tabpanel" class="tab-pane " id="tab-6-Out">
             <div class="codehilite"><pre><span></span>(User {_userEmail = &quot;betty@example.com&quot;,
        _userFirstName = &quot;Betty&quot;,
        _userLastName = &quot;Jones&quot;,
-       _userPassword = &quot;82b054bd83ffad9b6cf8bdb98ce3cc2f&quot;},16500) --
+       _userPassword = &quot;82b054bd83ffad9b6cf8bdb98ce3cc2f&quot;},Just 16500) --
 (User {_userEmail = &quot;james@example.com&quot;,
        _userFirstName = &quot;James&quot;,
        _userLastName = &quot;Smith&quot;,
-       _userPassword = &quot;b4cc344d25a2efe540adbf2678e2304c&quot;},0) --
+       _userPassword = &quot;b4cc344d25a2efe540adbf2678e2304c&quot;},Just 0) --
 (User {_userEmail = &quot;sam@example.com&quot;,
        _userFirstName = &quot;Sam&quot;,
        _userLastName = &quot;Taylor&quot;,
-       _userPassword = &quot;332532dcfaa1cbf61e2a266bd723612c&quot;},0) --
+       _userPassword = &quot;332532dcfaa1cbf61e2a266bd723612c&quot;},Just 0) --
 </pre></div>
 
         </div>
@@ -1712,22 +1729,22 @@ nullable primary keys to optionally include information.</p>
         <ul class="nav nav-tabs">
             
         <li class="nav-item">
-            <a href="#tab-7-haskell" aria-controls="tab-7-haskell" role="tab" data-toggle="tab" data-lang="haskell">Haskell</a>
+            <a href="#tab-7-Haskell" aria-controls="tab-7-Haskell" role="tab" data-toggle="tab" data-lang="haskell">Haskell</a>
         </li>
     
         <li class="nav-item">
-            <a href="#tab-7-sql" aria-controls="tab-7-sql" role="tab" data-toggle="tab" data-lang="sql">Sql</a>
+            <a href="#tab-7-Sql" aria-controls="tab-7-Sql" role="tab" data-toggle="tab" data-lang="sql">Sql</a>
         </li>
     
         <li class="nav-item">
-            <a href="#tab-7-out" aria-controls="tab-7-out" role="tab" data-toggle="tab" data-lang="out">Out</a>
+            <a href="#tab-7-Out" aria-controls="tab-7-Out" role="tab" data-toggle="tab" data-lang="out">Out</a>
         </li>
     
         </ul>
     
         <div class="tab-content">
             
-        <div role="tabpanel" class="tab-pane active" id="tab-7-haskell">
+        <div role="tabpanel" class="tab-pane active" id="tab-7-Haskell">
             <div class="codehilite"><pre><span></span><span class="nf">allUnshippedOrders</span> <span class="ow">&lt;-</span>
   <span class="n">withDatabaseDebug</span> <span class="n">putStrLn</span> <span class="n">conn</span> <span class="o">$</span>
     <span class="n">runSelectReturningList</span> <span class="o">$</span>
@@ -1740,7 +1757,7 @@ nullable primary keys to optionally include information.</p>
 
         </div>
     
-        <div role="tabpanel" class="tab-pane " id="tab-7-sql">
+        <div role="tabpanel" class="tab-pane " id="tab-7-Sql">
             <div class="codehilite"><pre><span></span><span class="k">SELECT</span> <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;id&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res0&quot;</span><span class="p">,</span>
        <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;date&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res1&quot;</span><span class="p">,</span>
        <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;for_user__email&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res2&quot;</span><span class="p">,</span>
@@ -1754,15 +1771,17 @@ nullable primary keys to optionally include information.</p>
 
         </div>
     
-        <div role="tabpanel" class="tab-pane " id="tab-7-out">
-            <div class="codehilite"><pre><span></span>Order {_orderId = Auto {unAuto = Just 1}, _orderDate = 2018-01-17 23:02:51,
-                                                                        _orderForUser = UserId &quot;james@example.com&quot;,
-                                                                        _orderShipToAddress = AddressId (Auto {unAuto = Just 1}),
-                                                                        _orderShippingInfo = ShippingInfoId Nothing} --
-Order {_orderId = Auto {unAuto = Just 3}, _orderDate = 2018-01-17 23:02:51,
-                                                                        _orderForUser = UserId &quot;james@example.com&quot;,
-                                                                        _orderShipToAddress = AddressId (Auto {unAuto = Just 1}),
-                                                                        _orderShippingInfo = ShippingInfoId Nothing} --
+        <div role="tabpanel" class="tab-pane " id="tab-7-Out">
+            <div class="codehilite"><pre><span></span>Order {_orderId = 1,
+       _orderDate = 2018-03-23 00:17:23,
+                                     _orderForUser = UserId &quot;james@example.com&quot;,
+                                     _orderShipToAddress = AddressId 1,
+                                                                     _orderShippingInfo = ShippingInfoId Nothing} --
+Order {_orderId = 3,
+       _orderDate = 2018-03-23 00:17:23,
+                                     _orderForUser = UserId &quot;james@example.com&quot;,
+                                     _orderShipToAddress = AddressId 1,
+                                                                     _orderShippingInfo = ShippingInfoId Nothing} --
 </pre></div>
 
         </div>
@@ -1778,22 +1797,22 @@ Order {_orderId = Auto {unAuto = Just 3}, _orderDate = 2018-01-17 23:02:51,
         <ul class="nav nav-tabs">
             
         <li class="nav-item">
-            <a href="#tab-8-haskell" aria-controls="tab-8-haskell" role="tab" data-toggle="tab" data-lang="haskell">Haskell</a>
+            <a href="#tab-8-Haskell" aria-controls="tab-8-Haskell" role="tab" data-toggle="tab" data-lang="haskell">Haskell</a>
         </li>
     
         <li class="nav-item">
-            <a href="#tab-8-sql" aria-controls="tab-8-sql" role="tab" data-toggle="tab" data-lang="sql">Sql</a>
+            <a href="#tab-8-Sql" aria-controls="tab-8-Sql" role="tab" data-toggle="tab" data-lang="sql">Sql</a>
         </li>
     
         <li class="nav-item">
-            <a href="#tab-8-out" aria-controls="tab-8-out" role="tab" data-toggle="tab" data-lang="out">Out</a>
+            <a href="#tab-8-Out" aria-controls="tab-8-Out" role="tab" data-toggle="tab" data-lang="out">Out</a>
         </li>
     
         </ul>
     
         <div class="tab-content">
             
-        <div role="tabpanel" class="tab-pane active" id="tab-8-haskell">
+        <div role="tabpanel" class="tab-pane active" id="tab-8-Haskell">
             <div class="codehilite"><pre><span></span><span class="nf">shippingInformationByUser</span> <span class="ow">&lt;-</span>
   <span class="n">withDatabaseDebug</span> <span class="n">putStrLn</span> <span class="n">conn</span> <span class="o">$</span>
     <span class="n">runSelectReturningList</span> <span class="o">$</span>
@@ -1812,7 +1831,7 @@ Order {_orderId = Auto {unAuto = Just 3}, _orderDate = 2018-01-17 23:02:51,
 
         </div>
     
-        <div role="tabpanel" class="tab-pane " id="tab-8-sql">
+        <div role="tabpanel" class="tab-pane " id="tab-8-Sql">
             <div class="codehilite"><pre><span></span><span class="k">SELECT</span> <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;email&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res0&quot;</span><span class="p">,</span>
        <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;first_name&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res1&quot;</span><span class="p">,</span>
        <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;last_name&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res2&quot;</span><span class="p">,</span>
@@ -1834,7 +1853,7 @@ Order {_orderId = Auto {unAuto = Just 3}, _orderDate = 2018-01-17 23:02:51,
 
         </div>
     
-        <div role="tabpanel" class="tab-pane " id="tab-8-out">
+        <div role="tabpanel" class="tab-pane " id="tab-8-Out">
             <div class="codehilite"><pre><span></span>(User {_userEmail = &quot;betty@example.com&quot;,
        _userFirstName = &quot;Betty&quot;,
        _userLastName = &quot;Jones&quot;,
@@ -1876,22 +1895,22 @@ queries because it makes them more difficult to understand.</p>
         <ul class="nav nav-tabs">
             
         <li class="nav-item">
-            <a href="#tab-9-haskell" aria-controls="tab-9-haskell" role="tab" data-toggle="tab" data-lang="haskell">Haskell</a>
+            <a href="#tab-9-Haskell" aria-controls="tab-9-Haskell" role="tab" data-toggle="tab" data-lang="haskell">Haskell</a>
         </li>
     
         <li class="nav-item">
-            <a href="#tab-9-sql" aria-controls="tab-9-sql" role="tab" data-toggle="tab" data-lang="sql">Sql</a>
+            <a href="#tab-9-Sql" aria-controls="tab-9-Sql" role="tab" data-toggle="tab" data-lang="sql">Sql</a>
         </li>
     
         <li class="nav-item">
-            <a href="#tab-9-out" aria-controls="tab-9-out" role="tab" data-toggle="tab" data-lang="out">Out</a>
+            <a href="#tab-9-Out" aria-controls="tab-9-Out" role="tab" data-toggle="tab" data-lang="out">Out</a>
         </li>
     
         </ul>
     
         <div class="tab-content">
             
-        <div role="tabpanel" class="tab-pane active" id="tab-9-haskell">
+        <div role="tabpanel" class="tab-pane active" id="tab-9-Haskell">
             <div class="codehilite"><pre><span></span><span class="nf">shippingInformationByUser</span> <span class="ow">&lt;-</span>
   <span class="n">withDatabaseDebug</span> <span class="n">putStrLn</span> <span class="n">conn</span> <span class="o">$</span>
     <span class="n">runSelectReturningList</span> <span class="o">$</span>
@@ -1922,7 +1941,7 @@ queries because it makes them more difficult to understand.</p>
 
         </div>
     
-        <div role="tabpanel" class="tab-pane " id="tab-9-sql">
+        <div role="tabpanel" class="tab-pane " id="tab-9-Sql">
             <div class="codehilite"><pre><span></span><span class="k">SELECT</span> <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;email&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res0&quot;</span><span class="p">,</span>
        <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;first_name&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res1&quot;</span><span class="p">,</span>
        <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;last_name&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res2&quot;</span><span class="p">,</span>
@@ -1952,7 +1971,7 @@ queries because it makes them more difficult to understand.</p>
 
         </div>
     
-        <div role="tabpanel" class="tab-pane " id="tab-9-out">
+        <div role="tabpanel" class="tab-pane " id="tab-9-Out">
             <div class="codehilite"><pre><span></span>(User {_userEmail = &quot;betty@example.com&quot;,
        _userFirstName = &quot;Betty&quot;,
        _userLastName = &quot;Jones&quot;,
@@ -1987,22 +2006,22 @@ generation of a sub <code>SELECT</code>.</p>
         <ul class="nav nav-tabs">
             
         <li class="nav-item">
-            <a href="#tab-10-haskell" aria-controls="tab-10-haskell" role="tab" data-toggle="tab" data-lang="haskell">Haskell</a>
+            <a href="#tab-10-Haskell" aria-controls="tab-10-Haskell" role="tab" data-toggle="tab" data-lang="haskell">Haskell</a>
         </li>
     
         <li class="nav-item">
-            <a href="#tab-10-sql" aria-controls="tab-10-sql" role="tab" data-toggle="tab" data-lang="sql">Sql</a>
+            <a href="#tab-10-Sql" aria-controls="tab-10-Sql" role="tab" data-toggle="tab" data-lang="sql">Sql</a>
         </li>
     
         <li class="nav-item">
-            <a href="#tab-10-out" aria-controls="tab-10-out" role="tab" data-toggle="tab" data-lang="out">Out</a>
+            <a href="#tab-10-Out" aria-controls="tab-10-Out" role="tab" data-toggle="tab" data-lang="out">Out</a>
         </li>
     
         </ul>
     
         <div class="tab-content">
             
-        <div role="tabpanel" class="tab-pane active" id="tab-10-haskell">
+        <div role="tabpanel" class="tab-pane active" id="tab-10-Haskell">
             <div class="codehilite"><pre><span></span><span class="nf">shippingInformationByUser</span> <span class="ow">&lt;-</span>
   <span class="n">withDatabaseDebug</span> <span class="n">putStrLn</span> <span class="n">conn</span> <span class="o">$</span>
     <span class="n">runSelectReturningList</span> <span class="o">$</span>
@@ -2035,7 +2054,7 @@ generation of a sub <code>SELECT</code>.</p>
 
         </div>
     
-        <div role="tabpanel" class="tab-pane " id="tab-10-sql">
+        <div role="tabpanel" class="tab-pane " id="tab-10-Sql">
             <div class="codehilite"><pre><span></span><span class="k">SELECT</span> <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;email&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res0&quot;</span><span class="p">,</span>
        <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;first_name&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res1&quot;</span><span class="p">,</span>
        <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;last_name&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res2&quot;</span><span class="p">,</span>
@@ -2071,7 +2090,7 @@ generation of a sub <code>SELECT</code>.</p>
 
         </div>
     
-        <div role="tabpanel" class="tab-pane " id="tab-10-out">
+        <div role="tabpanel" class="tab-pane " id="tab-10-Out">
             <div class="codehilite"><pre><span></span>(User {_userEmail = &quot;betty@example.com&quot;,
        _userFirstName = &quot;Betty&quot;,
        _userLastName = &quot;Jones&quot;,

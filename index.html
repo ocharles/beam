@@ -842,14 +842,14 @@
                   <h1>Home</h1>
                 
                 <p><img src="img/logo.svg" width="250px"/></p>
-<p>Beam is a highly-general library for accessing any kind of database with
-Haskell. Currently, it supports two SQL backends, Postgres and SQLite. Work is
-underway for an official MySQL backend (contributions appreciated and
-accepted!).</p>
-<p>Beam is highly extensible and other backends can be shipped independently
-without requiring any changes in the core libraries. For example, there is an
-independently maintained <a href="https://github.com/gibranrosa/beam-firebird">Firebird</a>
-backend. For information on creating additional SQL backends, see
+<p>Beam is a highly-general library for accessing any kind of database
+with Haskell. It supports several backends. <code>beam-postgres</code> and
+<code>beam-sqlite</code> are included in the main beam repository. Others are
+hosted and maintained independently, such as <code>beam-mysql</code> and
+<code>beam-firebird</code>. The documentation here shows examples in all known backends.</p>
+<p>Beam is highly extensible and other backends can be shipped
+independently without requiring any changes in the core libraries.For
+information on creating additional SQL backends, see
 the <a href="user-guide/custom-backends/">manual section</a> for more.</p>
 <p>Beam features</p>
 <ul>
@@ -866,8 +866,11 @@ the <a href="user-guide/custom-backends/">manual section</a> for more.</p>
   compiler may need more help.</li>
 </ul>
 <h2 id="how-to-install">How to install</h2>
-<p>Beam <strong>isnt</strong> available via Hackage <em>or</em> Stack. Until a release is cut, put the
-following in your <code>stack.yaml</code> to build and use beam in your project!</p>
+<p>Beam is available via Hackage and Stack, and can be included in your
+stack project by adding <code>beam-core</code> and an appropriate beam backend to
+your <code>stack.yaml</code>. Some projects may want to follow the latest master,
+for the newest features. If so, put the following in your <code>stack.yaml</code>
+to build and use beam in your project!</p>
 <div class="codehilite"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">packages</span><span class="p p-Indicator">:</span>
 <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">.</span>
 <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">location</span><span class="p p-Indicator">:</span>
@@ -876,7 +879,6 @@ following in your <code>stack.yaml</code> to build and use beam in your project!
   <span class="l l-Scalar l-Scalar-Plain">extra-dep</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">true</span>
   <span class="l l-Scalar l-Scalar-Plain">subdirs</span><span class="p p-Indicator">:</span>
     <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">beam-core</span>
-    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">beam-migrate</span>
     <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">&lt;backend&gt;</span>
 </pre></div>
 
@@ -888,11 +890,12 @@ or whichever commit you want to build from even.</p>
 </div>
 <p>and add the following to your <code>.cabal</code> file, in the <code>build-depends</code> section:</p>
 <div class="codehilite"><pre><span></span><span class="nf">beam</span><span class="o">-</span><span class="n">core</span><span class="p">,</span>
-<span class="nf">beam</span><span class="o">-</span><span class="n">migrate</span><span class="p">,</span>
 <span class="o">&lt;</span><span class="n">backend</span><span class="o">&gt;</span>
 </pre></div>
 
 
+<p>You may alse want to add the <code>beam-migrate</code> package if you want to
+manage your database schemas in Haskell as well.</p>
 <p>Available backends are:</p>
 <ul>
 <li>
@@ -901,11 +904,15 @@ or whichever commit you want to build from even.</p>
   for more information.</p>
 </li>
 <li>
-<p><code>beam-sqlite</code> -- An almost feature-complete backend for the Sqlite library.
+<p><code>beam-sqlite</code> -- A feature-complete backend for the Sqlite library.
   Note that SQLite does not support all SQL92 features, so some of the examples
   may not work. Refer
   to <a href="user-guide/backends/beam-sqlite/">the beam-sqlite documentation</a> for
   more information on compatibility.</p>
+</li>
+<li>
+<p><code>beam-mysql</code> -- A backend for MySQL or MariaDB. Maintained
+  separately on <a href="https://github.com/tathougies/beam-mysql">GitHub</a>.</p>
 </li>
 </ul>
 <h2 id="quick-start-guide">Quick Start Guide</h2>

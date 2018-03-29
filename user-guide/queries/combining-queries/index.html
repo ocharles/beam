@@ -854,22 +854,22 @@ employees.</p>
         <ul class="nav nav-tabs">
             
         <li class="nav-item">
-            <a href="#tab-0-haskell" aria-controls="tab-0-haskell" role="tab" data-toggle="tab" data-lang="haskell">Haskell</a>
+            <a href="#tab-0-Haskell" aria-controls="tab-0-Haskell" role="tab" data-toggle="tab" data-lang="haskell">Haskell</a>
         </li>
     
         <li class="nav-item">
-            <a href="#tab-0-sqlite3" aria-controls="tab-0-sqlite3" role="tab" data-toggle="tab" data-lang="sqlite3">Sqlite3</a>
+            <a href="#tab-0-Sqlite" aria-controls="tab-0-Sqlite" role="tab" data-toggle="tab" data-lang="sql">Sqlite</a>
         </li>
     
         <li class="nav-item">
-            <a href="#tab-0-postgres" aria-controls="tab-0-postgres" role="tab" data-toggle="tab" data-lang="postgres">Postgres</a>
+            <a href="#tab-0-Postgres" aria-controls="tab-0-Postgres" role="tab" data-toggle="tab" data-lang="sql">Postgres</a>
         </li>
     
         </ul>
     
         <div class="tab-content">
             
-        <div role="tabpanel" class="tab-pane active" id="tab-0-haskell">
+        <div role="tabpanel" class="tab-pane active" id="tab-0-Haskell">
             <div class="codehilite"><pre><span></span><span class="kr">let</span> <span class="n">customerNames</span> <span class="ow">=</span>
       <span class="n">fmap</span> <span class="p">(</span><span class="nf">\</span><span class="n">c</span> <span class="ow">-&gt;</span> <span class="p">(</span><span class="n">customerFirstName</span> <span class="n">c</span><span class="p">,</span> <span class="n">customerLastName</span> <span class="n">c</span><span class="p">))</span>
            <span class="p">(</span><span class="n">all_</span> <span class="p">(</span><span class="n">customer</span> <span class="n">chinookDb</span><span class="p">))</span>
@@ -881,28 +881,28 @@ employees.</p>
 
         </div>
     
-        <div role="tabpanel" class="tab-pane " id="tab-0-sqlite3">
-            <div class="codehilite"><pre><span></span><span class="go">SELECT &quot;t0&quot;.&quot;FirstName&quot; AS &quot;res0&quot;,</span>
-<span class="go">       &quot;t0&quot;.&quot;LastName&quot; AS &quot;res1&quot;</span>
-<span class="go">FROM &quot;Customer&quot; AS &quot;t0&quot;</span>
-<span class="go">UNION</span>
-<span class="go">SELECT &quot;t0&quot;.&quot;FirstName&quot; AS &quot;res0&quot;,</span>
-<span class="go">       &quot;t0&quot;.&quot;LastName&quot; AS &quot;res1&quot;</span>
-<span class="go">FROM &quot;Employee&quot; AS &quot;t0&quot;;</span>
+        <div role="tabpanel" class="tab-pane " id="tab-0-Sqlite">
+            <div class="codehilite"><pre><span></span><span class="k">SELECT</span> <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;FirstName&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res0&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;LastName&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res1&quot;</span>
+<span class="k">FROM</span> <span class="ss">&quot;Customer&quot;</span> <span class="k">AS</span> <span class="ss">&quot;t0&quot;</span>
+<span class="k">UNION</span>
+<span class="k">SELECT</span> <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;FirstName&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res0&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;LastName&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res1&quot;</span>
+<span class="k">FROM</span> <span class="ss">&quot;Employee&quot;</span> <span class="k">AS</span> <span class="ss">&quot;t0&quot;</span><span class="p">;</span>
 
-<span class="go">-- With values: []</span>
+<span class="c1">-- With values: []</span>
 </pre></div>
 
         </div>
     
-        <div role="tabpanel" class="tab-pane " id="tab-0-postgres">
-            <div class="codehilite"><pre><span></span>  <span class="p">(</span><span class="k">SELECT</span> <span class="s s-Name">&quot;t0&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;FirstName&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;res0&quot;</span><span class="p">,</span>
-          <span class="s s-Name">&quot;t0&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;LastName&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;res1&quot;</span>
-   <span class="k">FROM</span> <span class="s s-Name">&quot;Customer&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;t0&quot;</span><span class="p">)</span>
+        <div role="tabpanel" class="tab-pane " id="tab-0-Postgres">
+            <div class="codehilite"><pre><span></span>  <span class="p">(</span><span class="k">SELECT</span> <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;FirstName&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res0&quot;</span><span class="p">,</span>
+          <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;LastName&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res1&quot;</span>
+   <span class="k">FROM</span> <span class="ss">&quot;Customer&quot;</span> <span class="k">AS</span> <span class="ss">&quot;t0&quot;</span><span class="p">)</span>
 <span class="k">UNION</span>
-  <span class="p">(</span><span class="k">SELECT</span> <span class="s s-Name">&quot;t0&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;FirstName&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;res0&quot;</span><span class="p">,</span>
-          <span class="s s-Name">&quot;t0&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;LastName&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;res1&quot;</span>
-   <span class="k">FROM</span> <span class="s s-Name">&quot;Employee&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;t0&quot;</span><span class="p">)</span>
+  <span class="p">(</span><span class="k">SELECT</span> <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;FirstName&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res0&quot;</span><span class="p">,</span>
+          <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;LastName&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res1&quot;</span>
+   <span class="k">FROM</span> <span class="ss">&quot;Employee&quot;</span> <span class="k">AS</span> <span class="ss">&quot;t0&quot;</span><span class="p">)</span>
 </pre></div>
 
         </div>
@@ -929,22 +929,22 @@ generated.</p>
         <ul class="nav nav-tabs">
             
         <li class="nav-item">
-            <a href="#tab-1-haskell" aria-controls="tab-1-haskell" role="tab" data-toggle="tab" data-lang="haskell">Haskell</a>
+            <a href="#tab-1-Haskell" aria-controls="tab-1-Haskell" role="tab" data-toggle="tab" data-lang="haskell">Haskell</a>
         </li>
     
         <li class="nav-item">
-            <a href="#tab-1-sqlite3" aria-controls="tab-1-sqlite3" role="tab" data-toggle="tab" data-lang="sqlite3">Sqlite3</a>
+            <a href="#tab-1-Sqlite" aria-controls="tab-1-Sqlite" role="tab" data-toggle="tab" data-lang="sql">Sqlite</a>
         </li>
     
         <li class="nav-item">
-            <a href="#tab-1-postgres" aria-controls="tab-1-postgres" role="tab" data-toggle="tab" data-lang="postgres">Postgres</a>
+            <a href="#tab-1-Postgres" aria-controls="tab-1-Postgres" role="tab" data-toggle="tab" data-lang="sql">Postgres</a>
         </li>
     
         </ul>
     
         <div class="tab-content">
             
-        <div role="tabpanel" class="tab-pane active" id="tab-1-haskell">
+        <div role="tabpanel" class="tab-pane active" id="tab-1-Haskell">
             <div class="codehilite"><pre><span></span><span class="kr">let</span> <span class="n">customerFirstNames</span> <span class="ow">=</span>
       <span class="n">fmap</span> <span class="n">customerFirstName</span>
            <span class="p">(</span><span class="n">all_</span> <span class="p">(</span><span class="n">customer</span> <span class="n">chinookDb</span><span class="p">))</span>
@@ -963,37 +963,37 @@ generated.</p>
 
         </div>
     
-        <div role="tabpanel" class="tab-pane " id="tab-1-sqlite3">
-            <div class="codehilite"><pre><span></span><span class="go">SELECT &quot;t0&quot;.&quot;res0&quot; AS &quot;res0&quot;</span>
-<span class="go">FROM</span>
-<span class="go">  (SELECT &quot;t0&quot;.&quot;FirstName&quot; AS &quot;res0&quot;</span>
-<span class="go">   FROM &quot;Customer&quot; AS &quot;t0&quot;</span>
-<span class="go">   UNION SELECT &quot;t0&quot;.&quot;FirstName&quot; AS &quot;res0&quot;</span>
-<span class="go">   FROM &quot;Employee&quot; AS &quot;t0&quot;) AS &quot;t0&quot; INTERSECT</span>
-<span class="go">SELECT &quot;t0&quot;.&quot;res0&quot; AS &quot;res0&quot;</span>
-<span class="go">FROM</span>
-<span class="go">  (SELECT &quot;t0&quot;.&quot;LastName&quot; AS &quot;res0&quot;</span>
-<span class="go">   FROM &quot;Customer&quot; AS &quot;t0&quot;</span>
-<span class="go">   EXCEPT SELECT &quot;t0&quot;.&quot;LastName&quot; AS &quot;res0&quot;</span>
-<span class="go">   FROM &quot;Employee&quot; AS &quot;t0&quot;) AS &quot;t0&quot;;</span>
+        <div role="tabpanel" class="tab-pane " id="tab-1-Sqlite">
+            <div class="codehilite"><pre><span></span><span class="k">SELECT</span> <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;res0&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res0&quot;</span>
+<span class="k">FROM</span>
+  <span class="p">(</span><span class="k">SELECT</span> <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;FirstName&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res0&quot;</span>
+   <span class="k">FROM</span> <span class="ss">&quot;Customer&quot;</span> <span class="k">AS</span> <span class="ss">&quot;t0&quot;</span>
+   <span class="k">UNION</span> <span class="k">SELECT</span> <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;FirstName&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res0&quot;</span>
+   <span class="k">FROM</span> <span class="ss">&quot;Employee&quot;</span> <span class="k">AS</span> <span class="ss">&quot;t0&quot;</span><span class="p">)</span> <span class="k">AS</span> <span class="ss">&quot;t0&quot;</span> <span class="k">INTERSECT</span>
+<span class="k">SELECT</span> <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;res0&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res0&quot;</span>
+<span class="k">FROM</span>
+  <span class="p">(</span><span class="k">SELECT</span> <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;LastName&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res0&quot;</span>
+   <span class="k">FROM</span> <span class="ss">&quot;Customer&quot;</span> <span class="k">AS</span> <span class="ss">&quot;t0&quot;</span>
+   <span class="k">EXCEPT</span> <span class="k">SELECT</span> <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;LastName&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res0&quot;</span>
+   <span class="k">FROM</span> <span class="ss">&quot;Employee&quot;</span> <span class="k">AS</span> <span class="ss">&quot;t0&quot;</span><span class="p">)</span> <span class="k">AS</span> <span class="ss">&quot;t0&quot;</span><span class="p">;</span>
 
-<span class="go">-- With values: []</span>
+<span class="c1">-- With values: []</span>
 </pre></div>
 
         </div>
     
-        <div role="tabpanel" class="tab-pane " id="tab-1-postgres">
+        <div role="tabpanel" class="tab-pane " id="tab-1-Postgres">
             <div class="codehilite"><pre><span></span><span class="p">(</span>
-   <span class="p">(</span><span class="k">SELECT</span> <span class="s s-Name">&quot;t0&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;FirstName&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;res0&quot;</span>
-    <span class="k">FROM</span> <span class="s s-Name">&quot;Customer&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;t0&quot;</span><span class="p">)</span>
+   <span class="p">(</span><span class="k">SELECT</span> <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;FirstName&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res0&quot;</span>
+    <span class="k">FROM</span> <span class="ss">&quot;Customer&quot;</span> <span class="k">AS</span> <span class="ss">&quot;t0&quot;</span><span class="p">)</span>
  <span class="k">UNION</span>
-   <span class="p">(</span><span class="k">SELECT</span> <span class="s s-Name">&quot;t0&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;FirstName&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;res0&quot;</span>
-    <span class="k">FROM</span> <span class="s s-Name">&quot;Employee&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;t0&quot;</span><span class="p">))</span> <span class="k">INTERSECT</span> <span class="p">(</span>
-                                           <span class="p">(</span><span class="k">SELECT</span> <span class="s s-Name">&quot;t0&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;LastName&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;res0&quot;</span>
-                                            <span class="k">FROM</span> <span class="s s-Name">&quot;Customer&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;t0&quot;</span><span class="p">)</span>
+   <span class="p">(</span><span class="k">SELECT</span> <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;FirstName&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res0&quot;</span>
+    <span class="k">FROM</span> <span class="ss">&quot;Employee&quot;</span> <span class="k">AS</span> <span class="ss">&quot;t0&quot;</span><span class="p">))</span> <span class="k">INTERSECT</span> <span class="p">(</span>
+                                           <span class="p">(</span><span class="k">SELECT</span> <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;LastName&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res0&quot;</span>
+                                            <span class="k">FROM</span> <span class="ss">&quot;Customer&quot;</span> <span class="k">AS</span> <span class="ss">&quot;t0&quot;</span><span class="p">)</span>
                                          <span class="k">EXCEPT</span>
-                                           <span class="p">(</span><span class="k">SELECT</span> <span class="s s-Name">&quot;t0&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;LastName&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;res0&quot;</span>
-                                            <span class="k">FROM</span> <span class="s s-Name">&quot;Employee&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;t0&quot;</span><span class="p">))</span>
+                                           <span class="p">(</span><span class="k">SELECT</span> <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;LastName&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res0&quot;</span>
+                                            <span class="k">FROM</span> <span class="ss">&quot;Employee&quot;</span> <span class="k">AS</span> <span class="ss">&quot;t0&quot;</span><span class="p">))</span>
 </pre></div>
 
         </div>
@@ -1015,22 +1015,22 @@ query.</p>
         <ul class="nav nav-tabs">
             
         <li class="nav-item">
-            <a href="#tab-2-haskell" aria-controls="tab-2-haskell" role="tab" data-toggle="tab" data-lang="haskell">Haskell</a>
+            <a href="#tab-2-Haskell" aria-controls="tab-2-Haskell" role="tab" data-toggle="tab" data-lang="haskell">Haskell</a>
         </li>
     
         <li class="nav-item">
-            <a href="#tab-2-sqlite3" aria-controls="tab-2-sqlite3" role="tab" data-toggle="tab" data-lang="sqlite3">Sqlite3</a>
+            <a href="#tab-2-Sqlite" aria-controls="tab-2-Sqlite" role="tab" data-toggle="tab" data-lang="sql">Sqlite</a>
         </li>
     
         <li class="nav-item">
-            <a href="#tab-2-postgres" aria-controls="tab-2-postgres" role="tab" data-toggle="tab" data-lang="postgres">Postgres</a>
+            <a href="#tab-2-Postgres" aria-controls="tab-2-Postgres" role="tab" data-toggle="tab" data-lang="sql">Postgres</a>
         </li>
     
         </ul>
     
         <div class="tab-content">
             
-        <div role="tabpanel" class="tab-pane active" id="tab-2-haskell">
+        <div role="tabpanel" class="tab-pane active" id="tab-2-Haskell">
             <div class="codehilite"><pre><span></span><span class="kr">let</span> <span class="n">customerNames</span> <span class="ow">=</span>
       <span class="n">fmap</span> <span class="p">(</span><span class="nf">\</span><span class="n">c</span> <span class="ow">-&gt;</span> <span class="p">(</span><span class="n">customerFirstName</span> <span class="n">c</span><span class="p">,</span> <span class="n">customerLastName</span> <span class="n">c</span><span class="p">))</span>
            <span class="p">(</span><span class="n">all_</span> <span class="p">(</span><span class="n">customer</span> <span class="n">chinookDb</span><span class="p">))</span>
@@ -1042,30 +1042,30 @@ query.</p>
 
         </div>
     
-        <div role="tabpanel" class="tab-pane " id="tab-2-sqlite3">
-            <div class="codehilite"><pre><span></span><span class="go">SELECT &quot;t0&quot;.&quot;FirstName&quot; AS &quot;res0&quot;,</span>
-<span class="go">       &quot;t0&quot;.&quot;LastName&quot; AS &quot;res1&quot;</span>
-<span class="go">FROM &quot;Customer&quot; AS &quot;t0&quot;</span>
-<span class="go">UNION</span>
-<span class="go">SELECT &quot;t0&quot;.&quot;FirstName&quot; AS &quot;res0&quot;,</span>
-<span class="go">       &quot;t0&quot;.&quot;LastName&quot; AS &quot;res1&quot;</span>
-<span class="go">FROM &quot;Employee&quot; AS &quot;t0&quot;</span>
-<span class="go">LIMIT 10;</span>
+        <div role="tabpanel" class="tab-pane " id="tab-2-Sqlite">
+            <div class="codehilite"><pre><span></span><span class="k">SELECT</span> <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;FirstName&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res0&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;LastName&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res1&quot;</span>
+<span class="k">FROM</span> <span class="ss">&quot;Customer&quot;</span> <span class="k">AS</span> <span class="ss">&quot;t0&quot;</span>
+<span class="k">UNION</span>
+<span class="k">SELECT</span> <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;FirstName&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res0&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;LastName&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res1&quot;</span>
+<span class="k">FROM</span> <span class="ss">&quot;Employee&quot;</span> <span class="k">AS</span> <span class="ss">&quot;t0&quot;</span>
+<span class="k">LIMIT</span> <span class="mi">10</span><span class="p">;</span>
 
-<span class="go">-- With values: []</span>
+<span class="c1">-- With values: []</span>
 </pre></div>
 
         </div>
     
-        <div role="tabpanel" class="tab-pane " id="tab-2-postgres">
-            <div class="codehilite"><pre><span></span>  <span class="p">(</span><span class="k">SELECT</span> <span class="s s-Name">&quot;t0&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;FirstName&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;res0&quot;</span><span class="p">,</span>
-          <span class="s s-Name">&quot;t0&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;LastName&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;res1&quot;</span>
-   <span class="k">FROM</span> <span class="s s-Name">&quot;Customer&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;t0&quot;</span><span class="p">)</span>
+        <div role="tabpanel" class="tab-pane " id="tab-2-Postgres">
+            <div class="codehilite"><pre><span></span>  <span class="p">(</span><span class="k">SELECT</span> <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;FirstName&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res0&quot;</span><span class="p">,</span>
+          <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;LastName&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res1&quot;</span>
+   <span class="k">FROM</span> <span class="ss">&quot;Customer&quot;</span> <span class="k">AS</span> <span class="ss">&quot;t0&quot;</span><span class="p">)</span>
 <span class="k">UNION</span>
-  <span class="p">(</span><span class="k">SELECT</span> <span class="s s-Name">&quot;t0&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;FirstName&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;res0&quot;</span><span class="p">,</span>
-          <span class="s s-Name">&quot;t0&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;LastName&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;res1&quot;</span>
-   <span class="k">FROM</span> <span class="s s-Name">&quot;Employee&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;t0&quot;</span><span class="p">)</span>
-<span class="k">LIMIT</span> <span class="mf">10</span>
+  <span class="p">(</span><span class="k">SELECT</span> <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;FirstName&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res0&quot;</span><span class="p">,</span>
+          <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;LastName&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res1&quot;</span>
+   <span class="k">FROM</span> <span class="ss">&quot;Employee&quot;</span> <span class="k">AS</span> <span class="ss">&quot;t0&quot;</span><span class="p">)</span>
+<span class="k">LIMIT</span> <span class="mi">10</span>
 </pre></div>
 
         </div>
@@ -1081,22 +1081,22 @@ query.</p>
         <ul class="nav nav-tabs">
             
         <li class="nav-item">
-            <a href="#tab-12-haskell" aria-controls="tab-12-haskell" role="tab" data-toggle="tab" data-lang="haskell">Haskell</a>
+            <a href="#tab-12-Haskell" aria-controls="tab-12-Haskell" role="tab" data-toggle="tab" data-lang="haskell">Haskell</a>
         </li>
     
         <li class="nav-item">
-            <a href="#tab-12-sqlite3" aria-controls="tab-12-sqlite3" role="tab" data-toggle="tab" data-lang="sqlite3">Sqlite3</a>
+            <a href="#tab-12-Sqlite" aria-controls="tab-12-Sqlite" role="tab" data-toggle="tab" data-lang="sql">Sqlite</a>
         </li>
     
         <li class="nav-item">
-            <a href="#tab-12-postgres" aria-controls="tab-12-postgres" role="tab" data-toggle="tab" data-lang="postgres">Postgres</a>
+            <a href="#tab-12-Postgres" aria-controls="tab-12-Postgres" role="tab" data-toggle="tab" data-lang="sql">Postgres</a>
         </li>
     
         </ul>
     
         <div class="tab-content">
             
-        <div role="tabpanel" class="tab-pane active" id="tab-12-haskell">
+        <div role="tabpanel" class="tab-pane active" id="tab-12-Haskell">
             <div class="codehilite"><pre><span></span><span class="kr">let</span> <span class="n">customerNames</span> <span class="ow">=</span>
       <span class="n">fmap</span> <span class="p">(</span><span class="nf">\</span><span class="n">c</span> <span class="ow">-&gt;</span> <span class="p">(</span><span class="n">customerFirstName</span> <span class="n">c</span><span class="p">,</span> <span class="n">customerLastName</span> <span class="n">c</span><span class="p">))</span>
            <span class="p">(</span><span class="n">all_</span> <span class="p">(</span><span class="n">customer</span> <span class="n">chinookDb</span><span class="p">))</span>
@@ -1108,44 +1108,44 @@ query.</p>
 
         </div>
     
-        <div role="tabpanel" class="tab-pane " id="tab-12-sqlite3">
-            <div class="codehilite"><pre><span></span><span class="go">SELECT &quot;t0&quot;.&quot;res0&quot; AS &quot;res0&quot;,</span>
-<span class="go">       &quot;t0&quot;.&quot;res1&quot; AS &quot;res1&quot;</span>
-<span class="go">FROM</span>
-<span class="go">  (SELECT &quot;t0&quot;.&quot;FirstName&quot; AS &quot;res0&quot;,</span>
-<span class="go">          &quot;t0&quot;.&quot;LastName&quot; AS &quot;res1&quot;</span>
-<span class="go">   FROM &quot;Customer&quot; AS &quot;t0&quot;</span>
-<span class="go">   LIMIT 10) AS &quot;t0&quot;</span>
-<span class="go">UNION</span>
-<span class="go">SELECT &quot;t0&quot;.&quot;res0&quot; AS &quot;res0&quot;,</span>
-<span class="go">       &quot;t0&quot;.&quot;res1&quot; AS &quot;res1&quot;</span>
-<span class="go">FROM</span>
-<span class="go">  (SELECT &quot;t0&quot;.&quot;FirstName&quot; AS &quot;res0&quot;,</span>
-<span class="go">          &quot;t0&quot;.&quot;LastName&quot; AS &quot;res1&quot;</span>
-<span class="go">   FROM &quot;Employee&quot; AS &quot;t0&quot;</span>
-<span class="go">   LIMIT 10) AS &quot;t0&quot;;</span>
+        <div role="tabpanel" class="tab-pane " id="tab-12-Sqlite">
+            <div class="codehilite"><pre><span></span><span class="k">SELECT</span> <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;res0&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res0&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;res1&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res1&quot;</span>
+<span class="k">FROM</span>
+  <span class="p">(</span><span class="k">SELECT</span> <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;FirstName&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res0&quot;</span><span class="p">,</span>
+          <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;LastName&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res1&quot;</span>
+   <span class="k">FROM</span> <span class="ss">&quot;Customer&quot;</span> <span class="k">AS</span> <span class="ss">&quot;t0&quot;</span>
+   <span class="k">LIMIT</span> <span class="mi">10</span><span class="p">)</span> <span class="k">AS</span> <span class="ss">&quot;t0&quot;</span>
+<span class="k">UNION</span>
+<span class="k">SELECT</span> <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;res0&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res0&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;res1&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res1&quot;</span>
+<span class="k">FROM</span>
+  <span class="p">(</span><span class="k">SELECT</span> <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;FirstName&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res0&quot;</span><span class="p">,</span>
+          <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;LastName&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res1&quot;</span>
+   <span class="k">FROM</span> <span class="ss">&quot;Employee&quot;</span> <span class="k">AS</span> <span class="ss">&quot;t0&quot;</span>
+   <span class="k">LIMIT</span> <span class="mi">10</span><span class="p">)</span> <span class="k">AS</span> <span class="ss">&quot;t0&quot;</span><span class="p">;</span>
 
-<span class="go">-- With values: []</span>
+<span class="c1">-- With values: []</span>
 </pre></div>
 
         </div>
     
-        <div role="tabpanel" class="tab-pane " id="tab-12-postgres">
-            <div class="codehilite"><pre><span></span>  <span class="p">(</span><span class="k">SELECT</span> <span class="s s-Name">&quot;t0&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;res0&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;res0&quot;</span><span class="p">,</span>
-          <span class="s s-Name">&quot;t0&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;res1&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;res1&quot;</span>
+        <div role="tabpanel" class="tab-pane " id="tab-12-Postgres">
+            <div class="codehilite"><pre><span></span>  <span class="p">(</span><span class="k">SELECT</span> <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;res0&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res0&quot;</span><span class="p">,</span>
+          <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;res1&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res1&quot;</span>
    <span class="k">FROM</span>
-     <span class="p">(</span><span class="k">SELECT</span> <span class="s s-Name">&quot;t0&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;FirstName&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;res0&quot;</span><span class="p">,</span>
-             <span class="s s-Name">&quot;t0&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;LastName&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;res1&quot;</span>
-      <span class="k">FROM</span> <span class="s s-Name">&quot;Customer&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;t0&quot;</span>
-      <span class="k">LIMIT</span> <span class="mf">10</span><span class="p">)</span> <span class="k">AS</span> <span class="s s-Name">&quot;t0&quot;</span><span class="p">)</span>
+     <span class="p">(</span><span class="k">SELECT</span> <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;FirstName&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res0&quot;</span><span class="p">,</span>
+             <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;LastName&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res1&quot;</span>
+      <span class="k">FROM</span> <span class="ss">&quot;Customer&quot;</span> <span class="k">AS</span> <span class="ss">&quot;t0&quot;</span>
+      <span class="k">LIMIT</span> <span class="mi">10</span><span class="p">)</span> <span class="k">AS</span> <span class="ss">&quot;t0&quot;</span><span class="p">)</span>
 <span class="k">UNION</span>
-  <span class="p">(</span><span class="k">SELECT</span> <span class="s s-Name">&quot;t0&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;res0&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;res0&quot;</span><span class="p">,</span>
-          <span class="s s-Name">&quot;t0&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;res1&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;res1&quot;</span>
+  <span class="p">(</span><span class="k">SELECT</span> <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;res0&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res0&quot;</span><span class="p">,</span>
+          <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;res1&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res1&quot;</span>
    <span class="k">FROM</span>
-     <span class="p">(</span><span class="k">SELECT</span> <span class="s s-Name">&quot;t0&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;FirstName&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;res0&quot;</span><span class="p">,</span>
-             <span class="s s-Name">&quot;t0&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;LastName&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;res1&quot;</span>
-      <span class="k">FROM</span> <span class="s s-Name">&quot;Employee&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;t0&quot;</span>
-      <span class="k">LIMIT</span> <span class="mf">10</span><span class="p">)</span> <span class="k">AS</span> <span class="s s-Name">&quot;t0&quot;</span><span class="p">)</span>
+     <span class="p">(</span><span class="k">SELECT</span> <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;FirstName&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res0&quot;</span><span class="p">,</span>
+             <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;LastName&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res1&quot;</span>
+      <span class="k">FROM</span> <span class="ss">&quot;Employee&quot;</span> <span class="k">AS</span> <span class="ss">&quot;t0&quot;</span>
+      <span class="k">LIMIT</span> <span class="mi">10</span><span class="p">)</span> <span class="k">AS</span> <span class="ss">&quot;t0&quot;</span><span class="p">)</span>
 </pre></div>
 
         </div>

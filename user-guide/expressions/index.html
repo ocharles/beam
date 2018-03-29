@@ -368,6 +368,19 @@
     Literals
   </a>
   
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#utf-support" title="UTF support" class="md-nav__link">
+    UTF support
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -386,8 +399,29 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
+  <a href="#haskell-like-comparisons" title="Haskell-like comparisons" class="md-nav__link">
+    Haskell-like comparisons
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sql-like-comparisons" title="SQL-like comparisons" class="md-nav__link">
+    SQL-like comparisons
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#quantified-comparison" title="Quantified comparison" class="md-nav__link">
     Quantified comparison
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-in-predicate" title="The IN predicate" class="md-nav__link">
+    The IN predicate
   </a>
   
 </li>
@@ -840,6 +874,19 @@
     Literals
   </a>
   
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#utf-support" title="UTF support" class="md-nav__link">
+    UTF support
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -858,8 +905,29 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
+  <a href="#haskell-like-comparisons" title="Haskell-like comparisons" class="md-nav__link">
+    Haskell-like comparisons
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sql-like-comparisons" title="SQL-like comparisons" class="md-nav__link">
+    SQL-like comparisons
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#quantified-comparison" title="Quantified comparison" class="md-nav__link">
     Quantified comparison
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-in-predicate" title="The IN predicate" class="md-nav__link">
+    The IN predicate
   </a>
   
 </li>
@@ -952,6 +1020,83 @@ general for the compiler to meaningfully infer types.</p>
   well. For example, if you have an <code>AddressT Identity</code> named <code>a</code>, <code>val_ a ::
   AddressT (QGenExpr context expr s)</code>.</li>
 </ul>
+<h3 id="utf-support">UTF support</h3>
+<p>All included beam backends play nicely with UTF. New backends should also
+support UTF, if they support syntaxes and deserializers for <code>String</code> or <code>Text</code>.</p>
+<p>
+                <div class="code-nav-container">
+                    
+        <ul class="nav nav-tabs">
+            
+        <li class="nav-item">
+            <a href="#tab-0-Haskell" aria-controls="tab-0-Haskell" role="tab" data-toggle="tab" data-lang="haskell">Haskell</a>
+        </li>
+    
+        <li class="nav-item">
+            <a href="#tab-0-Sqlite" aria-controls="tab-0-Sqlite" role="tab" data-toggle="tab" data-lang="sql">Sqlite</a>
+        </li>
+    
+        <li class="nav-item">
+            <a href="#tab-0-Postgres" aria-controls="tab-0-Postgres" role="tab" data-toggle="tab" data-lang="sql">Postgres</a>
+        </li>
+    
+        </ul>
+    
+        <div class="tab-content">
+            
+        <div role="tabpanel" class="tab-pane active" id="tab-0-Haskell">
+            <div class="codehilite"><pre><span></span><span class="nf">filter_</span> <span class="p">(</span><span class="nf">\</span><span class="n">s</span> <span class="ow">-&gt;</span> <span class="n">customerFirstName</span> <span class="n">s</span> <span class="o">==.</span> <span class="s">&quot;あきら&quot;</span><span class="p">)</span> <span class="o">$</span>
+  <span class="n">all_</span> <span class="p">(</span><span class="n">customer</span> <span class="n">chinookDb</span><span class="p">)</span>
+</pre></div>
+
+        </div>
+    
+        <div role="tabpanel" class="tab-pane " id="tab-0-Sqlite">
+            <div class="codehilite"><pre><span></span><span class="k">SELECT</span> <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;CustomerId&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res0&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;FirstName&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res1&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;LastName&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res2&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;Company&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res3&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;Address&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res4&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;City&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res5&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;State&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res6&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;Country&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res7&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;PostalCode&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res8&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;Phone&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res9&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;Fax&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res10&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;Email&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res11&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;SupportRepId&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res12&quot;</span>
+<span class="k">FROM</span> <span class="ss">&quot;Customer&quot;</span> <span class="k">AS</span> <span class="ss">&quot;t0&quot;</span>
+<span class="k">WHERE</span> <span class="p">(</span><span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;FirstName&quot;</span><span class="p">)</span><span class="o">=</span><span class="p">(</span><span class="o">?</span><span class="p">);</span>
+
+<span class="c1">-- With values: [SQLText &quot;\12354\12365\12425&quot;]</span>
+</pre></div>
+
+        </div>
+    
+        <div role="tabpanel" class="tab-pane " id="tab-0-Postgres">
+            <div class="codehilite"><pre><span></span><span class="k">SELECT</span> <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;CustomerId&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res0&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;FirstName&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res1&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;LastName&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res2&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;Company&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res3&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;Address&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res4&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;City&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res5&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;State&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res6&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;Country&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res7&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;PostalCode&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res8&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;Phone&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res9&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;Fax&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res10&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;Email&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res11&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;SupportRepId&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res12&quot;</span>
+<span class="k">FROM</span> <span class="ss">&quot;Customer&quot;</span> <span class="k">AS</span> <span class="ss">&quot;t0&quot;</span>
+<span class="k">WHERE</span> <span class="p">(</span><span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;FirstName&quot;</span><span class="p">)</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;あきら&#39;</span><span class="p">)</span>
+</pre></div>
+
+        </div>
+    
+        </div>
+    
+                </div>
+                    </p>
 <h2 id="arithmetic">Arithmetic</h2>
 <p>Arithmetic operations that are part of the <code>Fractional</code> and <code>Num</code> classes can be
 used directly. For example, if <code>a</code> and <code>b</code> are <code>QGenExpr</code>s of the same type,
@@ -960,13 +1105,340 @@ then <code>a + b</code> is a <code>QGenExpr</code> of the same type.</p>
 implement <code>Integral</code>. Nevertheless, versions of <code>div</code> and <code>mod</code> are available as
 <code>div_</code> and <code>mod_</code>, respectively, having the corresponding type.</p>
 <h2 id="comparison">Comparison</h2>
-<p>The standard Haskell/SQL equality and comparison operators are available under
-the Haskell operator names, suffixed with <code>.</code>. For example, <code>==.</code> can be used to
-compare two <code>QGenExpr</code>s of the same context, thread, syntax, and type with one
-another for equality. The return type is another <code>QGenExpr</code> with type <code>Bool</code>.</p>
-<p>The other operators are named as you'd expect: <code>/=.</code> for inequality, <code>&lt;.</code> for
-less than, <code>&gt;.</code> for greater than, <code>&lt;=.</code> for less than or equal to, <code>&gt;=.</code> for
-greater than or equal to.</p>
+<p>SQL comparison is not as simple as you may think. <code>NULL</code> handling in particular
+actually makes things rather complicated.  SQL comparison operators actually
+return a <em>tri-state boolean</em>, representing true, false, and <em>unknown</em>, which is
+the result when two nulls are compared. Boolean combinators (<code>AND</code> and <code>OR</code>)
+handle these values in different ways. Beam abstracts some of this difference
+away, if you ask it to.</p>
+<h3 id="haskell-like-comparisons">Haskell-like comparisons</h3>
+<p>Haskell provides much more reasonable equality between potentially optional
+values. For example, <code>Nothing == Nothing</code> always! SQL does not provide a similar
+guarantee. However, beam can emulate Haskell-like equality in SQL using the
+<code>==.</code> operator. This uses a <code>CASE .. WHEN ..</code> statement or a special operator
+that properly handles <code>NULL</code>s in your given backend. Depending on your backend,
+this can severely impact performance, but it's 'correct'.</p>
+<p>For example, to find all customers living in Berlin:</p>
+<p>
+                <div class="code-nav-container">
+                    
+        <ul class="nav nav-tabs">
+            
+        <li class="nav-item">
+            <a href="#tab-1-Haskell" aria-controls="tab-1-Haskell" role="tab" data-toggle="tab" data-lang="haskell">Haskell</a>
+        </li>
+    
+        <li class="nav-item">
+            <a href="#tab-1-Sqlite" aria-controls="tab-1-Sqlite" role="tab" data-toggle="tab" data-lang="sql">Sqlite</a>
+        </li>
+    
+        <li class="nav-item">
+            <a href="#tab-1-Postgres" aria-controls="tab-1-Postgres" role="tab" data-toggle="tab" data-lang="sql">Postgres</a>
+        </li>
+    
+        </ul>
+    
+        <div class="tab-content">
+            
+        <div role="tabpanel" class="tab-pane active" id="tab-1-Haskell">
+            <div class="codehilite"><pre><span></span><span class="nf">filter_</span> <span class="p">(</span><span class="nf">\</span><span class="n">s</span> <span class="ow">-&gt;</span> <span class="n">addressCity</span> <span class="p">(</span><span class="n">customerAddress</span> <span class="n">s</span><span class="p">)</span> <span class="o">==.</span> <span class="n">val_</span> <span class="p">(</span><span class="kt">Just</span> <span class="s">&quot;Berlin&quot;</span><span class="p">))</span> <span class="o">$</span>
+  <span class="n">all_</span> <span class="p">(</span><span class="n">customer</span> <span class="n">chinookDb</span><span class="p">)</span>
+</pre></div>
+
+        </div>
+    
+        <div role="tabpanel" class="tab-pane " id="tab-1-Sqlite">
+            <div class="codehilite"><pre><span></span><span class="k">SELECT</span> <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;CustomerId&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res0&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;FirstName&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res1&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;LastName&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res2&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;Company&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res3&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;Address&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res4&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;City&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res5&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;State&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res6&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;Country&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res7&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;PostalCode&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res8&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;Phone&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res9&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;Fax&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res10&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;Email&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res11&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;SupportRepId&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res12&quot;</span>
+<span class="k">FROM</span> <span class="ss">&quot;Customer&quot;</span> <span class="k">AS</span> <span class="ss">&quot;t0&quot;</span>
+<span class="k">WHERE</span> <span class="k">CASE</span>
+          <span class="k">WHEN</span> <span class="p">((</span><span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;City&quot;</span><span class="p">)</span> <span class="k">IS</span> <span class="k">NULL</span><span class="p">)</span>
+               <span class="k">AND</span> <span class="p">((</span><span class="o">?</span><span class="p">)</span> <span class="k">IS</span> <span class="k">NULL</span><span class="p">)</span> <span class="k">THEN</span> <span class="o">?</span>
+          <span class="k">WHEN</span> <span class="p">((</span><span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;City&quot;</span><span class="p">)</span> <span class="k">IS</span> <span class="k">NULL</span><span class="p">)</span>
+               <span class="k">OR</span> <span class="p">((</span><span class="o">?</span><span class="p">)</span> <span class="k">IS</span> <span class="k">NULL</span><span class="p">)</span> <span class="k">THEN</span> <span class="o">?</span>
+          <span class="k">ELSE</span> <span class="p">(</span><span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;City&quot;</span><span class="p">)</span><span class="o">=</span><span class="p">(</span><span class="o">?</span><span class="p">)</span>
+      <span class="k">END</span><span class="p">;</span>
+
+<span class="c1">-- With values: [SQLText &quot;Berlin&quot;,SQLInteger 1,SQLText &quot;Berlin&quot;,SQLInteger 0,SQLText &quot;Berlin&quot;]</span>
+</pre></div>
+
+        </div>
+    
+        <div role="tabpanel" class="tab-pane " id="tab-1-Postgres">
+            <div class="codehilite"><pre><span></span><span class="k">SELECT</span> <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;CustomerId&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res0&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;FirstName&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res1&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;LastName&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res2&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;Company&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res3&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;Address&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res4&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;City&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res5&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;State&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res6&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;Country&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res7&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;PostalCode&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res8&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;Phone&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res9&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;Fax&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res10&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;Email&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res11&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;SupportRepId&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res12&quot;</span>
+<span class="k">FROM</span> <span class="ss">&quot;Customer&quot;</span> <span class="k">AS</span> <span class="ss">&quot;t0&quot;</span>
+<span class="k">WHERE</span> <span class="p">(</span><span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;City&quot;</span><span class="p">)</span> <span class="k">IS</span> <span class="k">NOT</span> <span class="k">DISTINCT</span>
+  <span class="k">FROM</span> <span class="p">(</span><span class="s1">&#39;Berlin&#39;</span><span class="p">)</span>
+</pre></div>
+
+        </div>
+    
+        </div>
+    
+                </div>
+                    </p>
+<p>Notice that SQLite uses a <code>CASE .. WHEN ..</code> statement, while Postgres uses the
+<code>IS NOT DISTINCT FROM</code> operator.</p>
+<p>The inequality operator is named <code>/=.</code>, as expected. Note that both <code>==.</code> and
+<code>/=.</code> return a SQL expression whose type is <code>Bool</code>.</p>
+<h3 id="sql-like-comparisons">SQL-like comparisons</h3>
+<p>Beam also provides equality operators that act like their underlying SQL
+counterparts. These operators map most directly to the SQL <code>=</code> and <code>&lt;&gt;</code>
+operators, but they require you to explicitly handle the possibility of
+<code>NULL</code>s. These operators are named <code>==?.</code> and <code>/=?.</code> respectively.</p>
+<p>Unlike <code>==.</code> and <code>/=.</code>, these operators return an expression of type
+<code>SqlBool</code>. <code>SqlBool</code> is a type that can only be manipulated as part of a SQL
+expression, and cannot be serialized or deserialized to/from Haskell. You need
+to convert it to a <code>Bool</code> value explicitly in order to get the result or use it
+with more advanced operators, such as <code>CASE .. WHEN ..</code>.</p>
+<p>In SQL, you can handle potentially unknown comparisons using the <code>IS TRUE</code>, <code>IS
+NOT TRUE</code>, <code>IS FALSE</code>, <code>IS NOT FALSE</code>, <code>IS UNKNOWN</code>, and <code>IS NOT UNKNOWN</code>
+operators. These are provided as the beam functions <code>isTrue_</code>, <code>isNotTrue_</code>,
+etc. These each take a SQL expression of type <code>SqlBool</code> and return one of type
+<code>Bool</code>.</p>
+<p>For example, to join every employee and customer who live in the same city, but
+using SQL-like equality and making sure the comparison really is true (i.e.,
+customers and employees who both have <code>NULL</code> cities will not be included).</p>
+<p>
+                <div class="code-nav-container">
+                    
+        <ul class="nav nav-tabs">
+            
+        <li class="nav-item">
+            <a href="#tab-2-Haskell" aria-controls="tab-2-Haskell" role="tab" data-toggle="tab" data-lang="haskell">Haskell</a>
+        </li>
+    
+        <li class="nav-item">
+            <a href="#tab-2-Sqlite" aria-controls="tab-2-Sqlite" role="tab" data-toggle="tab" data-lang="sql">Sqlite</a>
+        </li>
+    
+        <li class="nav-item">
+            <a href="#tab-2-Postgres" aria-controls="tab-2-Postgres" role="tab" data-toggle="tab" data-lang="sql">Postgres</a>
+        </li>
+    
+        </ul>
+    
+        <div class="tab-content">
+            
+        <div role="tabpanel" class="tab-pane active" id="tab-2-Haskell">
+            <div class="codehilite"><pre><span></span><span class="kr">do</span> <span class="n">c</span> <span class="ow">&lt;-</span> <span class="n">all_</span> <span class="p">(</span><span class="n">customer</span> <span class="n">chinookDb</span><span class="p">)</span>
+   <span class="n">e</span> <span class="ow">&lt;-</span> <span class="n">join_</span> <span class="p">(</span><span class="n">employee</span> <span class="n">chinookDb</span><span class="p">)</span> <span class="o">$</span> <span class="nf">\</span><span class="n">e</span> <span class="ow">-&gt;</span>
+        <span class="n">isTrue_</span> <span class="p">(</span><span class="n">addressCity</span> <span class="p">(</span><span class="n">customerAddress</span> <span class="n">c</span><span class="p">)</span> <span class="o">==?.</span> <span class="n">addressCity</span> <span class="p">(</span><span class="n">employeeAddress</span> <span class="n">e</span><span class="p">))</span>
+   <span class="n">pure</span> <span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">e</span><span class="p">)</span>
+</pre></div>
+
+        </div>
+    
+        <div role="tabpanel" class="tab-pane " id="tab-2-Sqlite">
+            <div class="codehilite"><pre><span></span><span class="k">SELECT</span> <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;CustomerId&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res0&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;FirstName&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res1&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;LastName&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res2&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;Company&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res3&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;Address&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res4&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;City&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res5&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;State&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res6&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;Country&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res7&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;PostalCode&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res8&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;Phone&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res9&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;Fax&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res10&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;Email&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res11&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;SupportRepId&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res12&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t1&quot;</span><span class="p">.</span><span class="ss">&quot;EmployeeId&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res13&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t1&quot;</span><span class="p">.</span><span class="ss">&quot;LastName&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res14&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t1&quot;</span><span class="p">.</span><span class="ss">&quot;FirstName&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res15&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t1&quot;</span><span class="p">.</span><span class="ss">&quot;Title&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res16&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t1&quot;</span><span class="p">.</span><span class="ss">&quot;ReportsTo&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res17&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t1&quot;</span><span class="p">.</span><span class="ss">&quot;BirthDate&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res18&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t1&quot;</span><span class="p">.</span><span class="ss">&quot;HireDate&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res19&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t1&quot;</span><span class="p">.</span><span class="ss">&quot;Address&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res20&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t1&quot;</span><span class="p">.</span><span class="ss">&quot;City&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res21&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t1&quot;</span><span class="p">.</span><span class="ss">&quot;State&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res22&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t1&quot;</span><span class="p">.</span><span class="ss">&quot;Country&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res23&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t1&quot;</span><span class="p">.</span><span class="ss">&quot;PostalCode&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res24&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t1&quot;</span><span class="p">.</span><span class="ss">&quot;Phone&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res25&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t1&quot;</span><span class="p">.</span><span class="ss">&quot;Fax&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res26&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t1&quot;</span><span class="p">.</span><span class="ss">&quot;Email&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res27&quot;</span>
+<span class="k">FROM</span> <span class="ss">&quot;Customer&quot;</span> <span class="k">AS</span> <span class="ss">&quot;t0&quot;</span>
+<span class="k">INNER</span> <span class="k">JOIN</span> <span class="ss">&quot;Employee&quot;</span> <span class="k">AS</span> <span class="ss">&quot;t1&quot;</span> <span class="k">ON</span> <span class="p">((</span><span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;City&quot;</span><span class="p">)</span><span class="o">=</span><span class="p">(</span><span class="ss">&quot;t1&quot;</span><span class="p">.</span><span class="ss">&quot;City&quot;</span><span class="p">))</span> <span class="k">IS</span> <span class="mi">1</span><span class="p">;</span>
+
+<span class="c1">-- With values: []</span>
+</pre></div>
+
+        </div>
+    
+        <div role="tabpanel" class="tab-pane " id="tab-2-Postgres">
+            <div class="codehilite"><pre><span></span><span class="k">SELECT</span> <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;CustomerId&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res0&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;FirstName&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res1&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;LastName&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res2&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;Company&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res3&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;Address&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res4&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;City&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res5&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;State&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res6&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;Country&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res7&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;PostalCode&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res8&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;Phone&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res9&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;Fax&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res10&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;Email&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res11&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;SupportRepId&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res12&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t1&quot;</span><span class="p">.</span><span class="ss">&quot;EmployeeId&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res13&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t1&quot;</span><span class="p">.</span><span class="ss">&quot;LastName&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res14&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t1&quot;</span><span class="p">.</span><span class="ss">&quot;FirstName&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res15&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t1&quot;</span><span class="p">.</span><span class="ss">&quot;Title&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res16&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t1&quot;</span><span class="p">.</span><span class="ss">&quot;ReportsTo&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res17&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t1&quot;</span><span class="p">.</span><span class="ss">&quot;BirthDate&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res18&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t1&quot;</span><span class="p">.</span><span class="ss">&quot;HireDate&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res19&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t1&quot;</span><span class="p">.</span><span class="ss">&quot;Address&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res20&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t1&quot;</span><span class="p">.</span><span class="ss">&quot;City&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res21&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t1&quot;</span><span class="p">.</span><span class="ss">&quot;State&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res22&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t1&quot;</span><span class="p">.</span><span class="ss">&quot;Country&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res23&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t1&quot;</span><span class="p">.</span><span class="ss">&quot;PostalCode&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res24&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t1&quot;</span><span class="p">.</span><span class="ss">&quot;Phone&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res25&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t1&quot;</span><span class="p">.</span><span class="ss">&quot;Fax&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res26&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t1&quot;</span><span class="p">.</span><span class="ss">&quot;Email&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res27&quot;</span>
+<span class="k">FROM</span> <span class="ss">&quot;Customer&quot;</span> <span class="k">AS</span> <span class="ss">&quot;t0&quot;</span>
+<span class="k">INNER</span> <span class="k">JOIN</span> <span class="ss">&quot;Employee&quot;</span> <span class="k">AS</span> <span class="ss">&quot;t1&quot;</span> <span class="k">ON</span> <span class="p">((</span><span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;City&quot;</span><span class="p">)</span> <span class="o">=</span> <span class="p">(</span><span class="ss">&quot;t1&quot;</span><span class="p">.</span><span class="ss">&quot;City&quot;</span><span class="p">))</span> <span class="k">IS</span> <span class="k">TRUE</span>
+</pre></div>
+
+        </div>
+    
+        </div>
+    
+                </div>
+                    </p>
+<p>Thinking of which <code>IS ..</code> operator to use can be confusing. If you have a
+default value you'd like to return in the case of an unknown comparison, use the
+<code>unknownAs_</code> function. For example, if we want to treat unknown values as <code>True</code>
+instead (i.e, we want customers and employees who both have <code>NULL</code> cities to be
+included)</p>
+<p>
+                <div class="code-nav-container">
+                    
+        <ul class="nav nav-tabs">
+            
+        <li class="nav-item">
+            <a href="#tab-3-Haskell" aria-controls="tab-3-Haskell" role="tab" data-toggle="tab" data-lang="haskell">Haskell</a>
+        </li>
+    
+        <li class="nav-item">
+            <a href="#tab-3-Sqlite" aria-controls="tab-3-Sqlite" role="tab" data-toggle="tab" data-lang="sql">Sqlite</a>
+        </li>
+    
+        <li class="nav-item">
+            <a href="#tab-3-Postgres" aria-controls="tab-3-Postgres" role="tab" data-toggle="tab" data-lang="sql">Postgres</a>
+        </li>
+    
+        </ul>
+    
+        <div class="tab-content">
+            
+        <div role="tabpanel" class="tab-pane active" id="tab-3-Haskell">
+            <div class="codehilite"><pre><span></span><span class="kr">do</span> <span class="n">c</span> <span class="ow">&lt;-</span> <span class="n">all_</span> <span class="p">(</span><span class="n">customer</span> <span class="n">chinookDb</span><span class="p">)</span>
+   <span class="n">e</span> <span class="ow">&lt;-</span> <span class="n">join_</span> <span class="p">(</span><span class="n">employee</span> <span class="n">chinookDb</span><span class="p">)</span> <span class="o">$</span> <span class="nf">\</span><span class="n">e</span> <span class="ow">-&gt;</span>
+        <span class="n">unknownAs_</span> <span class="kt">True</span> <span class="p">(</span><span class="n">addressCity</span> <span class="p">(</span><span class="n">customerAddress</span> <span class="n">c</span><span class="p">)</span> <span class="o">==?.</span> <span class="n">addressCity</span> <span class="p">(</span><span class="n">employeeAddress</span> <span class="n">e</span><span class="p">))</span>
+   <span class="n">pure</span> <span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">e</span><span class="p">)</span>
+</pre></div>
+
+        </div>
+    
+        <div role="tabpanel" class="tab-pane " id="tab-3-Sqlite">
+            <div class="codehilite"><pre><span></span><span class="k">SELECT</span> <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;CustomerId&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res0&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;FirstName&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res1&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;LastName&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res2&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;Company&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res3&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;Address&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res4&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;City&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res5&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;State&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res6&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;Country&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res7&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;PostalCode&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res8&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;Phone&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res9&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;Fax&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res10&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;Email&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res11&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;SupportRepId&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res12&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t1&quot;</span><span class="p">.</span><span class="ss">&quot;EmployeeId&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res13&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t1&quot;</span><span class="p">.</span><span class="ss">&quot;LastName&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res14&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t1&quot;</span><span class="p">.</span><span class="ss">&quot;FirstName&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res15&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t1&quot;</span><span class="p">.</span><span class="ss">&quot;Title&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res16&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t1&quot;</span><span class="p">.</span><span class="ss">&quot;ReportsTo&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res17&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t1&quot;</span><span class="p">.</span><span class="ss">&quot;BirthDate&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res18&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t1&quot;</span><span class="p">.</span><span class="ss">&quot;HireDate&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res19&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t1&quot;</span><span class="p">.</span><span class="ss">&quot;Address&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res20&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t1&quot;</span><span class="p">.</span><span class="ss">&quot;City&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res21&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t1&quot;</span><span class="p">.</span><span class="ss">&quot;State&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res22&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t1&quot;</span><span class="p">.</span><span class="ss">&quot;Country&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res23&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t1&quot;</span><span class="p">.</span><span class="ss">&quot;PostalCode&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res24&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t1&quot;</span><span class="p">.</span><span class="ss">&quot;Phone&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res25&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t1&quot;</span><span class="p">.</span><span class="ss">&quot;Fax&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res26&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t1&quot;</span><span class="p">.</span><span class="ss">&quot;Email&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res27&quot;</span>
+<span class="k">FROM</span> <span class="ss">&quot;Customer&quot;</span> <span class="k">AS</span> <span class="ss">&quot;t0&quot;</span>
+<span class="k">INNER</span> <span class="k">JOIN</span> <span class="ss">&quot;Employee&quot;</span> <span class="k">AS</span> <span class="ss">&quot;t1&quot;</span> <span class="k">ON</span> <span class="p">((</span><span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;City&quot;</span><span class="p">)</span><span class="o">=</span><span class="p">(</span><span class="ss">&quot;t1&quot;</span><span class="p">.</span><span class="ss">&quot;City&quot;</span><span class="p">))</span> <span class="k">IS</span> <span class="k">NOT</span> <span class="mi">0</span><span class="p">;</span>
+
+<span class="c1">-- With values: []</span>
+</pre></div>
+
+        </div>
+    
+        <div role="tabpanel" class="tab-pane " id="tab-3-Postgres">
+            <div class="codehilite"><pre><span></span><span class="k">SELECT</span> <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;CustomerId&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res0&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;FirstName&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res1&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;LastName&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res2&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;Company&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res3&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;Address&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res4&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;City&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res5&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;State&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res6&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;Country&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res7&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;PostalCode&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res8&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;Phone&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res9&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;Fax&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res10&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;Email&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res11&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;SupportRepId&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res12&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t1&quot;</span><span class="p">.</span><span class="ss">&quot;EmployeeId&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res13&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t1&quot;</span><span class="p">.</span><span class="ss">&quot;LastName&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res14&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t1&quot;</span><span class="p">.</span><span class="ss">&quot;FirstName&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res15&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t1&quot;</span><span class="p">.</span><span class="ss">&quot;Title&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res16&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t1&quot;</span><span class="p">.</span><span class="ss">&quot;ReportsTo&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res17&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t1&quot;</span><span class="p">.</span><span class="ss">&quot;BirthDate&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res18&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t1&quot;</span><span class="p">.</span><span class="ss">&quot;HireDate&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res19&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t1&quot;</span><span class="p">.</span><span class="ss">&quot;Address&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res20&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t1&quot;</span><span class="p">.</span><span class="ss">&quot;City&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res21&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t1&quot;</span><span class="p">.</span><span class="ss">&quot;State&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res22&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t1&quot;</span><span class="p">.</span><span class="ss">&quot;Country&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res23&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t1&quot;</span><span class="p">.</span><span class="ss">&quot;PostalCode&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res24&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t1&quot;</span><span class="p">.</span><span class="ss">&quot;Phone&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res25&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t1&quot;</span><span class="p">.</span><span class="ss">&quot;Fax&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res26&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t1&quot;</span><span class="p">.</span><span class="ss">&quot;Email&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res27&quot;</span>
+<span class="k">FROM</span> <span class="ss">&quot;Customer&quot;</span> <span class="k">AS</span> <span class="ss">&quot;t0&quot;</span>
+<span class="k">INNER</span> <span class="k">JOIN</span> <span class="ss">&quot;Employee&quot;</span> <span class="k">AS</span> <span class="ss">&quot;t1&quot;</span> <span class="k">ON</span> <span class="p">((</span><span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;City&quot;</span><span class="p">)</span> <span class="o">=</span> <span class="p">(</span><span class="ss">&quot;t1&quot;</span><span class="p">.</span><span class="ss">&quot;City&quot;</span><span class="p">))</span> <span class="k">IS</span> <span class="k">NOT</span> <span class="k">FALSE</span>
+</pre></div>
+
+        </div>
+    
+        </div>
+    
+                </div>
+                    </p>
 <h3 id="quantified-comparison">Quantified comparison</h3>
 <p>SQL also allows comparisons to be <em>quantified</em>. For example, the SQL expression
 <code>a == ANY(b)</code> evaluates to true only if one row of <code>b</code> is equal to <code>a</code>.
@@ -979,6 +1451,111 @@ argument of these operators is of type <code>QQuantified</code>. You can create 
 functions, which correspond to the <code>ANY</code> and <code>ALL</code> syntax respectively. <code>anyOf_</code>
 and <code>allOf_</code> take <code>Q</code> expressions (representing a query) and <code>anyIn_</code> and
 <code>allIn_</code> take lists of expressions.</p>
+<p>Quantified comparisons are always performed according to SQL semantics, meaning
+that they return values of type <code>SqlBOol</code>. This is because proper NULL handling
+with quantified comparisons cannot be expressed in a reasonable way. Use the
+functions described in <a href="#sql-like-comparisons">the section above</a>.</p>
+<p>For example, to get all invoice lines containing tracks longer than 3 minutes:</p>
+<p>
+                <div class="code-nav-container">
+                    
+        <ul class="nav nav-tabs">
+            
+        <li class="nav-item">
+            <a href="#tab-4-Haskell" aria-controls="tab-4-Haskell" role="tab" data-toggle="tab" data-lang="haskell">Haskell</a>
+        </li>
+    
+        <li class="nav-item">
+            <a href="#tab-4-Postgres" aria-controls="tab-4-Postgres" role="tab" data-toggle="tab" data-lang="sql">Postgres</a>
+        </li>
+    
+        </ul>
+    
+        <div class="tab-content">
+            
+        <div role="tabpanel" class="tab-pane active" id="tab-4-Haskell">
+            <div class="codehilite"><pre><span></span><span class="kr">let</span> <span class="n">tracksLongerThanThreeMinutes</span> <span class="ow">=</span>
+      <span class="n">fmap</span> <span class="n">trackId</span> <span class="o">$</span>
+      <span class="n">filter_</span> <span class="p">(</span><span class="nf">\</span><span class="n">t</span> <span class="ow">-&gt;</span> <span class="n">trackMilliseconds</span> <span class="n">t</span> <span class="o">&gt;=.</span> <span class="mi">180000</span><span class="p">)</span> <span class="o">$</span>
+        <span class="n">all_</span> <span class="p">(</span><span class="n">track</span> <span class="n">chinookDb</span><span class="p">)</span>
+<span class="kr">in</span> <span class="n">filter_</span> <span class="p">(</span><span class="nf">\</span><span class="n">ln</span> <span class="ow">-&gt;</span> <span class="kr">let</span> <span class="kt">TrackId</span> <span class="n">lnTrackId</span> <span class="ow">=</span> <span class="n">invoiceLineTrack</span> <span class="n">ln</span>
+                   <span class="kr">in</span> <span class="n">unknownAs_</span> <span class="kt">False</span> <span class="p">(</span><span class="n">lnTrackId</span> <span class="o">==*.</span> <span class="n">anyOf_</span> <span class="n">tracksLongerThanThreeMinutes</span><span class="p">))</span> <span class="o">$</span>
+     <span class="n">all_</span> <span class="p">(</span><span class="n">invoiceLine</span> <span class="n">chinookDb</span><span class="p">)</span>
+</pre></div>
+
+        </div>
+    
+        <div role="tabpanel" class="tab-pane " id="tab-4-Postgres">
+            <div class="codehilite"><pre><span></span><span class="k">SELECT</span> <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;InvoiceLineId&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res0&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;InvoiceId&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res1&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;TrackId&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res2&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;UnitPrice&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res3&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;Quantity&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res4&quot;</span>
+<span class="k">FROM</span> <span class="ss">&quot;InvoiceLine&quot;</span> <span class="k">AS</span> <span class="ss">&quot;t0&quot;</span>
+<span class="k">WHERE</span> <span class="p">((</span><span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;TrackId&quot;</span><span class="p">)</span> <span class="o">=</span> <span class="k">ANY</span>
+         <span class="p">(</span><span class="k">SELECT</span> <span class="ss">&quot;sub_t0&quot;</span><span class="p">.</span><span class="ss">&quot;TrackId&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res0&quot;</span>
+          <span class="k">FROM</span> <span class="ss">&quot;Track&quot;</span> <span class="k">AS</span> <span class="ss">&quot;sub_t0&quot;</span>
+          <span class="k">WHERE</span> <span class="p">(</span><span class="ss">&quot;sub_t0&quot;</span><span class="p">.</span><span class="ss">&quot;Milliseconds&quot;</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="p">(</span><span class="mi">180000</span><span class="p">)))</span> <span class="k">IS</span> <span class="k">TRUE</span>
+</pre></div>
+
+        </div>
+    
+        </div>
+    
+                </div>
+                    </p>
+<p>We can also supply a concrete list of values. For example to get everyone living
+in either Los Angeles or Manila:</p>
+<p>
+                <div class="code-nav-container">
+                    
+        <ul class="nav nav-tabs">
+            
+        <li class="nav-item">
+            <a href="#tab-5-Haskell" aria-controls="tab-5-Haskell" role="tab" data-toggle="tab" data-lang="haskell">Haskell</a>
+        </li>
+    
+        <li class="nav-item">
+            <a href="#tab-5-Postgres" aria-controls="tab-5-Postgres" role="tab" data-toggle="tab" data-lang="sql">Postgres</a>
+        </li>
+    
+        </ul>
+    
+        <div class="tab-content">
+            
+        <div role="tabpanel" class="tab-pane active" id="tab-5-Haskell">
+            <div class="codehilite"><pre><span></span><span class="nf">filter_</span> <span class="p">(</span><span class="nf">\</span><span class="n">c</span> <span class="ow">-&gt;</span>  <span class="n">unknownAs_</span> <span class="kt">False</span> <span class="p">(</span><span class="n">addressCity</span> <span class="p">(</span><span class="n">customerAddress</span> <span class="n">c</span><span class="p">)</span> <span class="o">==*.</span> <span class="n">anyIn_</span> <span class="p">[</span> <span class="n">just_</span> <span class="s">&quot;Los Angeles&quot;</span><span class="p">,</span> <span class="n">just_</span> <span class="s">&quot;Manila&quot;</span> <span class="p">]))</span> <span class="o">$</span>
+     <span class="n">all_</span> <span class="p">(</span><span class="n">customer</span> <span class="n">chinookDb</span><span class="p">)</span>
+</pre></div>
+
+        </div>
+    
+        <div role="tabpanel" class="tab-pane " id="tab-5-Postgres">
+            <div class="codehilite"><pre><span></span><span class="k">SELECT</span> <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;CustomerId&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res0&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;FirstName&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res1&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;LastName&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res2&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;Company&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res3&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;Address&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res4&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;City&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res5&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;State&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res6&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;Country&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res7&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;PostalCode&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res8&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;Phone&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res9&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;Fax&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res10&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;Email&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res11&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;SupportRepId&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res12&quot;</span>
+<span class="k">FROM</span> <span class="ss">&quot;Customer&quot;</span> <span class="k">AS</span> <span class="ss">&quot;t0&quot;</span>
+<span class="k">WHERE</span> <span class="p">((</span><span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;City&quot;</span><span class="p">)</span> <span class="o">=</span> <span class="k">ANY</span> <span class="p">(</span>
+                            <span class="k">VALUES</span> <span class="p">(</span><span class="s1">&#39;Los Angeles&#39;</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;Manila&#39;</span><span class="p">)))</span> <span class="k">IS</span> <span class="k">TRUE</span>
+</pre></div>
+
+        </div>
+    
+        </div>
+    
+                </div>
+                    </p>
+<h3 id="the-in-predicate">The <code>IN</code> predicate</h3>
 <p>You can also use <code>in_</code> to use the common <code>IN</code> predicate.</p>
 <p>
                 <div class="code-nav-container">
@@ -986,22 +1563,22 @@ and <code>allOf_</code> take <code>Q</code> expressions (representing a query) a
         <ul class="nav nav-tabs">
             
         <li class="nav-item">
-            <a href="#tab-0-haskell" aria-controls="tab-0-haskell" role="tab" data-toggle="tab" data-lang="haskell">Haskell</a>
+            <a href="#tab-6-Haskell" aria-controls="tab-6-Haskell" role="tab" data-toggle="tab" data-lang="haskell">Haskell</a>
         </li>
     
         <li class="nav-item">
-            <a href="#tab-0-sqlite3" aria-controls="tab-0-sqlite3" role="tab" data-toggle="tab" data-lang="sqlite3">Sqlite3</a>
+            <a href="#tab-6-Sqlite" aria-controls="tab-6-Sqlite" role="tab" data-toggle="tab" data-lang="sql">Sqlite</a>
         </li>
     
         <li class="nav-item">
-            <a href="#tab-0-postgres" aria-controls="tab-0-postgres" role="tab" data-toggle="tab" data-lang="postgres">Postgres</a>
+            <a href="#tab-6-Postgres" aria-controls="tab-6-Postgres" role="tab" data-toggle="tab" data-lang="sql">Postgres</a>
         </li>
     
         </ul>
     
         <div class="tab-content">
             
-        <div role="tabpanel" class="tab-pane active" id="tab-0-haskell">
+        <div role="tabpanel" class="tab-pane active" id="tab-6-Haskell">
             <div class="codehilite"><pre><span></span><span class="nf">limit_</span> <span class="mi">10</span> <span class="o">$</span>
   <span class="n">filter_</span> <span class="p">(</span><span class="nf">\</span><span class="n">customer</span> <span class="ow">-&gt;</span> <span class="n">customerFirstName</span> <span class="n">customer</span> <span class="p">`</span><span class="n">in_</span><span class="p">`</span> <span class="p">[</span><span class="n">val_</span> <span class="s">&quot;Joe&quot;</span><span class="p">,</span> <span class="n">val_</span> <span class="s">&quot;Sam&quot;</span><span class="p">,</span> <span class="n">val_</span> <span class="s">&quot;Elizabeth&quot;</span><span class="p">])</span> <span class="o">$</span>
   <span class="n">all_</span> <span class="p">(</span><span class="n">customer</span> <span class="n">chinookDb</span><span class="p">)</span>
@@ -1009,50 +1586,50 @@ and <code>allOf_</code> take <code>Q</code> expressions (representing a query) a
 
         </div>
     
-        <div role="tabpanel" class="tab-pane " id="tab-0-sqlite3">
-            <div class="codehilite"><pre><span></span><span class="go">SELECT &quot;t0&quot;.&quot;CustomerId&quot; AS &quot;res0&quot;,</span>
-<span class="go">       &quot;t0&quot;.&quot;FirstName&quot; AS &quot;res1&quot;,</span>
-<span class="go">       &quot;t0&quot;.&quot;LastName&quot; AS &quot;res2&quot;,</span>
-<span class="go">       &quot;t0&quot;.&quot;Company&quot; AS &quot;res3&quot;,</span>
-<span class="go">       &quot;t0&quot;.&quot;Address&quot; AS &quot;res4&quot;,</span>
-<span class="go">       &quot;t0&quot;.&quot;City&quot; AS &quot;res5&quot;,</span>
-<span class="go">       &quot;t0&quot;.&quot;State&quot; AS &quot;res6&quot;,</span>
-<span class="go">       &quot;t0&quot;.&quot;Country&quot; AS &quot;res7&quot;,</span>
-<span class="go">       &quot;t0&quot;.&quot;PostalCode&quot; AS &quot;res8&quot;,</span>
-<span class="go">       &quot;t0&quot;.&quot;Phone&quot; AS &quot;res9&quot;,</span>
-<span class="go">       &quot;t0&quot;.&quot;Fax&quot; AS &quot;res10&quot;,</span>
-<span class="go">       &quot;t0&quot;.&quot;Email&quot; AS &quot;res11&quot;,</span>
-<span class="go">       &quot;t0&quot;.&quot;SupportRepId&quot; AS &quot;res12&quot;</span>
-<span class="go">FROM &quot;Customer&quot; AS &quot;t0&quot;</span>
-<span class="go">WHERE (&quot;t0&quot;.&quot;FirstName&quot;) IN (?,</span>
-<span class="go">                             ?,</span>
-<span class="go">                             ?)</span>
-<span class="go">LIMIT 10;</span>
+        <div role="tabpanel" class="tab-pane " id="tab-6-Sqlite">
+            <div class="codehilite"><pre><span></span><span class="k">SELECT</span> <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;CustomerId&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res0&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;FirstName&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res1&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;LastName&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res2&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;Company&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res3&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;Address&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res4&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;City&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res5&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;State&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res6&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;Country&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res7&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;PostalCode&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res8&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;Phone&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res9&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;Fax&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res10&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;Email&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res11&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;SupportRepId&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res12&quot;</span>
+<span class="k">FROM</span> <span class="ss">&quot;Customer&quot;</span> <span class="k">AS</span> <span class="ss">&quot;t0&quot;</span>
+<span class="k">WHERE</span> <span class="p">(</span><span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;FirstName&quot;</span><span class="p">)</span> <span class="k">IN</span> <span class="p">(</span><span class="o">?</span><span class="p">,</span>
+                             <span class="o">?</span><span class="p">,</span>
+                             <span class="o">?</span><span class="p">)</span>
+<span class="k">LIMIT</span> <span class="mi">10</span><span class="p">;</span>
 
-<span class="go">-- With values: [SQLText &quot;Joe&quot;,SQLText &quot;Sam&quot;,SQLText &quot;Elizabeth&quot;]</span>
+<span class="c1">-- With values: [SQLText &quot;Joe&quot;,SQLText &quot;Sam&quot;,SQLText &quot;Elizabeth&quot;]</span>
 </pre></div>
 
         </div>
     
-        <div role="tabpanel" class="tab-pane " id="tab-0-postgres">
-            <div class="codehilite"><pre><span></span><span class="k">SELECT</span> <span class="s s-Name">&quot;t0&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;CustomerId&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;res0&quot;</span><span class="p">,</span>
-       <span class="s s-Name">&quot;t0&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;FirstName&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;res1&quot;</span><span class="p">,</span>
-       <span class="s s-Name">&quot;t0&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;LastName&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;res2&quot;</span><span class="p">,</span>
-       <span class="s s-Name">&quot;t0&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;Company&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;res3&quot;</span><span class="p">,</span>
-       <span class="s s-Name">&quot;t0&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;Address&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;res4&quot;</span><span class="p">,</span>
-       <span class="s s-Name">&quot;t0&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;City&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;res5&quot;</span><span class="p">,</span>
-       <span class="s s-Name">&quot;t0&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;State&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;res6&quot;</span><span class="p">,</span>
-       <span class="s s-Name">&quot;t0&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;Country&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;res7&quot;</span><span class="p">,</span>
-       <span class="s s-Name">&quot;t0&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;PostalCode&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;res8&quot;</span><span class="p">,</span>
-       <span class="s s-Name">&quot;t0&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;Phone&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;res9&quot;</span><span class="p">,</span>
-       <span class="s s-Name">&quot;t0&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;Fax&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;res10&quot;</span><span class="p">,</span>
-       <span class="s s-Name">&quot;t0&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;Email&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;res11&quot;</span><span class="p">,</span>
-       <span class="s s-Name">&quot;t0&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;SupportRepId&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;res12&quot;</span>
-<span class="k">FROM</span> <span class="s s-Name">&quot;Customer&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;t0&quot;</span>
-<span class="k">WHERE</span> <span class="p">(</span><span class="s s-Name">&quot;t0&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;FirstName&quot;</span><span class="p">)</span> <span class="k">IN</span> <span class="p">(</span><span class="s1">&#39;Joe&#39;</span><span class="p">,</span>
+        <div role="tabpanel" class="tab-pane " id="tab-6-Postgres">
+            <div class="codehilite"><pre><span></span><span class="k">SELECT</span> <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;CustomerId&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res0&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;FirstName&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res1&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;LastName&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res2&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;Company&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res3&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;Address&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res4&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;City&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res5&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;State&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res6&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;Country&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res7&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;PostalCode&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res8&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;Phone&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res9&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;Fax&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res10&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;Email&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res11&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;SupportRepId&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res12&quot;</span>
+<span class="k">FROM</span> <span class="ss">&quot;Customer&quot;</span> <span class="k">AS</span> <span class="ss">&quot;t0&quot;</span>
+<span class="k">WHERE</span> <span class="p">(</span><span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;FirstName&quot;</span><span class="p">)</span> <span class="k">IN</span> <span class="p">(</span><span class="s1">&#39;Joe&#39;</span><span class="p">,</span>
                              <span class="s1">&#39;Sam&#39;</span><span class="p">,</span>
                              <span class="s1">&#39;Elizabeth&#39;</span><span class="p">)</span>
-<span class="k">LIMIT</span> <span class="mf">10</span>
+<span class="k">LIMIT</span> <span class="mi">10</span>
 </pre></div>
 
         </div>
@@ -1175,6 +1752,24 @@ if. The corresponding beam syntax is</p>
 <td align="left"><code>NOT x</code></td>
 <td align="center">SQL92</td>
 <td align="left"><code>not_ x</code></td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left"><code>LOWER (x)</code></td>
+<td align="center">SQL92</td>
+<td align="left"><code>lower_ x</code></td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left"><code>UPPER (x)</code></td>
+<td align="center">SQL92</td>
+<td align="left"><code>upper_ x</code></td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left"><code>TRIM (x)</code></td>
+<td align="center">SQL92</td>
+<td align="left"><code>trim_ x</code></td>
 <td align="left"></td>
 </tr>
 </tbody>

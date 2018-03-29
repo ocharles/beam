@@ -1026,16 +1026,19 @@ for us by the compiler at compile-time!</p>
 
 <p>Additionally, all beam tables must implement the <code>Table</code> type class, which we
 can use to declare a primary key.</p>
+<p>The only thing we need to provide is the type of the primary keys for users, and
+a function that can extract the primary key from any <code>UserT f</code> object. To do
+this, add the following lines to the instance declaration.</p>
 <div class="codehilite"><pre><span></span><span class="kr">instance</span> <span class="kt">Table</span> <span class="kt">UserT</span> <span class="kr">where</span>
+    <span class="kr">data</span> <span class="kt">PrimaryKey</span> <span class="kt">UserT</span> <span class="n">f</span> <span class="ow">=</span> <span class="kt">UserId</span> <span class="p">(</span><span class="kt">Columnar</span> <span class="n">f</span> <span class="kt">Text</span><span class="p">)</span> <span class="kr">deriving</span> <span class="kt">Generic</span>
+    <span class="n">primaryKey</span> <span class="ow">=</span> <span class="kt">UserId</span> <span class="o">.</span> <span class="n">_userEmail</span>
+<span class="kr">instance</span> <span class="kt">Beamable</span> <span class="p">(</span><span class="kt">PrimaryKey</span> <span class="kt">UserT</span><span class="p">)</span>
 </pre></div>
 
 
-<p>The only thing we need to provide is the type of the primary keys for users, and
-a function that can extract the primary key from any <code>UserT f</code> object. To do
-this, we just add the following lines to the instance declaration.</p>
-<div class="codehilite"><pre><span></span>    <span class="kr">data</span> <span class="kt">PrimaryKey</span> <span class="kt">UserT</span> <span class="n">f</span> <span class="ow">=</span> <span class="kt">UserId</span> <span class="p">(</span><span class="kt">Columnar</span> <span class="n">f</span> <span class="kt">Text</span><span class="p">)</span> <span class="kr">deriving</span> <span class="kt">Generic</span>
-    <span class="n">primaryKey</span> <span class="ow">=</span> <span class="kt">UserId</span> <span class="o">.</span> <span class="n">_userEmail</span>
-<span class="kr">instance</span> <span class="kt">Beamable</span> <span class="p">(</span><span class="kt">PrimaryKey</span> <span class="kt">UserT</span><span class="p">)</span>
+<p>The <code>data</code> declaration is similar to a toplevel data definition, construct a key
+for <code>UserT</code> with the <code>UserId</code> constructor like a regular table.</p>
+<div class="codehilite"><pre><span></span><span class="nf">userKey</span> <span class="ow">=</span> <span class="kt">UserId</span> <span class="s">&quot;john@doe.org&quot;</span>
 </pre></div>
 
 
@@ -1059,7 +1062,7 @@ entities, such as tables. Many database systems can also hold other entities
                       <span class="p">{</span> <span class="n">_shoppingCartUsers</span> <span class="ow">::</span> <span class="n">f</span> <span class="p">(</span><span class="kt">TableEntity</span> <span class="kt">UserT</span><span class="p">)</span> <span class="p">}</span>
                         <span class="kr">deriving</span> <span class="kt">Generic</span>
 
-<span class="kr">instance</span> <span class="kt">Database</span> <span class="kt">ShoppingCartDb</span>
+<span class="kr">instance</span> <span class="kt">Database</span> <span class="n">be</span> <span class="kt">ShoppingCartDb</span>
 </pre></div>
 
 
@@ -1138,22 +1141,22 @@ added. Click between the tabs to see the SQL and console output generated</p>
         <ul class="nav nav-tabs">
             
         <li class="nav-item">
-            <a href="#tab-0-haskell" aria-controls="tab-0-haskell" role="tab" data-toggle="tab" data-lang="haskell">Haskell</a>
+            <a href="#tab-0-Haskell" aria-controls="tab-0-Haskell" role="tab" data-toggle="tab" data-lang="haskell">Haskell</a>
         </li>
     
         <li class="nav-item">
-            <a href="#tab-0-sql" aria-controls="tab-0-sql" role="tab" data-toggle="tab" data-lang="sql">Sql</a>
+            <a href="#tab-0-Sql" aria-controls="tab-0-Sql" role="tab" data-toggle="tab" data-lang="sql">Sql</a>
         </li>
     
         <li class="nav-item">
-            <a href="#tab-0-output" aria-controls="tab-0-output" role="tab" data-toggle="tab" data-lang="output">Output</a>
+            <a href="#tab-0-Output" aria-controls="tab-0-Output" role="tab" data-toggle="tab" data-lang="output">Output</a>
         </li>
     
         </ul>
     
         <div class="tab-content">
             
-        <div role="tabpanel" class="tab-pane active" id="tab-0-haskell">
+        <div role="tabpanel" class="tab-pane active" id="tab-0-Haskell">
             <div class="codehilite"><pre><span></span><span class="kr">let</span> <span class="n">allUsers</span> <span class="ow">=</span> <span class="n">all_</span> <span class="p">(</span><span class="n">_shoppingCartUsers</span> <span class="n">shoppingCartDb</span><span class="p">)</span>
 
 <span class="nf">withDatabaseDebug</span> <span class="n">putStrLn</span> <span class="n">conn</span> <span class="o">$</span> <span class="kr">do</span>
@@ -1163,7 +1166,7 @@ added. Click between the tabs to see the SQL and console output generated</p>
 
         </div>
     
-        <div role="tabpanel" class="tab-pane " id="tab-0-sql">
+        <div role="tabpanel" class="tab-pane " id="tab-0-Sql">
             <div class="codehilite"><pre><span></span><span class="k">SELECT</span> <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;email&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res0&quot;</span><span class="p">,</span>
        <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;first_name&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res1&quot;</span><span class="p">,</span>
        <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;last_name&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res2&quot;</span><span class="p">,</span>
@@ -1175,7 +1178,7 @@ added. Click between the tabs to see the SQL and console output generated</p>
 
         </div>
     
-        <div role="tabpanel" class="tab-pane " id="tab-0-output">
+        <div role="tabpanel" class="tab-pane " id="tab-0-Output">
             <div class="codehilite"><pre><span></span>User {_userEmail = &quot;james@example.com&quot;,
       _userFirstName = &quot;James&quot;,
       _userLastName = &quot;Smith&quot;,
@@ -1210,22 +1213,22 @@ order the query results. This is similar to the <code>sortBy</code> function for
         <ul class="nav nav-tabs">
             
         <li class="nav-item">
-            <a href="#tab-1-haskell" aria-controls="tab-1-haskell" role="tab" data-toggle="tab" data-lang="haskell">Haskell</a>
+            <a href="#tab-1-Haskell" aria-controls="tab-1-Haskell" role="tab" data-toggle="tab" data-lang="haskell">Haskell</a>
         </li>
     
         <li class="nav-item">
-            <a href="#tab-1-sql" aria-controls="tab-1-sql" role="tab" data-toggle="tab" data-lang="sql">Sql</a>
+            <a href="#tab-1-Sql" aria-controls="tab-1-Sql" role="tab" data-toggle="tab" data-lang="sql">Sql</a>
         </li>
     
         <li class="nav-item">
-            <a href="#tab-1-output" aria-controls="tab-1-output" role="tab" data-toggle="tab" data-lang="output">Output</a>
+            <a href="#tab-1-Output" aria-controls="tab-1-Output" role="tab" data-toggle="tab" data-lang="output">Output</a>
         </li>
     
         </ul>
     
         <div class="tab-content">
             
-        <div role="tabpanel" class="tab-pane active" id="tab-1-haskell">
+        <div role="tabpanel" class="tab-pane active" id="tab-1-Haskell">
             <div class="codehilite"><pre><span></span><span class="kr">let</span> <span class="n">sortUsersByFirstName</span> <span class="ow">=</span> <span class="n">orderBy_</span> <span class="p">(</span><span class="nf">\</span><span class="n">u</span> <span class="ow">-&gt;</span> <span class="p">(</span><span class="n">asc_</span> <span class="p">(</span><span class="n">_userFirstName</span> <span class="n">u</span><span class="p">),</span> <span class="n">desc_</span> <span class="p">(</span><span class="n">_userLastName</span> <span class="n">u</span><span class="p">)))</span> <span class="p">(</span><span class="n">all_</span> <span class="p">(</span><span class="n">_shoppingCartUsers</span> <span class="n">shoppingCartDb</span><span class="p">))</span>
 
 <span class="nf">withDatabaseDebug</span> <span class="n">putStrLn</span> <span class="n">conn</span> <span class="o">$</span> <span class="kr">do</span>
@@ -1235,7 +1238,7 @@ order the query results. This is similar to the <code>sortBy</code> function for
 
         </div>
     
-        <div role="tabpanel" class="tab-pane " id="tab-1-sql">
+        <div role="tabpanel" class="tab-pane " id="tab-1-Sql">
             <div class="codehilite"><pre><span></span><span class="k">SELECT</span> <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;email&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res0&quot;</span><span class="p">,</span>
        <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;first_name&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res1&quot;</span><span class="p">,</span>
        <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;last_name&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res2&quot;</span><span class="p">,</span>
@@ -1249,7 +1252,7 @@ order the query results. This is similar to the <code>sortBy</code> function for
 
         </div>
     
-        <div role="tabpanel" class="tab-pane " id="tab-1-output">
+        <div role="tabpanel" class="tab-pane " id="tab-1-Output">
             <div class="codehilite"><pre><span></span>User {_userEmail = &quot;betty@example.com&quot;,
       _userFirstName = &quot;Betty&quot;,
       _userLastName = &quot;Jones&quot;,
@@ -1277,22 +1280,22 @@ User {_userEmail = &quot;sam@example.com&quot;,
         <ul class="nav nav-tabs">
             
         <li class="nav-item">
-            <a href="#tab-2-haskell" aria-controls="tab-2-haskell" role="tab" data-toggle="tab" data-lang="haskell">Haskell</a>
+            <a href="#tab-2-Haskell" aria-controls="tab-2-Haskell" role="tab" data-toggle="tab" data-lang="haskell">Haskell</a>
         </li>
     
         <li class="nav-item">
-            <a href="#tab-2-sql" aria-controls="tab-2-sql" role="tab" data-toggle="tab" data-lang="sql">Sql</a>
+            <a href="#tab-2-Sql" aria-controls="tab-2-Sql" role="tab" data-toggle="tab" data-lang="sql">Sql</a>
         </li>
     
         <li class="nav-item">
-            <a href="#tab-2-output" aria-controls="tab-2-output" role="tab" data-toggle="tab" data-lang="output">Output</a>
+            <a href="#tab-2-Output" aria-controls="tab-2-Output" role="tab" data-toggle="tab" data-lang="output">Output</a>
         </li>
     
         </ul>
     
         <div class="tab-content">
             
-        <div role="tabpanel" class="tab-pane active" id="tab-2-haskell">
+        <div role="tabpanel" class="tab-pane active" id="tab-2-Haskell">
             <div class="codehilite"><pre><span></span><span class="kr">let</span> <span class="n">boundedQuery</span> <span class="ow">::</span> <span class="kt">Q</span> <span class="kt">SqliteSelectSyntax</span> <span class="kr">_</span> <span class="kr">_</span> <span class="kr">_</span>
     <span class="n">boundedQuery</span> <span class="ow">=</span> <span class="n">limit_</span> <span class="mi">1</span> <span class="o">$</span> <span class="n">offset_</span> <span class="mi">1</span> <span class="o">$</span>
                    <span class="n">orderBy_</span> <span class="p">(</span><span class="n">asc_</span> <span class="o">.</span> <span class="n">_userFirstName</span><span class="p">)</span> <span class="o">$</span>
@@ -1305,7 +1308,7 @@ User {_userEmail = &quot;sam@example.com&quot;,
 
         </div>
     
-        <div role="tabpanel" class="tab-pane " id="tab-2-sql">
+        <div role="tabpanel" class="tab-pane " id="tab-2-Sql">
             <div class="codehilite"><pre><span></span><span class="k">SELECT</span> <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;email&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res0&quot;</span><span class="p">,</span>
        <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;first_name&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res1&quot;</span><span class="p">,</span>
        <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;last_name&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res2&quot;</span><span class="p">,</span>
@@ -1320,7 +1323,7 @@ User {_userEmail = &quot;sam@example.com&quot;,
 
         </div>
     
-        <div role="tabpanel" class="tab-pane " id="tab-2-output">
+        <div role="tabpanel" class="tab-pane " id="tab-2-Output">
             <div class="codehilite"><pre><span></span>User {_userEmail = &quot;james@example.com&quot;,
       _userFirstName = &quot;James&quot;,
       _userLastName = &quot;Smith&quot;,
@@ -1357,22 +1360,22 @@ record from the database.</p>
         <ul class="nav nav-tabs">
             
         <li class="nav-item">
-            <a href="#tab-3-haskell" aria-controls="tab-3-haskell" role="tab" data-toggle="tab" data-lang="haskell">Haskell</a>
+            <a href="#tab-3-Haskell" aria-controls="tab-3-Haskell" role="tab" data-toggle="tab" data-lang="haskell">Haskell</a>
         </li>
     
         <li class="nav-item">
-            <a href="#tab-3-sql" aria-controls="tab-3-sql" role="tab" data-toggle="tab" data-lang="sql">Sql</a>
+            <a href="#tab-3-Sql" aria-controls="tab-3-Sql" role="tab" data-toggle="tab" data-lang="sql">Sql</a>
         </li>
     
         <li class="nav-item">
-            <a href="#tab-3-output" aria-controls="tab-3-output" role="tab" data-toggle="tab" data-lang="output">Output</a>
+            <a href="#tab-3-Output" aria-controls="tab-3-Output" role="tab" data-toggle="tab" data-lang="output">Output</a>
         </li>
     
         </ul>
     
         <div class="tab-content">
             
-        <div role="tabpanel" class="tab-pane active" id="tab-3-haskell">
+        <div role="tabpanel" class="tab-pane active" id="tab-3-Haskell">
             <div class="codehilite"><pre><span></span><span class="kr">let</span> <span class="n">userCount</span> <span class="ow">=</span> <span class="n">aggregate_</span> <span class="p">(</span><span class="nf">\</span><span class="n">u</span> <span class="ow">-&gt;</span> <span class="n">as_</span> <span class="o">@</span><span class="kt">Int</span> <span class="n">countAll_</span><span class="p">)</span> <span class="p">(</span><span class="n">all_</span> <span class="p">(</span><span class="n">_shoppingCartUsers</span> <span class="n">shoppingCartDb</span><span class="p">))</span>
 
 <span class="nf">withDatabaseDebug</span> <span class="n">putStrLn</span> <span class="n">conn</span> <span class="o">$</span> <span class="kr">do</span>
@@ -1382,7 +1385,7 @@ record from the database.</p>
 
         </div>
     
-        <div role="tabpanel" class="tab-pane " id="tab-3-sql">
+        <div role="tabpanel" class="tab-pane " id="tab-3-Sql">
             <div class="codehilite"><pre><span></span><span class="k">SELECT</span> <span class="k">COUNT</span><span class="p">(</span><span class="o">*</span><span class="p">)</span> <span class="k">AS</span> <span class="ss">&quot;res0&quot;</span>
 <span class="k">FROM</span> <span class="ss">&quot;cart_users&quot;</span> <span class="k">AS</span> <span class="ss">&quot;t0&quot;</span><span class="p">;</span>
 
@@ -1391,7 +1394,7 @@ record from the database.</p>
 
         </div>
     
-        <div role="tabpanel" class="tab-pane " id="tab-3-output">
+        <div role="tabpanel" class="tab-pane " id="tab-3-Output">
             <div class="codehilite"><pre><span></span>We have 3 users in the database --
 </pre></div>
 
@@ -1416,18 +1419,18 @@ more users to our database. We'll demonstrate using <code>withDatabase</code> to
         <ul class="nav nav-tabs">
             
         <li class="nav-item">
-            <a href="#tab-4-haskell" aria-controls="tab-4-haskell" role="tab" data-toggle="tab" data-lang="haskell">Haskell</a>
+            <a href="#tab-4-Haskell" aria-controls="tab-4-Haskell" role="tab" data-toggle="tab" data-lang="haskell">Haskell</a>
         </li>
     
         <li class="nav-item">
-            <a href="#tab-4-sql" aria-controls="tab-4-sql" role="tab" data-toggle="tab" data-lang="sql">Sql</a>
+            <a href="#tab-4-Sql" aria-controls="tab-4-Sql" role="tab" data-toggle="tab" data-lang="sql">Sql</a>
         </li>
     
         </ul>
     
         <div class="tab-content">
             
-        <div role="tabpanel" class="tab-pane active" id="tab-4-haskell">
+        <div role="tabpanel" class="tab-pane active" id="tab-4-Haskell">
             <div class="codehilite"><pre><span></span><span class="nf">withDatabaseDebug</span> <span class="n">putStrLn</span> <span class="n">conn</span> <span class="o">$</span>
   <span class="n">runInsert</span> <span class="o">$</span>
   <span class="n">insert</span> <span class="p">(</span><span class="n">_shoppingCartUsers</span> <span class="n">shoppingCartDb</span><span class="p">)</span> <span class="o">$</span>
@@ -1440,7 +1443,7 @@ more users to our database. We'll demonstrate using <code>withDatabase</code> to
 
         </div>
     
-        <div role="tabpanel" class="tab-pane " id="tab-4-sql">
+        <div role="tabpanel" class="tab-pane " id="tab-4-Sql">
             <div class="codehilite"><pre><span></span><span class="k">INSERT</span> <span class="k">INTO</span> <span class="ss">&quot;cart_users&quot;</span><span class="p">(</span><span class="ss">&quot;email&quot;</span><span class="p">,</span>
                          <span class="ss">&quot;first_name&quot;</span><span class="p">,</span>
                          <span class="ss">&quot;last_name&quot;</span><span class="p">,</span>
@@ -1479,23 +1482,23 @@ the number of users.</p>
         <ul class="nav nav-tabs">
             
         <li class="nav-item">
-            <a href="#tab-5-haskell" aria-controls="tab-5-haskell" role="tab" data-toggle="tab" data-lang="haskell">Haskell</a>
+            <a href="#tab-5-Haskell" aria-controls="tab-5-Haskell" role="tab" data-toggle="tab" data-lang="haskell">Haskell</a>
         </li>
     
         <li class="nav-item">
-            <a href="#tab-5-sql" aria-controls="tab-5-sql" role="tab" data-toggle="tab" data-lang="sql">Sql</a>
+            <a href="#tab-5-Sql" aria-controls="tab-5-Sql" role="tab" data-toggle="tab" data-lang="sql">Sql</a>
         </li>
     
         <li class="nav-item">
-            <a href="#tab-5-output" aria-controls="tab-5-output" role="tab" data-toggle="tab" data-lang="output">Output</a>
+            <a href="#tab-5-Output" aria-controls="tab-5-Output" role="tab" data-toggle="tab" data-lang="output">Output</a>
         </li>
     
         </ul>
     
         <div class="tab-content">
             
-        <div role="tabpanel" class="tab-pane active" id="tab-5-haskell">
-            <div class="codehilite"><pre><span></span><span class="kr">let</span> <span class="n">numberOfUsersByName</span> <span class="ow">=</span> <span class="n">aggregate_</span> <span class="p">(</span><span class="nf">\</span><span class="n">u</span> <span class="ow">-&gt;</span> <span class="p">(</span><span class="n">group_</span> <span class="p">(</span><span class="n">_userFirstName</span> <span class="n">u</span><span class="p">),</span> <span class="n">as_</span> <span class="o">@</span><span class="kt">Int</span> <span class="n">countAll_</span><span class="p">))</span> <span class="o">$</span> 
+        <div role="tabpanel" class="tab-pane active" id="tab-5-Haskell">
+            <div class="codehilite"><pre><span></span><span class="kr">let</span> <span class="n">numberOfUsersByName</span> <span class="ow">=</span> <span class="n">aggregate_</span> <span class="p">(</span><span class="nf">\</span><span class="n">u</span> <span class="ow">-&gt;</span> <span class="p">(</span><span class="n">group_</span> <span class="p">(</span><span class="n">_userFirstName</span> <span class="n">u</span><span class="p">),</span> <span class="n">as_</span> <span class="o">@</span><span class="kt">Int</span> <span class="n">countAll_</span><span class="p">))</span> <span class="o">$</span>
                           <span class="n">all_</span> <span class="p">(</span><span class="n">_shoppingCartUsers</span> <span class="n">shoppingCartDb</span><span class="p">)</span>
 
 <span class="nf">withDatabaseDebug</span> <span class="n">putStrLn</span> <span class="n">conn</span> <span class="o">$</span> <span class="kr">do</span>
@@ -1505,7 +1508,7 @@ the number of users.</p>
 
         </div>
     
-        <div role="tabpanel" class="tab-pane " id="tab-5-sql">
+        <div role="tabpanel" class="tab-pane " id="tab-5-Sql">
             <div class="codehilite"><pre><span></span><span class="k">SELECT</span> <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;first_name&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res0&quot;</span><span class="p">,</span>
        <span class="k">COUNT</span><span class="p">(</span><span class="o">*</span><span class="p">)</span> <span class="k">AS</span> <span class="ss">&quot;res1&quot;</span>
 <span class="k">FROM</span> <span class="ss">&quot;cart_users&quot;</span> <span class="k">AS</span> <span class="ss">&quot;t0&quot;</span>
@@ -1516,7 +1519,7 @@ the number of users.</p>
 
         </div>
     
-        <div role="tabpanel" class="tab-pane " id="tab-5-output">
+        <div role="tabpanel" class="tab-pane " id="tab-5-Output">
             <div class="codehilite"><pre><span></span>(&quot;Betty&quot;,
  2) --
 (&quot;James&quot;,

@@ -832,18 +832,18 @@ customer, use <code>withWindow_</code> as follows.</p>
         <ul class="nav nav-tabs">
             
         <li class="nav-item">
-            <a href="#tab-0-haskell" aria-controls="tab-0-haskell" role="tab" data-toggle="tab" data-lang="haskell">Haskell</a>
+            <a href="#tab-0-Haskell" aria-controls="tab-0-Haskell" role="tab" data-toggle="tab" data-lang="haskell">Haskell</a>
         </li>
     
         <li class="nav-item">
-            <a href="#tab-0-postgres" aria-controls="tab-0-postgres" role="tab" data-toggle="tab" data-lang="postgres">Postgres</a>
+            <a href="#tab-0-Postgres" aria-controls="tab-0-Postgres" role="tab" data-toggle="tab" data-lang="sql">Postgres</a>
         </li>
     
         </ul>
     
         <div class="tab-content">
             
-        <div role="tabpanel" class="tab-pane active" id="tab-0-haskell">
+        <div role="tabpanel" class="tab-pane active" id="tab-0-Haskell">
             <div class="codehilite"><pre><span></span><span class="nf">withWindow_</span> <span class="p">(</span><span class="nf">\</span><span class="n">i</span> <span class="ow">-&gt;</span> <span class="n">frame_</span> <span class="p">(</span><span class="n">partitionBy_</span> <span class="p">(</span><span class="n">invoiceCustomer</span> <span class="n">i</span><span class="p">))</span> <span class="n">noOrder_</span> <span class="n">noBounds_</span><span class="p">)</span>
             <span class="p">(</span><span class="nf">\</span><span class="n">i</span> <span class="n">w</span> <span class="ow">-&gt;</span> <span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">avg_</span> <span class="p">(</span><span class="n">invoiceTotal</span> <span class="n">i</span><span class="p">)</span> <span class="p">`</span><span class="n">over_</span><span class="p">`</span> <span class="n">w</span><span class="p">))</span>
             <span class="p">(</span><span class="n">all_</span> <span class="p">(</span><span class="n">invoice</span> <span class="n">chinookDb</span><span class="p">))</span>
@@ -851,18 +851,18 @@ customer, use <code>withWindow_</code> as follows.</p>
 
         </div>
     
-        <div role="tabpanel" class="tab-pane " id="tab-0-postgres">
-            <div class="codehilite"><pre><span></span><span class="k">SELECT</span> <span class="s s-Name">&quot;t0&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;InvoiceId&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;res0&quot;</span><span class="p">,</span>
-       <span class="s s-Name">&quot;t0&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;CustomerId&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;res1&quot;</span><span class="p">,</span>
-       <span class="s s-Name">&quot;t0&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;InvoiceDate&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;res2&quot;</span><span class="p">,</span>
-       <span class="s s-Name">&quot;t0&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;BillingAddress&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;res3&quot;</span><span class="p">,</span>
-       <span class="s s-Name">&quot;t0&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;BillingCity&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;res4&quot;</span><span class="p">,</span>
-       <span class="s s-Name">&quot;t0&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;BillingState&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;res5&quot;</span><span class="p">,</span>
-       <span class="s s-Name">&quot;t0&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;BillingCountry&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;res6&quot;</span><span class="p">,</span>
-       <span class="s s-Name">&quot;t0&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;BillingPostalCode&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;res7&quot;</span><span class="p">,</span>
-       <span class="s s-Name">&quot;t0&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;Total&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;res8&quot;</span><span class="p">,</span>
-       <span class="n">AVG</span><span class="p">(</span><span class="s s-Name">&quot;t0&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;Total&quot;</span><span class="p">)</span> <span class="k">OVER</span> <span class="p">(</span><span class="k">PARTITION</span> <span class="k">BY</span> <span class="s s-Name">&quot;t0&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;CustomerId&quot;</span><span class="p">)</span> <span class="k">AS</span> <span class="s s-Name">&quot;res9&quot;</span>
-<span class="k">FROM</span> <span class="s s-Name">&quot;Invoice&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;t0&quot;</span>
+        <div role="tabpanel" class="tab-pane " id="tab-0-Postgres">
+            <div class="codehilite"><pre><span></span><span class="k">SELECT</span> <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;InvoiceId&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res0&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;CustomerId&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res1&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;InvoiceDate&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res2&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;BillingAddress&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res3&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;BillingCity&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res4&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;BillingState&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res5&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;BillingCountry&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res6&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;BillingPostalCode&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res7&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;Total&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res8&quot;</span><span class="p">,</span>
+       <span class="k">AVG</span><span class="p">(</span><span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;Total&quot;</span><span class="p">)</span> <span class="n">OVER</span> <span class="p">(</span><span class="n">PARTITION</span> <span class="k">BY</span> <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;CustomerId&quot;</span><span class="p">)</span> <span class="k">AS</span> <span class="ss">&quot;res9&quot;</span>
+<span class="k">FROM</span> <span class="ss">&quot;Invoice&quot;</span> <span class="k">AS</span> <span class="ss">&quot;t0&quot;</span>
 </pre></div>
 
         </div>
@@ -879,18 +879,18 @@ customer <em>and</em> the overall ranking,</p>
         <ul class="nav nav-tabs">
             
         <li class="nav-item">
-            <a href="#tab-1-haskell" aria-controls="tab-1-haskell" role="tab" data-toggle="tab" data-lang="haskell">Haskell</a>
+            <a href="#tab-1-Haskell" aria-controls="tab-1-Haskell" role="tab" data-toggle="tab" data-lang="haskell">Haskell</a>
         </li>
     
         <li class="nav-item">
-            <a href="#tab-1-postgres" aria-controls="tab-1-postgres" role="tab" data-toggle="tab" data-lang="postgres">Postgres</a>
+            <a href="#tab-1-Postgres" aria-controls="tab-1-Postgres" role="tab" data-toggle="tab" data-lang="sql">Postgres</a>
         </li>
     
         </ul>
     
         <div class="tab-content">
             
-        <div role="tabpanel" class="tab-pane active" id="tab-1-haskell">
+        <div role="tabpanel" class="tab-pane active" id="tab-1-Haskell">
             <div class="codehilite"><pre><span></span><span class="nf">withWindow_</span> <span class="p">(</span><span class="nf">\</span><span class="n">i</span> <span class="ow">-&gt;</span> <span class="p">(</span> <span class="n">frame_</span> <span class="n">noPartition_</span> <span class="p">(</span><span class="n">orderPartitionBy_</span> <span class="p">(</span><span class="n">asc_</span> <span class="p">(</span><span class="n">invoiceTotal</span> <span class="n">i</span><span class="p">)))</span> <span class="n">noBounds_</span>
                    <span class="p">,</span> <span class="n">frame_</span> <span class="p">(</span><span class="n">partitionBy_</span> <span class="p">(</span><span class="n">invoiceCustomer</span> <span class="n">i</span><span class="p">))</span> <span class="p">(</span><span class="n">orderPartitionBy_</span> <span class="p">(</span><span class="n">asc_</span> <span class="p">(</span><span class="n">invoiceTotal</span> <span class="n">i</span><span class="p">)))</span> <span class="n">noBounds_</span> <span class="p">))</span>
             <span class="p">(</span><span class="nf">\</span><span class="n">i</span> <span class="p">(</span><span class="n">allInvoices</span><span class="p">,</span> <span class="n">customerInvoices</span><span class="p">)</span> <span class="ow">-&gt;</span> <span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">rank_</span> <span class="p">`</span><span class="n">over_</span><span class="p">`</span> <span class="n">allInvoices</span><span class="p">,</span> <span class="n">rank_</span> <span class="p">`</span><span class="n">over_</span><span class="p">`</span> <span class="n">customerInvoices</span><span class="p">))</span>
@@ -899,21 +899,21 @@ customer <em>and</em> the overall ranking,</p>
 
         </div>
     
-        <div role="tabpanel" class="tab-pane " id="tab-1-postgres">
-            <div class="codehilite"><pre><span></span><span class="k">SELECT</span> <span class="s s-Name">&quot;t0&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;InvoiceId&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;res0&quot;</span><span class="p">,</span>
-       <span class="s s-Name">&quot;t0&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;CustomerId&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;res1&quot;</span><span class="p">,</span>
-       <span class="s s-Name">&quot;t0&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;InvoiceDate&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;res2&quot;</span><span class="p">,</span>
-       <span class="s s-Name">&quot;t0&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;BillingAddress&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;res3&quot;</span><span class="p">,</span>
-       <span class="s s-Name">&quot;t0&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;BillingCity&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;res4&quot;</span><span class="p">,</span>
-       <span class="s s-Name">&quot;t0&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;BillingState&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;res5&quot;</span><span class="p">,</span>
-       <span class="s s-Name">&quot;t0&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;BillingCountry&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;res6&quot;</span><span class="p">,</span>
-       <span class="s s-Name">&quot;t0&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;BillingPostalCode&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;res7&quot;</span><span class="p">,</span>
-       <span class="s s-Name">&quot;t0&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;Total&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;res8&quot;</span><span class="p">,</span>
-       <span class="n">RANK</span><span class="p">()</span> <span class="k">OVER</span> <span class="p">(</span>
-                    <span class="k">ORDER</span> <span class="k">BY</span> <span class="s s-Name">&quot;t0&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;Total&quot;</span> <span class="k">ASC</span><span class="p">)</span> <span class="k">AS</span> <span class="s s-Name">&quot;res9&quot;</span><span class="p">,</span>
-       <span class="n">RANK</span><span class="p">()</span> <span class="k">OVER</span> <span class="p">(</span><span class="k">PARTITION</span> <span class="k">BY</span> <span class="s s-Name">&quot;t0&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;CustomerId&quot;</span>
-                    <span class="k">ORDER</span> <span class="k">BY</span> <span class="s s-Name">&quot;t0&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;Total&quot;</span> <span class="k">ASC</span><span class="p">)</span> <span class="k">AS</span> <span class="s s-Name">&quot;res10&quot;</span>
-<span class="k">FROM</span> <span class="s s-Name">&quot;Invoice&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;t0&quot;</span>
+        <div role="tabpanel" class="tab-pane " id="tab-1-Postgres">
+            <div class="codehilite"><pre><span></span><span class="k">SELECT</span> <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;InvoiceId&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res0&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;CustomerId&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res1&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;InvoiceDate&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res2&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;BillingAddress&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res3&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;BillingCity&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res4&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;BillingState&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res5&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;BillingCountry&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res6&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;BillingPostalCode&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res7&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;Total&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res8&quot;</span><span class="p">,</span>
+       <span class="n">RANK</span><span class="p">()</span> <span class="n">OVER</span> <span class="p">(</span>
+                    <span class="k">ORDER</span> <span class="k">BY</span> <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;Total&quot;</span> <span class="k">ASC</span><span class="p">)</span> <span class="k">AS</span> <span class="ss">&quot;res9&quot;</span><span class="p">,</span>
+       <span class="n">RANK</span><span class="p">()</span> <span class="n">OVER</span> <span class="p">(</span><span class="n">PARTITION</span> <span class="k">BY</span> <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;CustomerId&quot;</span>
+                    <span class="k">ORDER</span> <span class="k">BY</span> <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;Total&quot;</span> <span class="k">ASC</span><span class="p">)</span> <span class="k">AS</span> <span class="ss">&quot;res10&quot;</span>
+<span class="k">FROM</span> <span class="ss">&quot;Invoice&quot;</span> <span class="k">AS</span> <span class="ss">&quot;t0&quot;</span>
 </pre></div>
 
         </div>
@@ -938,18 +938,18 @@ For example, to get the sum of the totals of the invoices, by rank.</p>
         <ul class="nav nav-tabs">
             
         <li class="nav-item">
-            <a href="#tab-2-haskell" aria-controls="tab-2-haskell" role="tab" data-toggle="tab" data-lang="haskell">Haskell</a>
+            <a href="#tab-2-Haskell" aria-controls="tab-2-Haskell" role="tab" data-toggle="tab" data-lang="haskell">Haskell</a>
         </li>
     
         <li class="nav-item">
-            <a href="#tab-2-postgres" aria-controls="tab-2-postgres" role="tab" data-toggle="tab" data-lang="postgres">Postgres</a>
+            <a href="#tab-2-Postgres" aria-controls="tab-2-Postgres" role="tab" data-toggle="tab" data-lang="sql">Postgres</a>
         </li>
     
         </ul>
     
         <div class="tab-content">
             
-        <div role="tabpanel" class="tab-pane active" id="tab-2-haskell">
+        <div role="tabpanel" class="tab-pane active" id="tab-2-Haskell">
             <div class="codehilite"><pre><span></span><span class="nf">orderBy_</span> <span class="p">(</span><span class="nf">\</span><span class="p">(</span><span class="n">rank</span><span class="p">,</span> <span class="kr">_</span><span class="p">)</span> <span class="ow">-&gt;</span> <span class="n">asc_</span> <span class="n">rank</span><span class="p">)</span> <span class="o">$</span>
 <span class="nf">aggregate_</span> <span class="p">(</span><span class="nf">\</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">rank</span><span class="p">)</span> <span class="ow">-&gt;</span> <span class="p">(</span><span class="n">group_</span> <span class="n">rank</span><span class="p">,</span> <span class="n">sum_</span> <span class="o">$</span> <span class="n">invoiceTotal</span> <span class="n">i</span><span class="p">))</span> <span class="o">$</span>
 <span class="nf">withWindow_</span> <span class="p">(</span><span class="nf">\</span><span class="n">i</span> <span class="ow">-&gt;</span> <span class="n">frame_</span> <span class="p">(</span><span class="n">partitionBy_</span> <span class="p">(</span><span class="n">invoiceCustomer</span> <span class="n">i</span><span class="p">))</span> <span class="p">(</span><span class="n">orderPartitionBy_</span> <span class="p">(</span><span class="n">asc_</span> <span class="p">(</span><span class="n">invoiceTotal</span> <span class="n">i</span><span class="p">)))</span> <span class="n">noBounds_</span><span class="p">)</span>
@@ -959,24 +959,24 @@ For example, to get the sum of the totals of the invoices, by rank.</p>
 
         </div>
     
-        <div role="tabpanel" class="tab-pane " id="tab-2-postgres">
-            <div class="codehilite"><pre><span></span><span class="k">SELECT</span> <span class="s s-Name">&quot;t0&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;res9&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;res0&quot;</span><span class="p">,</span>
-       <span class="n">SUM</span><span class="p">(</span><span class="s s-Name">&quot;t0&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;res8&quot;</span><span class="p">)</span> <span class="k">AS</span> <span class="s s-Name">&quot;res1&quot;</span>
+        <div role="tabpanel" class="tab-pane " id="tab-2-Postgres">
+            <div class="codehilite"><pre><span></span><span class="k">SELECT</span> <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;res9&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res0&quot;</span><span class="p">,</span>
+       <span class="k">SUM</span><span class="p">(</span><span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;res8&quot;</span><span class="p">)</span> <span class="k">AS</span> <span class="ss">&quot;res1&quot;</span>
 <span class="k">FROM</span>
-  <span class="p">(</span><span class="k">SELECT</span> <span class="s s-Name">&quot;t0&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;InvoiceId&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;res0&quot;</span><span class="p">,</span>
-          <span class="s s-Name">&quot;t0&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;CustomerId&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;res1&quot;</span><span class="p">,</span>
-          <span class="s s-Name">&quot;t0&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;InvoiceDate&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;res2&quot;</span><span class="p">,</span>
-          <span class="s s-Name">&quot;t0&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;BillingAddress&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;res3&quot;</span><span class="p">,</span>
-          <span class="s s-Name">&quot;t0&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;BillingCity&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;res4&quot;</span><span class="p">,</span>
-          <span class="s s-Name">&quot;t0&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;BillingState&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;res5&quot;</span><span class="p">,</span>
-          <span class="s s-Name">&quot;t0&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;BillingCountry&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;res6&quot;</span><span class="p">,</span>
-          <span class="s s-Name">&quot;t0&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;BillingPostalCode&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;res7&quot;</span><span class="p">,</span>
-          <span class="s s-Name">&quot;t0&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;Total&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;res8&quot;</span><span class="p">,</span>
-          <span class="n">RANK</span><span class="p">()</span> <span class="k">OVER</span> <span class="p">(</span><span class="k">PARTITION</span> <span class="k">BY</span> <span class="s s-Name">&quot;t0&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;CustomerId&quot;</span>
-                       <span class="k">ORDER</span> <span class="k">BY</span> <span class="s s-Name">&quot;t0&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;Total&quot;</span> <span class="k">ASC</span><span class="p">)</span> <span class="k">AS</span> <span class="s s-Name">&quot;res9&quot;</span>
-   <span class="k">FROM</span> <span class="s s-Name">&quot;Invoice&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;t0&quot;</span><span class="p">)</span> <span class="k">AS</span> <span class="s s-Name">&quot;t0&quot;</span>
-<span class="k">GROUP</span> <span class="k">BY</span> <span class="s s-Name">&quot;t0&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;res9&quot;</span>
-<span class="k">ORDER</span> <span class="k">BY</span> <span class="s s-Name">&quot;t0&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;res9&quot;</span> <span class="k">ASC</span>
+  <span class="p">(</span><span class="k">SELECT</span> <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;InvoiceId&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res0&quot;</span><span class="p">,</span>
+          <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;CustomerId&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res1&quot;</span><span class="p">,</span>
+          <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;InvoiceDate&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res2&quot;</span><span class="p">,</span>
+          <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;BillingAddress&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res3&quot;</span><span class="p">,</span>
+          <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;BillingCity&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res4&quot;</span><span class="p">,</span>
+          <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;BillingState&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res5&quot;</span><span class="p">,</span>
+          <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;BillingCountry&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res6&quot;</span><span class="p">,</span>
+          <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;BillingPostalCode&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res7&quot;</span><span class="p">,</span>
+          <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;Total&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res8&quot;</span><span class="p">,</span>
+          <span class="n">RANK</span><span class="p">()</span> <span class="n">OVER</span> <span class="p">(</span><span class="n">PARTITION</span> <span class="k">BY</span> <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;CustomerId&quot;</span>
+                       <span class="k">ORDER</span> <span class="k">BY</span> <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;Total&quot;</span> <span class="k">ASC</span><span class="p">)</span> <span class="k">AS</span> <span class="ss">&quot;res9&quot;</span>
+   <span class="k">FROM</span> <span class="ss">&quot;Invoice&quot;</span> <span class="k">AS</span> <span class="ss">&quot;t0&quot;</span><span class="p">)</span> <span class="k">AS</span> <span class="ss">&quot;t0&quot;</span>
+<span class="k">GROUP</span> <span class="k">BY</span> <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;res9&quot;</span>
+<span class="k">ORDER</span> <span class="k">BY</span> <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;res9&quot;</span> <span class="k">ASC</span>
 </pre></div>
 
         </div>
@@ -1015,18 +1015,18 @@ calculation.</p>
         <ul class="nav nav-tabs">
             
         <li class="nav-item">
-            <a href="#tab-8-haskell" aria-controls="tab-8-haskell" role="tab" data-toggle="tab" data-lang="haskell">Haskell</a>
+            <a href="#tab-8-Haskell" aria-controls="tab-8-Haskell" role="tab" data-toggle="tab" data-lang="haskell">Haskell</a>
         </li>
     
         <li class="nav-item">
-            <a href="#tab-8-postgres" aria-controls="tab-8-postgres" role="tab" data-toggle="tab" data-lang="postgres">Postgres</a>
+            <a href="#tab-8-Postgres" aria-controls="tab-8-Postgres" role="tab" data-toggle="tab" data-lang="sql">Postgres</a>
         </li>
     
         </ul>
     
         <div class="tab-content">
             
-        <div role="tabpanel" class="tab-pane active" id="tab-8-haskell">
+        <div role="tabpanel" class="tab-pane active" id="tab-8-Haskell">
             <div class="codehilite"><pre><span></span><span class="nf">withWindow_</span> <span class="p">(</span><span class="nf">\</span><span class="n">i</span> <span class="ow">-&gt;</span> <span class="p">(</span> <span class="n">frame_</span> <span class="n">noPartition_</span> <span class="n">noOrder_</span> <span class="n">noBounds_</span>
                    <span class="p">,</span> <span class="n">frame_</span> <span class="p">(</span><span class="n">partitionBy_</span> <span class="p">(</span><span class="n">invoiceCustomer</span> <span class="n">i</span><span class="p">))</span> <span class="n">noOrder_</span> <span class="n">noBounds_</span>
                    <span class="p">,</span> <span class="n">frame_</span> <span class="n">noPartition_</span> <span class="p">(</span><span class="n">orderPartitionBy_</span> <span class="p">(</span><span class="n">asc_</span> <span class="p">(</span><span class="n">invoiceTotal</span> <span class="n">i</span><span class="p">)))</span> <span class="n">noBounds_</span>
@@ -1042,23 +1042,23 @@ calculation.</p>
 
         </div>
     
-        <div role="tabpanel" class="tab-pane " id="tab-8-postgres">
-            <div class="codehilite"><pre><span></span><span class="k">SELECT</span> <span class="s s-Name">&quot;t0&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;InvoiceId&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;res0&quot;</span><span class="p">,</span>
-       <span class="s s-Name">&quot;t0&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;CustomerId&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;res1&quot;</span><span class="p">,</span>
-       <span class="s s-Name">&quot;t0&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;InvoiceDate&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;res2&quot;</span><span class="p">,</span>
-       <span class="s s-Name">&quot;t0&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;BillingAddress&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;res3&quot;</span><span class="p">,</span>
-       <span class="s s-Name">&quot;t0&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;BillingCity&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;res4&quot;</span><span class="p">,</span>
-       <span class="s s-Name">&quot;t0&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;BillingState&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;res5&quot;</span><span class="p">,</span>
-       <span class="s s-Name">&quot;t0&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;BillingCountry&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;res6&quot;</span><span class="p">,</span>
-       <span class="s s-Name">&quot;t0&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;BillingPostalCode&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;res7&quot;</span><span class="p">,</span>
-       <span class="s s-Name">&quot;t0&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;Total&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;res8&quot;</span><span class="p">,</span>
-       <span class="n">AVG</span><span class="p">(</span><span class="s s-Name">&quot;t0&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;Total&quot;</span><span class="p">)</span> <span class="k">OVER</span> <span class="p">()</span> <span class="k">AS</span> <span class="s s-Name">&quot;res9&quot;</span><span class="p">,</span>
-       <span class="n">AVG</span><span class="p">(</span><span class="s s-Name">&quot;t0&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;Total&quot;</span><span class="p">)</span> <span class="k">OVER</span> <span class="p">(</span><span class="k">PARTITION</span> <span class="k">BY</span> <span class="s s-Name">&quot;t0&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;CustomerId&quot;</span><span class="p">)</span> <span class="k">AS</span> <span class="s s-Name">&quot;res10&quot;</span><span class="p">,</span>
-       <span class="n">RANK</span><span class="p">()</span> <span class="k">OVER</span> <span class="p">(</span>
-                    <span class="k">ORDER</span> <span class="k">BY</span> <span class="s s-Name">&quot;t0&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;Total&quot;</span> <span class="k">ASC</span><span class="p">)</span> <span class="k">AS</span> <span class="s s-Name">&quot;res11&quot;</span><span class="p">,</span>
-       <span class="n">AVG</span><span class="p">(</span><span class="s s-Name">&quot;t0&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;Total&quot;</span><span class="p">)</span> <span class="k">OVER</span> <span class="p">(</span>
-                               <span class="k">ORDER</span> <span class="k">BY</span> <span class="s s-Name">&quot;t0&quot;</span><span class="mf">.</span><span class="s s-Name">&quot;InvoiceDate&quot;</span> <span class="k">ASC</span> <span class="k">ROWS</span> <span class="k">BETWEEN</span> <span class="mf">2</span> <span class="k">PRECEDING</span> <span class="k">AND</span> <span class="mf">2</span> <span class="k">FOLLOWING</span><span class="p">)</span> <span class="k">AS</span> <span class="s s-Name">&quot;res12&quot;</span>
-<span class="k">FROM</span> <span class="s s-Name">&quot;Invoice&quot;</span> <span class="k">AS</span> <span class="s s-Name">&quot;t0&quot;</span>
+        <div role="tabpanel" class="tab-pane " id="tab-8-Postgres">
+            <div class="codehilite"><pre><span></span><span class="k">SELECT</span> <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;InvoiceId&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res0&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;CustomerId&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res1&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;InvoiceDate&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res2&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;BillingAddress&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res3&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;BillingCity&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res4&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;BillingState&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res5&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;BillingCountry&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res6&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;BillingPostalCode&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res7&quot;</span><span class="p">,</span>
+       <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;Total&quot;</span> <span class="k">AS</span> <span class="ss">&quot;res8&quot;</span><span class="p">,</span>
+       <span class="k">AVG</span><span class="p">(</span><span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;Total&quot;</span><span class="p">)</span> <span class="n">OVER</span> <span class="p">()</span> <span class="k">AS</span> <span class="ss">&quot;res9&quot;</span><span class="p">,</span>
+       <span class="k">AVG</span><span class="p">(</span><span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;Total&quot;</span><span class="p">)</span> <span class="n">OVER</span> <span class="p">(</span><span class="n">PARTITION</span> <span class="k">BY</span> <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;CustomerId&quot;</span><span class="p">)</span> <span class="k">AS</span> <span class="ss">&quot;res10&quot;</span><span class="p">,</span>
+       <span class="n">RANK</span><span class="p">()</span> <span class="n">OVER</span> <span class="p">(</span>
+                    <span class="k">ORDER</span> <span class="k">BY</span> <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;Total&quot;</span> <span class="k">ASC</span><span class="p">)</span> <span class="k">AS</span> <span class="ss">&quot;res11&quot;</span><span class="p">,</span>
+       <span class="k">AVG</span><span class="p">(</span><span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;Total&quot;</span><span class="p">)</span> <span class="n">OVER</span> <span class="p">(</span>
+                               <span class="k">ORDER</span> <span class="k">BY</span> <span class="ss">&quot;t0&quot;</span><span class="p">.</span><span class="ss">&quot;InvoiceDate&quot;</span> <span class="k">ASC</span> <span class="k">ROWS</span> <span class="k">BETWEEN</span> <span class="mi">2</span> <span class="n">PRECEDING</span> <span class="k">AND</span> <span class="mi">2</span> <span class="n">FOLLOWING</span><span class="p">)</span> <span class="k">AS</span> <span class="ss">&quot;res12&quot;</span>
+<span class="k">FROM</span> <span class="ss">&quot;Invoice&quot;</span> <span class="k">AS</span> <span class="ss">&quot;t0&quot;</span>
 </pre></div>
 
         </div>
