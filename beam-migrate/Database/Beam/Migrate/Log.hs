@@ -166,9 +166,9 @@ ensureBackendTables be@BeamMigrationBackend { backendGetDbConstraints = getCs } 
         Just Nothing -> cleanAndCreateSchema
         Just (Just maxVersion')
           | maxVersion' > beamMigrateSchemaVersion ->
-              fail "This database is being managed by a newer version of beam-migrate"
+              error "This database is being managed by a newer version of beam-migrate"
           | maxVersion' < beamMigrateSchemaVersion ->
-              fail "This database is being managed by an older version of beam-migrate, but there are no older versions"
+              error "This database is being managed by an older version of beam-migrate, but there are no older versions"
           | otherwise -> pure ()
 
     cleanAndCreateSchema = do
@@ -181,7 +181,7 @@ ensureBackendTables be@BeamMigrationBackend { backendGetDbConstraints = getCs } 
           runSelectReturningOne $ select $
           aggregate_ (\_ -> as_ @Int countAll_) $
           all_ (_beamMigrateLogEntries (beamMigrateDb @be @m))
-        when (totalCnt > 0) (fail "beam-migrate: No versioning information, but log entries present")
+        when (totalCnt > 0) (error "beam-migrate: No versioning information, but log entries present")
         runNoReturn (dropTableCmd (dropTableSyntax (tableName Nothing "beam_migration")))
 
       runNoReturn (dropTableCmd (dropTableSyntax (tableName Nothing "beam_version")))
