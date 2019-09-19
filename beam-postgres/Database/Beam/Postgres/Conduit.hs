@@ -130,10 +130,10 @@ runQueryReturning conn x withSrc = do
       singleRowModeSet <- liftIO (Pg.withConnection conn Pg.setSingleRowMode)
       if singleRowModeSet
          then withSrc (streamResults Nothing) `finally` gracefulShutdown
-         else fail "Could not enable single row mode"
+         else liftIO (fail "Could not enable single row mode")
     else do
       errMsg <- fromMaybe "No libpq error provided" <$> liftIO (Pg.withConnection conn Pg.errorMessage)
-      fail (show errMsg)
+      liftIO (fail (show errMsg))
 
   where
     streamResults fields = do
@@ -152,15 +152,15 @@ runQueryReturning conn x withSrc = do
                      do C.yield parsedRow'
                         streamResults (Just fields')
             Pg.TuplesOk -> liftIO (Pg.withConnection conn finishQuery)
-            Pg.EmptyQuery -> fail "No query"
+            Pg.EmptyQuery -> liftIO (fail "No query")
             Pg.CommandOk -> pure ()
             _ -> do errMsg <- liftIO (Pg.resultErrorMessage row)
-                    fail ("Postgres error: " <> show errMsg)
+                    liftIO (fail ("Postgres error: " <> show errMsg))
 
     bailEarly row errorString = do
       Pg.unsafeFreeResult row
       Pg.withConnection conn $ cancelQuery
-      fail errorString
+      liftIO (fail errorString)
 
     cancelQuery conn' = do
       cancel <- Pg.getCancel conn'
@@ -170,7 +170,7 @@ runQueryReturning conn x withSrc = do
           res <- Pg.cancel cancel'
           case res of
             Right () -> liftIO (finishQuery conn')
-            Left err -> fail ("Could not cancel: " <> show err)
+            Left err -> liftIO (fail ("Could not cancel: " <> show err))
 
     finishQuery conn' = do
       nextRow <- Pg.getResult conn'
