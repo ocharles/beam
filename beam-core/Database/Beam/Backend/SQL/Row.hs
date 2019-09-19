@@ -29,6 +29,10 @@ import qualified Data.Vector.Sized as Vector
 import           Data.Proxy
 #endif
 
+#if MIN_VERSION_base(4,9,0)
+import qualified Control.Monad.Fail as Fail
+#endif
+
 import           GHC.Generics
 import           GHC.TypeLits
 
@@ -67,8 +71,16 @@ instance Monad (FromBackendRowM be) where
     FromBackendRowM $
     a >>= (\x -> let FromBackendRowM b' = b x in b')
 
+#if !(MIN_VERSION_base(4,13,0))
   fail = FromBackendRowM . liftF . FailParseWith .
          BeamRowReadError Nothing . ColumnErrorInternal
+#endif
+
+#if MIN_VERSION_base(4,9,0)
+instance Fail.MonadFail (FromBackendRowM be) where
+  fail = FromBackendRowM . liftF . FailParseWith .
+         BeamRowReadError Nothing . ColumnErrorInternal
+#endif
 
 instance Alternative (FromBackendRowM be) where
   empty   = fail "empty"
