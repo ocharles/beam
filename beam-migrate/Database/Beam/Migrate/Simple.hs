@@ -76,17 +76,17 @@ defaultUpToDateHooks =
   , startStepHook       = \_ _ -> pure ()
   , endStepHook         = \_ _ -> pure ()
   , runCommandHook      = \_ _ -> pure ()
-  , queryFailedHook     = fail "Log entry query fails"
+  , queryFailedHook     = error "Log entry query fails"
   , discontinuousMigrationsHook =
-      \ix -> fail ("Discontinuous migration log: missing migration at " ++ show ix)
+      \ix -> error ("Discontinuous migration log: missing migration at " ++ show ix)
   , logMismatchHook =
       \ix actual expected ->
-        fail ("Log mismatch at index " ++ show ix ++ ":\n" ++
+        error ("Log mismatch at index " ++ show ix ++ ":\n" ++
               "  expected: " ++ T.unpack expected ++ "\n" ++
               "  actual  : " ++ T.unpack actual)
   , databaseAheadHook =
       \aheadBy ->
-        fail ("The database is ahead of the known schema by " ++ show aheadBy ++ " migration(s)")
+        error ("The database is ahead of the known schema by " ++ show aheadBy ++ " migration(s)")
   }
 
 -- | Equivalent to calling 'bringUpToDateWithHooks' with 'defaultUpToDateHooks'.
@@ -197,7 +197,7 @@ createSchema :: Database be db
              -> m ()
 createSchema BeamMigrationBackend { backendActionProvider = actions } db =
   case simpleSchema actions db of
-    Nothing -> fail "createSchema: Could not determine schema"
+    Nothing -> error "createSchema: Could not determine schema"
     Just cmds ->
         mapM_ runNoReturn cmds
 
@@ -215,12 +215,12 @@ autoMigrate BeamMigrationBackend { backendActionProvider = actions
   do actual <- getCs
      let expected = collectChecks db
      case finalSolution (heuristicSolver actions actual expected) of
-       Candidates {} -> fail "autoMigrate: Could not determine migration"
+       Candidates {} -> error "autoMigrate: Could not determine migration"
        Solved cmds ->
          -- Check if any of the commands are irreversible
          case foldMap migrationCommandDataLossPossible cmds of
            MigrationKeepsData -> mapM_ (runNoReturn . migrationCommand) cmds
-           _ -> fail "autoMigrate: Not performing automatic migration due to data loss"
+           _ -> error "autoMigrate: Not performing automatic migration due to data loss"
 
 -- | Given a migration backend, a handle to a database, and a checked database,
 -- attempt to find a schema. This should always return 'Just', unless the
@@ -315,6 +315,6 @@ haskellSchema BeamMigrationBackend { backendGetDbConstraints = getCs
     Solved cmds   ->
       let hsModule = hsActionsToModule "NewBeamSchema" (map migrationCommand cmds)
       in case renderHsSchema hsModule of
-           Left err -> fail ("Error writing Haskell schema: " ++ err)
+           Left err -> error ("Error writing Haskell schema: " ++ err)
            Right modStr -> pure modStr
-    Candidates {} -> fail "Could not form Haskell schema"
+    Candidates {} -> error "Could not form Haskell schema"
